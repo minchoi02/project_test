@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="login">
+
+	<!-- Admin -->
+	
+	<select id="memberLogin" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT 
+			SEQ
+			, CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) AS ID
+			, CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS NAME
+			, MEMO
+			, DEL_YN
+			, REG_DATE
+			, GRADE
+			, MENU
+		FROM MASTER
+		WHERE CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) = #{id,jdbcType=VARCHAR}
+		  AND PWD = PASSWORD(#{pwd,jdbcType=VARCHAR})
+		  AND DEL_YN = 'N' 
+		<!-- WHERE SEQ = 1 -->
+	</select>
+	
+	<select id="memberLoginCrypt" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT 
+			SEQ
+			, CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) AS ID
+			, CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS NAME
+			, MEMO
+			, DEL_YN
+			, REG_DATE
+			, GRADE
+			, MENU
+		FROM MASTER
+		WHERE ID = #{id,jdbcType=VARCHAR}
+		  AND PWD = #{pwd,jdbcType=VARCHAR}
+		  AND DEL_YN = 'N' 
+		<!-- WHERE SEQ = 1 -->
+	</select>
+	
+	<!-- User -->
+	
+	<select id="loginPro" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT SEQ
+			, CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) AS ID
+			, CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS NAME
+			, MEMO
+			, DEL_YN
+			, REG_DATE
+			, GRADE
+			, MENU
+		FROM MASTER
+		WHERE EMAIL = #{email, jdbcType=VARCHAR}
+		  AND PWD = #{pwd, jdbcType=VARCHAR}
+		  AND DEL_YN = 'N'
+	</select>
+	
+</mapper>

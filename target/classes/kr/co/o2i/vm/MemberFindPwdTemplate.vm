@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=1280">
+	<title>메일</title>
+</head>
+<body>
+	<table style="padding:12px 50px;width:700px;" cellpadding="0" cellspacing="0">
+		<tr>
+			<td style="padding-bottom:10px;border-bottom:1px solid #000;width:700px">
+				<img src="http://www.jayeoncenter.co.kr/assets/user/mail/images/logo.png" alt="자연명상심리상담센터">
+			</td>
+		</tr>
+		<tr>
+			<td style="width:700px;color:#000">
+				<table style="width:700px;border-right:1px solid #dedede;border-bottom:1px solid #dedede;border-left:1px solid #dedede;" cellpadding="0" cellspacing="0">					
+					<tr>
+						<td style="padding:60px 0 15px;width:700px;text-align:center;">
+							<img src="http://www.jayeoncenter.co.kr/assets/user/mail/images/img01.png" alt="">
+						</td>
+					</tr>
+					<tr>
+						<td style="padding:0 0 15px;width:700px;text-align:center;font-size:24px;">비밀번호 찾기 안내</td>
+					</tr>
+					<tr>
+						<td style="padding:0 0 32px;width:700px;text-align:center;font-size:12px;line-height:19px;">
+							자연명상심리센터 홈페이지에서 비밀번호변경을 위하여 발송된 메일입니다.<br>
+							아래 인증번호를 정보드림 홈페이지에 입력해주시기 바랍니다.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<!-- 인증번호 -->
+							<table style="width:500px;margin:0 auto;background:#efefef;">
+								<tr>
+									<td style="width:175px;height:70px; text-align:right;padding-right:30px;font-size:20px;font-weight:bold;">인증번호</td>
+									<td><p style="padding:5px;text-align:center;background:#fff;width:170px;font-size:20px;font-weight:bold;">$RDM_NUM</p></td>
+								</tr>
+							</table>
+							<!--// 인증번호 -->
+						</td>
+					</tr>
+					<tr>
+						<td style="padding:55px 0 70px">
+							<!-- 버튼 -->
+							<table style="width:500px;margin:0 auto;text-align:center;">
+								<tr>
+									<td><a href="#" style="width:233px; height:40px;line-height:40px;display:inline-block;background:#46a048;color:#fff;font-weight:bold;text-align:center;font-size:12px;">자연명상심리센터 로그인</a></td>
+									<td><a href="#" style="width:233px; height:40px;line-height:40px;display:inline-block;background:#8b7053;color:#fff;font-weight:bold;text-align:center;font-size:12px;">자연명상심리센터 홈페이지 메인</a></td>
+								</tr>
+							</table>
+							<!--// 버튼 -->
+						</td>
+					</tr>
+					<tr>
+						<td style="padding:20px 20px 30px;width:660px;border-top:1px solid #dedede;line-height:17px;font-size:11px">
+							비밀번호 찾기를 시도하지 않았지만 메일을 반복적으로 받으실 경우, 자연명상심리센터(전화 02-407-4686)로 연락부탁드리겠습니다.<br/>감사합니다.
+						</td>
+					</tr>
+					<tr>
+						<td style="width:700px;background:#ececec;">
+							<!-- 푸터 -->
+							<table style="width:700px;">
+								<tr>
+									<td style="width:490px;padding:15px 20px;font-size:11px">
+										<p style="margin-bottom:10px;font-size:12px">* 본 메일은 발신전용 입니다.</p>
+										<p style="color:#676767;line-height:17px;">자연명상심리상담센터 (우:05661) 서울 송파구 중대로25길 9, 303호(오금동, 금아웰빙타운)<br>
+											전화번호 02-407-4686   /   팩스번호 02-000-0000<br>
+											Copyright (C)2018 자연명상심리상담센터. All right reserved.</p>
+										</td>
+									<td style="width:130px;padding:15px 20px;"><img src="http://www.jayeoncenter.co.kr/assets/user/mail/images/logofooter.png" alt="자연명상심리상담센터"></td>
+								</tr>
+							</table>
+							<!--// 푸터 -->
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

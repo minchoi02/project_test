@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="organization">
+
+	<select id="depth1list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT * FROM ORGANIZATION
+			WHERE DEPTH = 1
+			  AND DEL_YN = 'N'
+			ORDER BY SEQ
+	</select>
+	
+	<select id="depth1listCount" resultType="int" >
+		SELECT COUNT(*) AS CNT FROM ORGANIZATION
+			WHERE DEPTH = 1
+			  AND DEL_YN = 'N'
+	</select>
+	
+	<select id="view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT *
+		FROM ORGANIZATION
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<select id="depth2list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT * FROM ORGANIZATION
+			WHERE DEPTH = 2
+			  AND DEL_YN = 'N'
+			  AND GUBUN = (SELECT GUBUN FROM ORGANIZATION WHERE SEQ = ${seq})
+			ORDER BY SEQ
+	</select>
+	
+	<select id="depth2listCount" resultType="int" >
+		SELECT COUNT(*) AS CNT FROM ORGANIZATION
+			WHERE DEPTH = 1
+			  AND DEL_YN = 'N'
+			  AND GUBUN = (SELECT GUBUN FROM ORGANIZATION WHERE SEQ = ${seq})
+	</select>
+	
+	<insert id="gubun1insert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO ORGANIZATION
+						  ( SEQ
+						  , GUBUN	
+						  , DEPTH
+						  , NAME
+					   	  , POSITION
+					 	  , ETC
+					 	  , REG_DATE
+					 	  , DEL_YN
+					 	  , GUBUN2
+				  )VALUES(  
+				  	  ( SELECT SEQ FROM (SELECT IFNULL(MAX(SEQ),0)+1 AS SEQ FROM ORGANIZATION) hh )
+					 ,(SELECT GUBUN FROM ( SELECT GUBUN FROM ORGANIZATION WHERE SEQ = ${seq} ) tt)
+					 ,2
+					 ,#{name,jdbcType=VARCHAR}
+					 ,#{position,jdbcType=VARCHAR}
+					 ,#{etc,jdbcType=VARCHAR}
+					 ,NOW()
+					 ,'N'
+					 ,#{gubun2,jdbcType=VARCHAR}
+				 )
+	</insert>
+	
+	<insert id="gubun2insert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO ORGANIZATION
+						  ( SEQ
+						  , GUBUN	
+						  , DEPTH
+						  , NAME
+					   	  , POSITION
+					 	  , ETC
+					 	  , REG_DATE
+					 	  , DEL_YN
+					 	  , TEL2
+				  )VALUES(  
+				  	  ( SELECT SEQ FROM (SELECT IFNULL(MAX(SEQ),0)+1 AS SEQ FROM ORGANIZATION) hh )
+					 ,(SELECT GUBUN FROM ( SELECT GUBUN FROM ORGANIZATION WHERE SEQ = ${seq} ) tt)
+					 ,2
+					 ,#{name,jdbcType=VARCHAR}
+					 ,#{position,jdbcType=VARCHAR}
+					 ,#{etc,jdbcType=VARCHAR}
+					 ,NOW()
+					 ,'N'
+					 ,#{tel2,jdbcType=VARCHAR}
+				 )
+	</insert>
+	
+	<delete id="delete" parameterType="java.util.Map" >
+		UPDATE ORGANIZATION
+	       SET DEL_YN  = 'Y'
+		 WHERE GUBUN = (SELECT GUBUN FROM( SELECT GUBUN FROM ORGANIZATION WHERE SEQ = ${seq} ) tt)
+		   AND DEPTH = 2
+	</delete>
+	
+	<update id="update" parameterType="java.util.Map">
+		UPDATE ORGANIZATION SET
+				    TEL = #{tel,jdbcType=VARCHAR}
+			 	  , FAX = #{fax,jdbcType=VARCHAR}
+			WHERE SEQ = ${seq}
+	</update>
+	
+</mapper>

@@ -1,0 +1,306 @@
+<<<<<<< HEAD
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="t" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page isELIgnored ="false" %>
+<script>
+
+function setIFrameHeight(obj){
+    if(obj.contentDocument){
+        obj.height = obj.contentDocument.body.offsetHeight + 40;
+    } else {
+        obj.height = obj.contentWindow.document.body.scrollHeight;
+    }
+}
+
+$(document).ready(function(){
+
+	$('#btnSearch').click(function () {
+	//	if(! valCheck('search_value','검색어를 입력하세요')) return;
+	//	if(! lenCheck('search_value',2, '검색어는 2글자 이상 입력하세요')) return;
+	//	$('#page').val(1);
+	//	$('#pagelistno').val(1);
+		$('#searchForm').submit();
+	});
+	
+	$('#lifetime_type1').click(function () {
+		$("#tabs1").click();
+	});
+	
+	$('#lifetime_type2').click(function () {
+		$("#tabs2").click();
+	});
+	
+	$('#lifetime_type3').click(function () {
+		$("#tabs3").click();
+	});
+	
+	$('#lifetime_type4').click(function () {
+		$("#tabs4").click();
+	});
+	
+	var lifetime = "${bean.lifetime}";
+	$("#lifetime_type"+lifetime).click();
+	
+	
+	
+});
+
+</script>
+			<form name="searchForm" id="searchForm" method="post" action="/custom_info/a_2.do">
+					<div class="contsArea personalizedInfo">
+						<p class="textPara_top">생애주기를 선택하시면 원하시는 '복지서비스'정보를 보실 수 있습니다.</p>
+
+						<!-- 검색박스 -->
+						<div class="searchBoxWrap boxTypeIcon">
+							<div class="lifetimeRadioGroup">
+								<span class="ico_lifetime01"><input type="radio" name="lifetime" id="lifetime_type1" checked="checked"><label for="lifetime_type1">영유아기</label></span>
+								<span class="ico_lifetime02"><input type="radio" name="lifetime" id="lifetime_type2"><label for="lifetime_type2">아동·청소년기</label></span>
+								<span class="ico_lifetime03"><input type="radio" name="lifetime" id="lifetime_type3"><label for="lifetime_type3">청년기</label></span>
+								<span class="ico_lifetime04"><input type="radio" name="lifetime" id="lifetime_type4"><label for="lifetime_type4">중·노년기</label></span>
+							</div>
+							<div class="serchWordsGroup">
+								<p>
+									<label for="search_content">검색어 <em>검색을 원하는 키워드를 입력하세요.</em></label>
+									<input type="text" id="search_content" name="search_content" value="${bean.search_content}">
+								</p>
+
+								<button type="button" id="btnSearch" class="btnTypeSearch colorGreen"><span>검색</span></button>
+							</div>
+						</div>
+						<!-- //검색박스 -->
+
+						<!-- 탭 -->
+						<div class="tabMenuWrapper">
+							<div class="tabMenu num4">
+								<div>
+									<div class="btnTab"><a href="#lifetimeTab01" id="tabs1"><span>영유아기 (<em>${search_count_1}</em>)</span></a></div>
+									<div class="btnTab"><a href="#lifetimeTab02" id="tabs2"><span>아동·청소년기 (<em>${search_count_2}</em>)</span></a></div>
+									<div class="btnTab"><a href="#lifetimeTab03" id="tabs3"><span>청년기 (<em>${search_count_3}</em>)</span></a></div>
+									<div class="btnTab"><a href="#lifetimeTab04" id="tabs4"><span>중·노년기 (<em>${search_count_4}</em>)</span></a></div>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="lifetimeTab01">
+								<p class="contsSubTit">영유아기(<span>${search_count_1}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_1}">
+											<li>
+												<a href="#" class="panelTitle"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="/custom_info/getContent.do?seq=${list.SEQ}" style="width: 100%; height: 130vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="lifetimeTab02">
+								<p class="contsSubTit">아동·청소년기(<span>${search_count_2}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_2}">
+											<li>
+												<a href="#" class="panelTitle"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="/custom_info/getContent.do?seq=${list.SEQ}" style="width: 100%; height: 130vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="lifetimeTab03">
+								<p class="contsSubTit">청년기(<span>${search_count_3}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_3}">
+											<li>
+												<a href="#" class="panelTitle"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="/custom_info/getContent.do?seq=${list.SEQ}" style="width: 100%; height: 130vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="lifetimeTab04">
+								<p class="contsSubTit">중·노년기(<span>${search_count_4}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_4}">
+											<li>
+												<a href="#" class="panelTitle"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="/custom_info/getContent.do?seq=${list.SEQ}" style="width: 100%; height: 130vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+						<!-- //탭 -->
+					</div>
+=======
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="t" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page isELIgnored ="false" %>
+<script>
+
+function setIFrameHeight(obj){
+    if(obj.contentDocument){
+        obj.height = obj.contentDocument.body.offsetHeight + 40;
+    } else {
+        obj.height = obj.contentWindow.document.body.scrollHeight;
+    }
+}
+
+$(document).ready(function(){
+
+	$('#btnSearch').click(function () {
+	//	if(! valCheck('search_value','검색어를 입력하세요')) return;
+	//	if(! lenCheck('search_value',2, '검색어는 2글자 이상 입력하세요')) return;
+	//	$('#page').val(1);
+	//	$('#pagelistno').val(1);
+		$('#searchForm').submit();
+	});
+	
+	$('#lifetime_type1').click(function () {
+		$("#tabs1").click();
+	});
+	
+	$('#lifetime_type2').click(function () {
+		$("#tabs2").click();
+	});
+	
+	$('#lifetime_type3').click(function () {
+		$("#tabs3").click();
+	});
+	
+	$('#lifetime_type4').click(function () {
+		$("#tabs4").click();
+	});
+	
+	var lifetime = "${bean.lifetime}";
+	$("#lifetime_type"+lifetime).click();
+	
+	
+	
+});
+
+</script>
+			<form name="searchForm" id="searchForm" method="post" action="/custom_info/a_2.do">
+					<div class="contsArea personalizedInfo">
+						<p class="textPara_top">생애주기를 선택하시면 원하시는 '복지서비스'정보를 보실 수 있습니다.</p>
+
+						<!-- 검색박스 -->
+						<div class="searchBoxWrap boxTypeIcon">
+							<div class="lifetimeRadioGroup">
+								<span class="ico_lifetime01"><input type="radio" name="lifetime" id="lifetime_type1" checked="checked"><label for="lifetime_type1">영유아기</label></span>
+								<span class="ico_lifetime02"><input type="radio" name="lifetime" id="lifetime_type2"><label for="lifetime_type2">아동·청소년기</label></span>
+								<span class="ico_lifetime03"><input type="radio" name="lifetime" id="lifetime_type3"><label for="lifetime_type3">청년기</label></span>
+								<span class="ico_lifetime04"><input type="radio" name="lifetime" id="lifetime_type4"><label for="lifetime_type4">중·노년기</label></span>
+							</div>
+							<div class="serchWordsGroup">
+								<p>
+									<label for="search_content">검색어 <em>검색을 원하는 키워드를 입력하세요.</em></label>
+									<input type="text" id="search_content" name="search_content" value="${bean.search_content}">
+								</p>
+
+								<button type="button" id="btnSearch" class="btnTypeSearch colorGreen"><span>검색</span></button>
+							</div>
+						</div>
+						<!-- //검색박스 -->
+
+						<!-- 탭 -->
+						<div class="tabMenuWrapper">
+							<div class="tabMenu num4">
+								<div>
+									<div class="btnTab"><a href="#lifetimeTab01" id="tabs1"><span>영유아기 (<em>${search_count_1}</em>)</span></a></div>
+									<div class="btnTab"><a href="#lifetimeTab02" id="tabs2"><span>아동·청소년기 (<em>${search_count_2}</em>)</span></a></div>
+									<div class="btnTab"><a href="#lifetimeTab03" id="tabs3"><span>청년기 (<em>${search_count_3}</em>)</span></a></div>
+									<div class="btnTab"><a href="#lifetimeTab04" id="tabs4"><span>중·노년기 (<em>${search_count_4}</em>)</span></a></div>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="lifetimeTab01">
+								<p class="contsSubTit">영유아기(<span>${search_count_1}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_1}">
+											<li>
+												<a href="#" class="panelTitle"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="/custom_info/getContent.do?seq=${list.SEQ}" style="width: 100%; height: 130vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="lifetimeTab02">
+								<p class="contsSubTit">아동·청소년기(<span>${search_count_2}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_2}">
+											<li>
+												<a href="#" class="panelTitle"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="/custom_info/getContent.do?seq=${list.SEQ}" style="width: 100%; height: 130vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="lifetimeTab03">
+								<p class="contsSubTit">청년기(<span>${search_count_3}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_3}">
+											<li>
+												<a href="#" class="panelTitle"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="/custom_info/getContent.do?seq=${list.SEQ}" style="width: 100%; height: 130vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="lifetimeTab04">
+								<p class="contsSubTit">중·노년기(<span>${search_count_4}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_4}">
+											<li>
+												<a href="#" class="panelTitle"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="/custom_info/getContent.do?seq=${list.SEQ}" style="width: 100%; height: 130vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+						<!-- //탭 -->
+					</div>
+>>>>>>> refs/heads/202204
+			</form>

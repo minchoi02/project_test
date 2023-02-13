@@ -1,0 +1,744 @@
+<<<<<<< HEAD
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="t" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page isELIgnored ="false" %>
+<script>
+
+$(document).ready(function(){
+
+	$('#btnSearch').click(function () {
+	//	if(! valCheck('search_value','검색어를 입력하세요')) return;
+	//	if(! lenCheck('search_value',2, '검색어는 2글자 이상 입력하세요')) return;
+		$('#page').val(1);
+		$('#pagelistno').val(1);
+		$("#searchForm").attr("action", "/welfare_facility/b_2/list.do");
+		$('#searchForm').submit();
+	});
+	
+	$('#search_area_seq').change(function () {
+		var thisVal = $(this).val();
+		if(thisVal == "38"){
+			$('#daejeonArea1').click();
+		}else if(thisVal == "37"){
+			$('#daejeonArea2').click();
+		}else if(thisVal == "40"){
+			$('#daejeonArea3').click();
+		}else if(thisVal == "39"){
+			$('#daejeonArea4').click();
+		}else if(thisVal == "41"){
+			$('#daejeonArea5').click();
+		}
+	});
+		
+	fac_popup_ok();
+	
+});
+
+function goView(seq){
+	
+	$("#frm_search_kind_seq").val($("#search_kind_seq").val());
+	$("#frm_search_area_seq").val($("#search_area_seq").val());
+	$("#frm_search_content").val($("#search_content").val());
+	
+	$("#seq").val(seq);
+	$("#frm").attr("action", "/welfare_facility/b_2/view.do");
+	$("#frm").submit();
+}
+
+function fac_popup(){
+	$(".fac_popup").show();
+}
+
+function fac_popup_ok(){
+	
+	var html = "";
+	if($("#facility01").is(":checked")){
+		html+='<li><span class="facility01">장애인 화장실</span></li>';
+	}
+	if($("#facility02").is(":checked")){
+		html+='<li><span class="facility02">엘리베이터</span></li>';
+	}
+	if($("#facility03").is(":checked")){
+		html+='<li><span class="facility03">장애인전용 주차구역</span></li>';
+	}
+	if($("#facility04").is(":checked")){
+		html+='<li><span class="facility04">주출입구 단차없음</span></li>';
+	}
+	if($("#facility05").is(":checked")){
+		html+='<li><span class="facility05">장애인이용 매표소</span></li>';
+	}
+	if($("#facility06").is(":checked")){
+		html+='<li><span class="facility06">지하철 접근가능</span></li>';
+	}
+	if($("#facility07").is(":checked")){
+		html+='<li><span class="facility07">저상버스 접근가능</span></li>';
+	}
+	if($("#facility08").is(":checked")){
+		html+='<li><span class="facility08">장애인단독 접근가능</span></li>';
+	}
+	if($("#facility09").is(":checked")){
+		html+='<li><span class="facility09">장애인이용시 동반자 권장</span></li>';
+	}
+	if($("#facility10").is(":checked")){
+		html+='<li><span class="facility10">휠체어 대여</span></li>';
+	}
+	if($("#facility11").is(":checked")){
+		html+='<li><span class="facility11">시각장애인 편의서비스</span></li>';
+	}
+	if($("#facility12").is(":checked")){
+		html+='<li><span class="facility12">청각장애인 편의서비스</span></li>';
+	}
+	if($("#facility13").is(":checked")){
+		html+='<li><span class="facility13">장애인객실</span></li>';
+	}
+	if($("#facility14").is(":checked")){
+		html+='<li><span class="facility14">장애인 이용 안내소</span></li>';
+	}	
+	if($("#facility15").is(":checked")){
+		html+='<li><span class="facility15">장애인지정석</span></li>';
+	}
+
+	html+='<button type="button" class="btnType02 colorDeepBlue" onclick="fac_popup();"><span>선택</span></button>';
+	
+	$("#fac_list").html(html);
+	
+	$(".fac_popup").hide();
+}
+</script>
+			
+					<div class="contsArea facility">
+						<p class="textPara_top">검색을 통해 찾고자 하시는 우리지역 복지시설을 찾으실 수 있습니다.</p>
+
+						<form name="searchForm" id="searchForm" method="post" action="/welfare_facility/b_2/list.do">
+						<!-- 검색박스 -->
+						<div class="searchBoxWrap facility">
+							<div class="typeFacility">
+								<div class="verticalBox maps">
+									<div>
+										<span class="imgBox"><img src="/assets/user/images/srch02_map01_dong-gu.png" alt="대전지도" usemap="#srchMap"></span>
+										<map name="srchMap">
+											<area id="daejeonArea1" href="#" alt="동구"   shape="poly" coords="204,59,174,86,171,97,182,111,172,117,158,110,144,121,168,152,144,156,147,170,141,179,148,191,127,209,143,217,164,199,181,188,190,154,195,123,213,112,219,95,244,87,231,72,218,67,209,75,203,58" onfocus="this.blur()">
+											<area id="daejeonArea2" href="#" alt="중구"   shape="poly" coords="107,168,113,154,141,119,161,147,140,152,145,167,136,175,148,189,130,210,120,192,112,192,121,171,104,166" onfocus="this.blur()">
+											<area id="daejeonArea3" href="#" alt="서구"   shape="poly" coords="53,174,44,185,54,200,59,196,70,204,71,224,98,197,98,170,109,162,111,152,135,116,132,102,108,112,105,127,92,131,86,144,65,169,53,173" onfocus="this.blur()">
+											<area id="daejeonArea4" href="#" alt="대덕구" shape="poly" coords="143,118,158,105,164,113,178,111,172,98,175,83,206,58,215,50,197,45,204,31,183,46,146,50,138,59,158,74,144,94,131,101" onfocus="this.blur()">
+											<area id="daejeonArea5" href="#" alt="유성구" shape="poly" coords="29,154,28,154,52,172,69,161,100,126,114,109,133,100,147,96,154,72,138,55,153,46,154,25,144,19,128,25,124,45,106,68,78,70,56,114,49,127,38,150,26,152" onfocus="this.blur()">
+										</map>
+									</div>
+
+									<script>
+									$(function(){
+										IMG_Replace();
+									});
+									function IMG_Replace(){
+										var mapIMG = $('.verticalBox.maps').find('.imgBox > img'),
+											area1_src = '/assets/user/images/srch02_map01_dong-gu.png',
+											area2_src = '/assets/user/images/srch02_map02_Jung-gu.png',
+											area3_src = '/assets/user/images/srch02_map03_seo-gu.png',
+											area4_src = '/assets/user/images/srch02_map04_daedeok-gu.png',
+											area5_src = '/assets/user/images/srch02_map05_yuseong-gu.png';
+
+										$('#daejeonArea1').on('click',function(){
+											mapIMG.attr('src',area1_src);
+											$("#search_area_seq").val("38").prop("selected", true);
+											return false;
+										});
+
+										$('#daejeonArea2').on('click',function(e){
+											mapIMG.attr('src',area2_src);
+											$("#search_area_seq").val("37").prop("selected", true);
+											return false;
+										});
+
+										$('#daejeonArea3').on('click',function(e){
+											mapIMG.attr('src',area3_src);
+											$("#search_area_seq").val("40").prop("selected", true);
+											return false;
+										});
+
+										$('#daejeonArea4').on('click',function(e){
+											mapIMG.attr('src',area4_src);
+											$("#search_area_seq").val("39").prop("selected", true);
+											return false;
+										});
+
+										$('#daejeonArea5').on('click',function(e){
+											mapIMG.attr('src',area5_src);
+											$("#search_area_seq").val("41").prop("selected", true);
+											return false;
+										});
+										
+										var area = "${bean.search_area_seq}";
+										if(area == "38"){
+											$("#daejeonArea1").click();
+										}else if(area == "37"){
+											$("#daejeonArea2").click();
+										}else if(area == "40"){
+											$("#daejeonArea3").click();
+										}else if(area == "39"){
+											$("#daejeonArea4").click();
+										}else if(area == "41"){
+											$("#daejeonArea5").click();
+										}
+									}
+									</script>
+								</div>
+								<div class="verticalBox srchInput">
+									<p class="srchText">지역 또는 복지시설명을 입력해주세요.</p>
+									<p>
+										<label for="search_area_seq">지역</label>
+										<select name="search_area_seq" id="search_area_seq">
+											<option value="">전체</option>
+											<c:forEach var="list" items="${selType6List}">
+												<option value="${list.SEQ}" <c:if test="${list.SEQ != '' and list.SEQ == bean.search_area_seq}">selected="selected"</c:if>>${list.CODE_DESC}</option>
+											</c:forEach>
+										</select>
+									</p>
+									
+									<p>
+										<label for="search_kind_seq">시설유형</label>
+										<select name="search_kind_seq" id="search_kind_seq">
+											<option value="">전체</option>
+											<c:forEach var="list" items="${selType31List}">
+												<option value="${list.SEQ}" <c:if test="${list.SEQ != '' and list.SEQ == bean.search_kind_seq}">selected="selected"</c:if>>${list.CODE_DESC}</option>
+											</c:forEach>
+										</select>	
+									</p>
+									
+									<div class="clfix">
+										<p class="tit">편의시설</p>
+										<div class="iconArea">
+											<ul class="fac_list w300" id="fac_list">
+												<li><button type="button" class="btnType02 colorDeepBlue" onclick="fac_popup();"><span>선택</span></button></li>
+											</ul>
+										</div>
+									</div>
+									
+									<!-- 편의시설 popup -->
+									<div class="fac_popup" style="display:none;">
+										<ul class="fac_list02">
+											<li><input type="checkbox" id="facility01" name="search_facility01" value="check" <c:if test="${bean.search_facility01 eq 'check'}">checked</c:if>><label for="facility01"><span class="facility01">장애인<br/>화장실</span></label></li>
+											<li><input type="checkbox" id="facility02" name="search_facility02" value="check" <c:if test="${bean.search_facility02 eq 'check'}">checked</c:if>><label for="facility02"><span class="facility02">엘리베이터</span></label></li>
+											<li><input type="checkbox" id="facility03" name="search_facility03" value="check" <c:if test="${bean.search_facility03 eq 'check'}">checked</c:if>><label for="facility03"><span class="facility03">장애인전용<br/>주차구역</span></label></li>
+											<li><input type="checkbox" id="facility04" name="search_facility04" value="check" <c:if test="${bean.search_facility04 eq 'check'}">checked</c:if>><label for="facility04"><span class="facility04">주출입구<br/>단차없음</span></label></li>
+											<li><input type="checkbox" id="facility05" name="search_facility05" value="check" <c:if test="${bean.search_facility05 eq 'check'}">checked</c:if>><label for="facility05"><span class="facility05">장애인이용<br/>매표소</span></label></li>
+											<li><input type="checkbox" id="facility06" name="search_facility06" value="check" <c:if test="${bean.search_facility06 eq 'check'}">checked</c:if>><label for="facility06"><span class="facility06">지하철<br/>접근가능</span></label></li>
+											<li><input type="checkbox" id="facility07" name="search_facility07" value="check" <c:if test="${bean.search_facility07 eq 'check'}">checked</c:if>><label for="facility07"><span class="facility07">저상버스<br/>접근가능</span></label></li>
+											<li><input type="checkbox" id="facility08" name="search_facility08" value="check" <c:if test="${bean.search_facility08 eq 'check'}">checked</c:if>><label for="facility08"><span class="facility08">장애인단독<br/>접근가능</span></label></li>
+											<li><input type="checkbox" id="facility09" name="search_facility09" value="check" <c:if test="${bean.search_facility09 eq 'check'}">checked</c:if>><label for="facility09"><span class="facility09">장애인이용시<br/>동반자 권장</span></label></li>
+											<li><input type="checkbox" id="facility10" name="search_facility10" value="check" <c:if test="${bean.search_facility10 eq 'check'}">checked</c:if>><label for="facility10"><span class="facility10">휠체어<br/>대여</span></label></li>
+											<li><input type="checkbox" id="facility11" name="search_facility11" value="check" <c:if test="${bean.search_facility11 eq 'check'}">checked</c:if>><label for="facility11"><span class="facility11">시각장애인<br/>편의서비스</span></label></li>
+											<li><input type="checkbox" id="facility12" name="search_facility12" value="check" <c:if test="${bean.search_facility12 eq 'check'}">checked</c:if>><label for="facility12"><span class="facility12">청각장애인<br/>편의서비스</span></label></li>
+											<li><input type="checkbox" id="facility13" name="search_facility13" value="check" <c:if test="${bean.search_facility13 eq 'check'}">checked</c:if>><label for="facility13"><span class="facility13">장애인<br/>객실</span></label></li>
+											<li><input type="checkbox" id="facility14" name="search_facility14" value="check" <c:if test="${bean.search_facility14 eq 'check'}">checked</c:if>><label for="facility14"><span class="facility14">장애인이용<br/>안내소</span></label></li>
+											<li><input type="checkbox" id="facility15" name="search_facility15" value="check" <c:if test="${bean.search_facility15 eq 'check'}">checked</c:if>><label for="facility15"><span class="facility15">장애인<br/>지정석</span></label></li>
+										</ul>
+										<p class="ac"><button type="button" class="btnType02 colorDeepBlue" onclick="fac_popup_ok();"><span>선택완료</span></button></p>
+									</div>
+									<!-- 편의시설 popup //-->
+									
+									
+									<p><label for="search_content">검색어</label><input type="text" name="search_content" id="search_content" value="${bean.search_content}"></p>
+									<p class="btns"><button type="button" class="btnTypeSearch colorGreen" id="btnSearch"><span>검색</span></button></p>
+								</div>
+							</div>
+						</div>
+						<!-- //검색박스 -->
+						</form>
+						
+						<form name="frm" id="frm" method="post">
+							<input type="hidden" name="page" id="page" value="${bean.page}" />
+							<input type="hidden" name="pagelistno" id="pagelistno" value="${bean.pagelistno}" />
+							
+							<input type="hidden" name="seq" id="seq" value="" />
+							
+							<input type="hidden" name="search_kind_seq" id="frm_search_kind_seq" value="${bean.search_kind_seq}" />
+							<input type="hidden" name="search_area_seq" id="frm_search_area_seq" value="${bean.search_area_seq}" />
+							<input type="hidden" name="search_content" id="frm_search_content" value="${bean.search_content}" />
+									
+						<div class="textRight">총 <em>${totalCount}</em>건, <em>${bean.page}</em>/${listCount} page</div>
+						<!-- list -->
+						<div class="commList">
+							<table class="boardTypeCol type02">
+								<caption> 복지시설 검색이며 번호,지역,시설유형,시설명,연락처,주소,홈페이지,지도 목록 제공이며 상세페이지로 이동합니다.</caption>
+								<colgroup>
+									<col style="width:60px">
+									<col style="width:70px">
+									<col style="width:100px">
+									<col style="width:auto">
+									<col style="width:130px">
+									<col style="width:auto">
+									<col style="width:140px">
+								</colgroup>
+								<thead>
+									<tr>
+										<th scope="col">no</th>
+										<th scope="col">지역</th>
+										<th scope="col">시설유형</th>
+										<th scope="col">시설명</th>
+										<th scope="col">전화번호</th>
+										<th scope="col">주소</th>
+										<th scope="col">편의시설</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:if test="${empty list}">
+										<tr>
+											<td colspan="7" style="text-align:center;">검색된 편의시설이 없습니다.</td>
+										</tr>
+									</c:if>
+									<c:if test="${!empty list}">
+										<c:forEach var="list" items="${list}">
+											<tr>
+												<c:set var="q" value="${q+1 }" />
+          										<td onclick="goView('${list.SEQ}');">${pageCount -q +1 }</td>
+												<td onclick="goView('${list.SEQ}');" style="text-align: center;">${list.AREA}</td>
+												<td onclick="goView('${list.SEQ}');" style="text-align: center;">${list.KIND}</td>
+												<td onclick="goView('${list.SEQ}');" style="text-align: center;">${list.NAME}</td>
+												<td onclick="goView('${list.SEQ}');" style="text-align: center;">
+													<c:choose>
+														<c:when test="${not empty list.TEL1}">
+															${list.TEL1}-${list.TEL2}-${list.TEL3}
+														</c:when>
+														<c:otherwise>
+															-
+														</c:otherwise>
+													</c:choose>	
+												</td>
+												<td onclick="goView('${list.SEQ}');" style="text-align: left;">${list.ADDR1} ${list.ADDR2}</td>
+												<td onclick="goView('${list.SEQ}');" style="text-align: left;">
+													<ul class="fac_list w140">
+														<c:if test="${fn:contains(list.KIND_STR, '186')}">
+															<li><span class="facility01">장애인 화장실</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '187')}">
+															<li><span class="facility02">엘리베이터</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '188')}">
+															<li><span class="facility03">장애인전용 주차구역</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '189')}">
+															<li><span class="facility04">주출입구 단차없음</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '191')}">
+															<li><span class="facility05">장애인이용 매표소</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '192')}">
+															<li><span class="facility06">지하철 접근가능</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '193')}">
+															<li><span class="facility07">저상버스 접근가능</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '194')}">
+															<li><span class="facility08">장애인단독 접근가능</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '195')}">
+															<li><span class="facility09">장애인이용시 동반자 권장</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '196')}">
+															<li><span class="facility10">휠체어 대여</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '197')}">
+															<li><span class="facility11">시각장애인 편의서비스</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '198')}">
+															<li><span class="facility12">청각장애인 편의서비스</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '199')}">
+															<li><span class="facility13">장애인객실</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '200')}">
+															<li><span class="facility14">장애인 이용 안내소</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '211')}">
+															<li><span class="facility15">일반 엘리베이터</span></li>
+														</c:if>
+													</ul>
+												</td>
+											</tr>
+										</c:forEach>
+									</c:if>									
+								</tbody>
+							</table>
+						</div>
+						<!-- //list -->
+
+						${navi}
+						
+						</form>
+					</div>
+=======
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="t" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page isELIgnored ="false" %>
+<script>
+
+$(document).ready(function(){
+
+	$('#btnSearch').click(function () {
+	//	if(! valCheck('search_value','검색어를 입력하세요')) return;
+	//	if(! lenCheck('search_value',2, '검색어는 2글자 이상 입력하세요')) return;
+		$('#page').val(1);
+		$('#pagelistno').val(1);
+		$("#searchForm").attr("action", "/welfare_facility/b_2/list.do");
+		$('#searchForm').submit();
+	});
+	
+	$('#search_area_seq').change(function () {
+		var thisVal = $(this).val();
+		if(thisVal == "38"){
+			$('#daejeonArea1').click();
+		}else if(thisVal == "37"){
+			$('#daejeonArea2').click();
+		}else if(thisVal == "40"){
+			$('#daejeonArea3').click();
+		}else if(thisVal == "39"){
+			$('#daejeonArea4').click();
+		}else if(thisVal == "41"){
+			$('#daejeonArea5').click();
+		}
+	});
+		
+	fac_popup_ok();
+	
+});
+
+function goView(seq){
+	
+	$("#frm_search_kind_seq").val($("#search_kind_seq").val());
+	$("#frm_search_area_seq").val($("#search_area_seq").val());
+	$("#frm_search_content").val($("#search_content").val());
+	
+	$("#seq").val(seq);
+	$("#frm").attr("action", "/welfare_facility/b_2/view.do");
+	$("#frm").submit();
+}
+
+function fac_popup(){
+	$(".fac_popup").show();
+}
+
+function fac_popup_ok(){
+	
+	var html = "";
+	if($("#facility01").is(":checked")){
+		html+='<li><span class="facility01">장애인 화장실</span></li>';
+	}
+	if($("#facility02").is(":checked")){
+		html+='<li><span class="facility02">엘리베이터</span></li>';
+	}
+	if($("#facility03").is(":checked")){
+		html+='<li><span class="facility03">장애인전용 주차구역</span></li>';
+	}
+	if($("#facility04").is(":checked")){
+		html+='<li><span class="facility04">주출입구 단차없음</span></li>';
+	}
+	if($("#facility05").is(":checked")){
+		html+='<li><span class="facility05">장애인이용 매표소</span></li>';
+	}
+	if($("#facility06").is(":checked")){
+		html+='<li><span class="facility06">지하철 접근가능</span></li>';
+	}
+	if($("#facility07").is(":checked")){
+		html+='<li><span class="facility07">저상버스 접근가능</span></li>';
+	}
+	if($("#facility08").is(":checked")){
+		html+='<li><span class="facility08">장애인단독 접근가능</span></li>';
+	}
+	if($("#facility09").is(":checked")){
+		html+='<li><span class="facility09">장애인이용시 동반자 권장</span></li>';
+	}
+	if($("#facility10").is(":checked")){
+		html+='<li><span class="facility10">휠체어 대여</span></li>';
+	}
+	if($("#facility11").is(":checked")){
+		html+='<li><span class="facility11">시각장애인 편의서비스</span></li>';
+	}
+	if($("#facility12").is(":checked")){
+		html+='<li><span class="facility12">청각장애인 편의서비스</span></li>';
+	}
+	if($("#facility13").is(":checked")){
+		html+='<li><span class="facility13">장애인객실</span></li>';
+	}
+	if($("#facility14").is(":checked")){
+		html+='<li><span class="facility14">장애인 이용 안내소</span></li>';
+	}	
+	if($("#facility15").is(":checked")){
+		html+='<li><span class="facility15">장애인지정석</span></li>';
+	}
+
+	html+='<button type="button" class="btnType02 colorDeepBlue" onclick="fac_popup();"><span>선택</span></button>';
+	
+	$("#fac_list").html(html);
+	
+	$(".fac_popup").hide();
+}
+</script>
+			
+					<div class="contsArea facility">
+						<p class="textPara_top">검색을 통해 찾고자 하시는 우리지역 복지시설을 찾으실 수 있습니다.</p>
+
+						<form name="searchForm" id="searchForm" method="post" action="/welfare_facility/b_2/list.do">
+						<!-- 검색박스 -->
+						<div class="searchBoxWrap facility">
+							<div class="typeFacility">
+								<div class="verticalBox maps">
+									<div>
+										<span class="imgBox"><img src="/assets/user/images/srch02_map01_dong-gu.png" alt="대전지도" usemap="#srchMap"></span>
+										<map name="srchMap">
+											<area id="daejeonArea1" href="#" alt="동구"   shape="poly" coords="204,59,174,86,171,97,182,111,172,117,158,110,144,121,168,152,144,156,147,170,141,179,148,191,127,209,143,217,164,199,181,188,190,154,195,123,213,112,219,95,244,87,231,72,218,67,209,75,203,58" onfocus="this.blur()">
+											<area id="daejeonArea2" href="#" alt="중구"   shape="poly" coords="107,168,113,154,141,119,161,147,140,152,145,167,136,175,148,189,130,210,120,192,112,192,121,171,104,166" onfocus="this.blur()">
+											<area id="daejeonArea3" href="#" alt="서구"   shape="poly" coords="53,174,44,185,54,200,59,196,70,204,71,224,98,197,98,170,109,162,111,152,135,116,132,102,108,112,105,127,92,131,86,144,65,169,53,173" onfocus="this.blur()">
+											<area id="daejeonArea4" href="#" alt="대덕구" shape="poly" coords="143,118,158,105,164,113,178,111,172,98,175,83,206,58,215,50,197,45,204,31,183,46,146,50,138,59,158,74,144,94,131,101" onfocus="this.blur()">
+											<area id="daejeonArea5" href="#" alt="유성구" shape="poly" coords="29,154,28,154,52,172,69,161,100,126,114,109,133,100,147,96,154,72,138,55,153,46,154,25,144,19,128,25,124,45,106,68,78,70,56,114,49,127,38,150,26,152" onfocus="this.blur()">
+										</map>
+									</div>
+
+									<script>
+									$(function(){
+										IMG_Replace();
+									});
+									function IMG_Replace(){
+										var mapIMG = $('.verticalBox.maps').find('.imgBox > img'),
+											area1_src = '/assets/user/images/srch02_map01_dong-gu.png',
+											area2_src = '/assets/user/images/srch02_map02_Jung-gu.png',
+											area3_src = '/assets/user/images/srch02_map03_seo-gu.png',
+											area4_src = '/assets/user/images/srch02_map04_daedeok-gu.png',
+											area5_src = '/assets/user/images/srch02_map05_yuseong-gu.png';
+
+										$('#daejeonArea1').on('click',function(){
+											mapIMG.attr('src',area1_src);
+											$("#search_area_seq").val("38").prop("selected", true);
+											return false;
+										});
+
+										$('#daejeonArea2').on('click',function(e){
+											mapIMG.attr('src',area2_src);
+											$("#search_area_seq").val("37").prop("selected", true);
+											return false;
+										});
+
+										$('#daejeonArea3').on('click',function(e){
+											mapIMG.attr('src',area3_src);
+											$("#search_area_seq").val("40").prop("selected", true);
+											return false;
+										});
+
+										$('#daejeonArea4').on('click',function(e){
+											mapIMG.attr('src',area4_src);
+											$("#search_area_seq").val("39").prop("selected", true);
+											return false;
+										});
+
+										$('#daejeonArea5').on('click',function(e){
+											mapIMG.attr('src',area5_src);
+											$("#search_area_seq").val("41").prop("selected", true);
+											return false;
+										});
+										
+										var area = "${bean.search_area_seq}";
+										if(area == "38"){
+											$("#daejeonArea1").click();
+										}else if(area == "37"){
+											$("#daejeonArea2").click();
+										}else if(area == "40"){
+											$("#daejeonArea3").click();
+										}else if(area == "39"){
+											$("#daejeonArea4").click();
+										}else if(area == "41"){
+											$("#daejeonArea5").click();
+										}
+									}
+									</script>
+								</div>
+								<div class="verticalBox srchInput">
+									<p class="srchText">지역 또는 복지시설명을 입력해주세요.</p>
+									<p>
+										<label for="search_area_seq">지역</label>
+										<select name="search_area_seq" id="search_area_seq">
+											<option value="">전체</option>
+											<c:forEach var="list" items="${selType6List}">
+												<option value="${list.SEQ}" <c:if test="${list.SEQ != '' and list.SEQ == bean.search_area_seq}">selected="selected"</c:if>>${list.CODE_DESC}</option>
+											</c:forEach>
+										</select>
+									</p>
+									
+									<p>
+										<label for="search_kind_seq">시설유형</label>
+										<select name="search_kind_seq" id="search_kind_seq">
+											<option value="">전체</option>
+											<c:forEach var="list" items="${selType31List}">
+												<option value="${list.SEQ}" <c:if test="${list.SEQ != '' and list.SEQ == bean.search_kind_seq}">selected="selected"</c:if>>${list.CODE_DESC}</option>
+											</c:forEach>
+										</select>	
+									</p>
+									
+									<div class="clfix">
+										<p class="tit">편의시설</p>
+										<div class="iconArea">
+											<ul class="fac_list w300" id="fac_list">
+												<li><button type="button" class="btnType02 colorDeepBlue" onclick="fac_popup();"><span>선택</span></button></li>
+											</ul>
+										</div>
+									</div>
+									
+									<!-- 편의시설 popup -->
+									<div class="fac_popup" style="display:none;">
+										<ul class="fac_list02">
+											<li><input type="checkbox" id="facility01" name="search_facility01" value="check" <c:if test="${bean.search_facility01 eq 'check'}">checked</c:if>><label for="facility01"><span class="facility01">장애인<br/>화장실</span></label></li>
+											<li><input type="checkbox" id="facility02" name="search_facility02" value="check" <c:if test="${bean.search_facility02 eq 'check'}">checked</c:if>><label for="facility02"><span class="facility02">엘리베이터</span></label></li>
+											<li><input type="checkbox" id="facility03" name="search_facility03" value="check" <c:if test="${bean.search_facility03 eq 'check'}">checked</c:if>><label for="facility03"><span class="facility03">장애인전용<br/>주차구역</span></label></li>
+											<li><input type="checkbox" id="facility04" name="search_facility04" value="check" <c:if test="${bean.search_facility04 eq 'check'}">checked</c:if>><label for="facility04"><span class="facility04">주출입구<br/>단차없음</span></label></li>
+											<li><input type="checkbox" id="facility05" name="search_facility05" value="check" <c:if test="${bean.search_facility05 eq 'check'}">checked</c:if>><label for="facility05"><span class="facility05">장애인이용<br/>매표소</span></label></li>
+											<li><input type="checkbox" id="facility06" name="search_facility06" value="check" <c:if test="${bean.search_facility06 eq 'check'}">checked</c:if>><label for="facility06"><span class="facility06">지하철<br/>접근가능</span></label></li>
+											<li><input type="checkbox" id="facility07" name="search_facility07" value="check" <c:if test="${bean.search_facility07 eq 'check'}">checked</c:if>><label for="facility07"><span class="facility07">저상버스<br/>접근가능</span></label></li>
+											<li><input type="checkbox" id="facility08" name="search_facility08" value="check" <c:if test="${bean.search_facility08 eq 'check'}">checked</c:if>><label for="facility08"><span class="facility08">장애인단독<br/>접근가능</span></label></li>
+											<li><input type="checkbox" id="facility09" name="search_facility09" value="check" <c:if test="${bean.search_facility09 eq 'check'}">checked</c:if>><label for="facility09"><span class="facility09">장애인이용시<br/>동반자 권장</span></label></li>
+											<li><input type="checkbox" id="facility10" name="search_facility10" value="check" <c:if test="${bean.search_facility10 eq 'check'}">checked</c:if>><label for="facility10"><span class="facility10">휠체어<br/>대여</span></label></li>
+											<li><input type="checkbox" id="facility11" name="search_facility11" value="check" <c:if test="${bean.search_facility11 eq 'check'}">checked</c:if>><label for="facility11"><span class="facility11">시각장애인<br/>편의서비스</span></label></li>
+											<li><input type="checkbox" id="facility12" name="search_facility12" value="check" <c:if test="${bean.search_facility12 eq 'check'}">checked</c:if>><label for="facility12"><span class="facility12">청각장애인<br/>편의서비스</span></label></li>
+											<li><input type="checkbox" id="facility13" name="search_facility13" value="check" <c:if test="${bean.search_facility13 eq 'check'}">checked</c:if>><label for="facility13"><span class="facility13">장애인<br/>객실</span></label></li>
+											<li><input type="checkbox" id="facility14" name="search_facility14" value="check" <c:if test="${bean.search_facility14 eq 'check'}">checked</c:if>><label for="facility14"><span class="facility14">장애인이용<br/>안내소</span></label></li>
+											<li><input type="checkbox" id="facility15" name="search_facility15" value="check" <c:if test="${bean.search_facility15 eq 'check'}">checked</c:if>><label for="facility15"><span class="facility15">장애인<br/>지정석</span></label></li>
+										</ul>
+										<p class="ac"><button type="button" class="btnType02 colorDeepBlue" onclick="fac_popup_ok();"><span>선택완료</span></button></p>
+									</div>
+									<!-- 편의시설 popup //-->
+									
+									
+									<p><label for="search_content">검색어</label><input type="text" name="search_content" id="search_content" value="${bean.search_content}"></p>
+									<p class="btns"><button type="button" class="btnTypeSearch colorGreen" id="btnSearch"><span>검색</span></button></p>
+								</div>
+							</div>
+						</div>
+						<!-- //검색박스 -->
+						</form>
+						
+						<form name="frm" id="frm" method="post">
+							<input type="hidden" name="page" id="page" value="${bean.page}" />
+							<input type="hidden" name="pagelistno" id="pagelistno" value="${bean.pagelistno}" />
+							
+							<input type="hidden" name="seq" id="seq" value="" />
+							
+							<input type="hidden" name="search_kind_seq" id="frm_search_kind_seq" value="${bean.search_kind_seq}" />
+							<input type="hidden" name="search_area_seq" id="frm_search_area_seq" value="${bean.search_area_seq}" />
+							<input type="hidden" name="search_content" id="frm_search_content" value="${bean.search_content}" />
+									
+						<div class="textRight">총 <em>${totalCount}</em>건, <em>${bean.page}</em>/${listCount} page</div>
+						<!-- list -->
+						<div class="commList">
+							<table class="boardTypeCol type02">
+								<caption> 복지시설 검색이며 번호,지역,시설유형,시설명,연락처,주소,홈페이지,지도 목록 제공이며 상세페이지로 이동합니다.</caption>
+								<colgroup>
+									<col style="width:60px">
+									<col style="width:70px">
+									<col style="width:100px">
+									<col style="width:auto">
+									<col style="width:130px">
+									<col style="width:auto">
+									<col style="width:140px">
+								</colgroup>
+								<thead>
+									<tr>
+										<th scope="col">no</th>
+										<th scope="col">지역</th>
+										<th scope="col">시설유형</th>
+										<th scope="col">시설명</th>
+										<th scope="col">전화번호</th>
+										<th scope="col">주소</th>
+										<th scope="col">편의시설</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:if test="${empty list}">
+										<tr>
+											<td colspan="7" style="text-align:center;">검색된 편의시설이 없습니다.</td>
+										</tr>
+									</c:if>
+									<c:if test="${!empty list}">
+										<c:forEach var="list" items="${list}">
+											<tr>
+												<c:set var="q" value="${q+1 }" />
+          										<td onclick="goView('${list.SEQ}');">${pageCount -q +1 }</td>
+												<td onclick="goView('${list.SEQ}');" style="text-align: center;">${list.AREA}</td>
+												<td onclick="goView('${list.SEQ}');" style="text-align: center;">${list.KIND}</td>
+												<td onclick="goView('${list.SEQ}');" style="text-align: center;">${list.NAME}</td>
+												<td onclick="goView('${list.SEQ}');" style="text-align: center;">
+													<c:choose>
+														<c:when test="${not empty list.TEL1}">
+															${list.TEL1}-${list.TEL2}-${list.TEL3}
+														</c:when>
+														<c:otherwise>
+															-
+														</c:otherwise>
+													</c:choose>	
+												</td>
+												<td onclick="goView('${list.SEQ}');" style="text-align: left;">${list.ADDR1} ${list.ADDR2}</td>
+												<td onclick="goView('${list.SEQ}');" style="text-align: left;">
+													<ul class="fac_list w140">
+														<c:if test="${fn:contains(list.KIND_STR, '186')}">
+															<li><span class="facility01">장애인 화장실</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '187')}">
+															<li><span class="facility02">엘리베이터</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '188')}">
+															<li><span class="facility03">장애인전용 주차구역</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '189')}">
+															<li><span class="facility04">주출입구 단차없음</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '191')}">
+															<li><span class="facility05">장애인이용 매표소</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '192')}">
+															<li><span class="facility06">지하철 접근가능</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '193')}">
+															<li><span class="facility07">저상버스 접근가능</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '194')}">
+															<li><span class="facility08">장애인단독 접근가능</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '195')}">
+															<li><span class="facility09">장애인이용시 동반자 권장</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '196')}">
+															<li><span class="facility10">휠체어 대여</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '197')}">
+															<li><span class="facility11">시각장애인 편의서비스</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '198')}">
+															<li><span class="facility12">청각장애인 편의서비스</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '199')}">
+															<li><span class="facility13">장애인객실</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '200')}">
+															<li><span class="facility14">장애인 이용 안내소</span></li>
+														</c:if>
+														<c:if test="${fn:contains(list.KIND_STR, '211')}">
+															<li><span class="facility15">일반 엘리베이터</span></li>
+														</c:if>
+													</ul>
+												</td>
+											</tr>
+										</c:forEach>
+									</c:if>									
+								</tbody>
+							</table>
+						</div>
+						<!-- //list -->
+
+						${navi}
+						
+						</form>
+					</div>
+>>>>>>> refs/heads/202204
+			

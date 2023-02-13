@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="code">
+
+	<select id="getCodeList" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT * FROM WELFARE_CODE
+			WHERE DEL_YN = 'N'
+			  AND TYPE = ${type}
+			ORDER BY SORT ASC
+	</select>
+	
+	<select id="getCodeName" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT * FROM WELFARE_CODE
+			WHERE DEL_YN = 'N'
+			  AND SEQ = ${seq}
+			ORDER BY SORT ASC
+	</select>
+		
+</mapper>

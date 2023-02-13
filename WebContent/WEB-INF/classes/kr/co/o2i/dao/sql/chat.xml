@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="chat">
+	
+	<select id="selectChatConf" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT 
+			CONF_KEY
+			,VALUE
+				
+		FROM CHAT_CONF
+	</select>
+	
+	<update id="updateStartTime" parameterType="java.util.Map">
+		UPDATE CHAT_CONF 
+		
+		SET VALUE = #{start_time ,jdbcType=VARCHAR}
+			
+		WHERE CONF_KEY='STARTTIME'
+	</update>	
+	
+	<update id="updateEndTime" parameterType="java.util.Map">
+		UPDATE CHAT_CONF 
+		
+		SET VALUE = #{end_time ,jdbcType=VARCHAR}
+			
+		WHERE CONF_KEY='ENDTIME'
+	</update>	
+	
+	<update id="updateChatUse" parameterType="java.util.Map">
+		UPDATE CHAT_CONF 
+		
+		SET VALUE = #{chat_use ,jdbcType=VARCHAR}
+			
+		WHERE CONF_KEY='CHAT_USE'
+	</update>	
+	
+</mapper>

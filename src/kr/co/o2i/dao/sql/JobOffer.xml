@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="job_offer">
+
+	<!-- <parameterMap type="kr.co.o2i.util.CommonMap" id="jobOfferParam">
+		<parameter property="content"   javaType="java.lang.String" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.ClobTypeHandler"  />
+	</parameterMap> -->
+
+	<insert id="insert" parameterType="java.util.Map">
+		INSERT INTO JOB_OFFER
+						  ( SEQ
+						  ,DEL_YN
+						  ,REG_DATE
+						  ,STATUS_SEQ
+						  ,TITLE
+						  ,SDATE
+						  ,EDATE
+						  ,TYPE_SEQ
+						  ,EMP_SEQ
+						  ,SEX
+						  ,SEX_CNT
+						  ,JOB_FAMILY
+						  ,CONTENT
+						  ,AGE_STR
+						  ,AGE_INT
+						  ,MARRY_SEQ
+						  ,EDU_SEQ
+						  ,CERT
+						  ,DOCUMENT1_YN
+						  ,DOCUMENT2_YN
+						  ,DOCUMENT3_YN
+						  ,DOCUMENT4_YN
+						  ,DOCUMENT5_YN
+						  ,DOCUMENT6_YN
+						  ,DOCUMENT_ETC
+						  ,SHOUR
+						  ,SMINUTE
+						  ,EHOUR
+						  ,EMINUTE
+						  ,SALARY_KIND_SEQ
+						  ,SALARY
+						  ,GUGUN_SEQ
+						  ,DONGRI_SEQ
+						  ,EAT1_YN
+						  ,EAT2_YN
+						  ,EAT3_YN
+						  ,DORMITORY_YN
+						  ,SERVERANCEPAY_YN
+						  ,COMPANY_NAME
+						  ,COMPANY_CEO_NAME
+						  ,COMPANY_NUMBER
+						  ,COMPANY_DOMAIN
+						  ,COMPANY_TEL
+						  ,COMPANY_FAX
+						  ,COMPANY_SECTORS
+						  ,COMPANY_PRODUCT
+						  ,INSURANCE1_YN
+						  ,INSURANCE2_YN
+						  ,INSURANCE3_YN
+						  ,INSURANCE4_YN
+						  ,PERSON1
+						  ,PERSON2
+						  ,MANAGER_NAME
+						  ,MANAGER_TEL
+						  ,DISABLES_EMP_YN
+						  ,DISABLES_EMP
+						  ,ZIP_CD
+						  ,ADDR1
+						  ,ADDR2
+						  ,EMP_INT
+				  )VALUES(  
+				  	  ${seq}
+				  	  ,'N'
+				  	  ,NOW()
+				  	  ,${status_seq}
+				  	  ,#{title		,jdbcType=VARCHAR}
+				  	  ,STR_TO_DATE(CONCAT(#{sdate_year,jdbcType=VARCHAR},#{sdate_month,jdbcType=VARCHAR},#{sdate_day,jdbcType=VARCHAR}), '%Y%m%d')
+				  	  ,STR_TO_DATE(CONCAT(#{edate_year,jdbcType=VARCHAR},#{edate_month,jdbcType=VARCHAR},#{edate_day,jdbcType=VARCHAR}), '%Y%m%d')
+				  	  ,${type_seq}
+				  	  ,${emp_seq}
+				  	  ,#{sex		,jdbcType=VARCHAR}
+				  	  ,${sex_cnt}
+				  	  ,#{job_family		,jdbcType=VARCHAR}
+				  	  ,#{content		,jdbcType=VARCHAR}
+				  	  ,#{age_str		,jdbcType=VARCHAR}
+				  	  ,#{age_int		,jdbcType=VARCHAR}
+				  	  ,${marry_seq}
+				  	  ,${edu_seq}
+				  	  ,#{cert		,jdbcType=VARCHAR}
+				  	  ,#{document1_yn		,jdbcType=VARCHAR}
+				  	  ,#{document2_yn		,jdbcType=VARCHAR}
+				  	  ,#{document3_yn		,jdbcType=VARCHAR}
+				  	  ,#{document4_yn		,jdbcType=VARCHAR}
+				  	  ,#{document5_yn		,jdbcType=VARCHAR}
+				  	  ,#{document6_yn		,jdbcType=VARCHAR}
+				  	  ,#{document_etc		,jdbcType=VARCHAR}				  	  
+				  	  ,#{shour		,jdbcType=VARCHAR}
+				  	  ,#{sminute		,jdbcType=VARCHAR}
+				  	  ,#{ehour		,jdbcType=VARCHAR}
+				  	  ,#{eminute		,jdbcType=VARCHAR}
+				  	  ,${salary_kind_seq}
+				  	  ,#{salary		,jdbcType=VARCHAR}
+				  	  ,${gugun_seq}
+				  	  ,${dongri_seq}
+				  	  ,#{eat1_yn		,jdbcType=VARCHAR}
+				  	  ,#{eat2_yn		,jdbcType=VARCHAR}
+				  	  ,#{eat3_yn		,jdbcType=VARCHAR}
+				  	  ,#{dormitory_yn		,jdbcType=VARCHAR}
+				  	  ,#{serverancepay_yn		,jdbcType=VARCHAR}
+				  	  ,#{company_name		,jdbcType=VARCHAR}
+				  	  ,#{company_ceo_name		,jdbcType=VARCHAR}
+				  	  ,#{company_number		,jdbcType=VARCHAR}
+				  	  ,#{company_domain		,jdbcType=VARCHAR}
+				  	  ,#{company_tel		,jdbcType=VARCHAR}
+				  	  ,#{company_fax		,jdbcType=VARCHAR}
+				  	  ,#{company_sectors		,jdbcType=VARCHAR}
+				  	  ,#{company_product		,jdbcType=VARCHAR}
+				  	  ,#{insurance1_yn		,jdbcType=VARCHAR}
+				  	  ,#{insurance2_yn		,jdbcType=VARCHAR}
+				  	  ,#{insurance3_yn		,jdbcType=VARCHAR}
+				  	  ,#{insurance4_yn		,jdbcType=VARCHAR}
+				  	  ,#{person1		,jdbcType=VARCHAR}
+				  	  ,#{person2		,jdbcType=VARCHAR}
+				  	  ,#{manager_name		,jdbcType=VARCHAR}
+				  	  ,#{manager_tel		,jdbcType=VARCHAR}
+				  	  ,#{disables_emp_yn		,jdbcType=VARCHAR}
+				  	  ,#{disables_emp		,jdbcType=VARCHAR}
+				  	  ,#{zip_cd		,jdbcType=VARCHAR}
+				  	  ,#{addr1		,jdbcType=VARCHAR}
+				  	  ,#{addr2		,jdbcType=VARCHAR}
+				  	  ,${emp_int}
+				 )
+	</insert>
+	
+	<select id="getMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM JOB_OFFER
+	</select>
+
+
+	<select id="view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT SEQ
+    				  ,DEL_YN
+    				  ,REG_DATE
+    				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.STATUS_SEQ) AS STATUS
+    				  ,STATUS_SEQ
+    				  ,TITLE
+    				  ,SDATE
+    				  ,EDATE
+    				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.TYPE_SEQ) AS TYPE
+    				  ,TYPE_SEQ
+    				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.EMP_SEQ) AS EMP
+    				  ,EMP_SEQ
+    				  ,EMP_INT
+    				  ,SEX
+    				  ,SEX_CNT
+    				  ,JOB_FAMILY
+    				  ,CONTENT
+    				  <![CDATA[,REPLACE(CONTENT, '\r\n', '<br>') AS VIEW_CONTENT]]>    				  
+    				  ,AGE_STR
+    				  ,AGE_INT
+    				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.MARRY_SEQ) AS MARRY
+    				  ,MARRY_SEQ
+    				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.EDU_SEQ) AS EDU
+    				  ,EDU_SEQ
+    				  ,CERT
+    				  ,DOCUMENT1_YN
+    				  ,DOCUMENT2_YN
+    				  ,DOCUMENT3_YN
+    				  ,DOCUMENT4_YN
+    				  ,DOCUMENT5_YN
+    				  ,DOCUMENT6_YN
+    				  ,DOCUMENT_ETC
+    				  ,SHOUR
+    				  ,SMINUTE
+    				  ,EHOUR
+    				  ,EMINUTE
+    				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.SALARY_KIND_SEQ) AS SALARY_KIND
+    				  ,SALARY_KIND_SEQ
+    				  ,SALARY
+    				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.GUGUN_SEQ) AS GUGUN
+    				  ,GUGUN_SEQ
+    				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.DONGRI_SEQ) AS DONGRI
+    				  ,DONGRI_SEQ
+    				  ,EAT1_YN
+    				  ,EAT2_YN
+    				  ,EAT3_YN
+    				  ,DORMITORY_YN
+    				  ,SERVERANCEPAY_YN
+    				  ,COMPANY_NAME
+    				  ,COMPANY_CEO_NAME
+    				  ,COMPANY_NUMBER
+    				  ,COMPANY_DOMAIN
+    				  ,COMPANY_TEL
+    				  ,COMPANY_FAX
+    				  ,COMPANY_SECTORS
+    				  ,COMPANY_PRODUCT
+    				  ,INSURANCE1_YN
+					 ,INSURANCE2_YN
+					 ,INSURANCE3_YN
+					 ,INSURANCE4_YN
+					 ,PERSON1
+					 ,PERSON2
+					 ,MANAGER_NAME
+					 ,MANAGER_TEL
+					 ,DISABLES_EMP_YN
+					 ,DISABLES_EMP
+					 ,ZIP_CD
+					 ,ADDR1
+					 ,ADDR2
+					 ,CONVERT(DATE_FORMAT(SDATE, '%Y'), UNSIGNED) AS SDATE_YEAR
+					 ,CONVERT(DATE_FORMAT(SDATE, '%m'), UNSIGNED) AS SDATE_MONTH
+					 ,CONVERT(DATE_FORMAT(SDATE, '%d'), UNSIGNED) AS SDATE_DAY
+					 ,CONVERT(DATE_FORMAT(EDATE, '%Y'), UNSIGNED) AS EDATE_YEAR
+					 ,CONVERT(DATE_FORMAT(EDATE, '%m'), UNSIGNED) AS EDATE_MONTH
+					 ,CONVERT(DATE_FORMAT(EDATE, '%d'), UNSIGNED) AS EDATE_DAY
+		FROM JOB_OFFER T1
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<select id="list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT SEQ
+			       				  ,DEL_YN
+			       				  ,REG_DATE
+			       				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.STATUS_SEQ) AS STATUS
+			       				  ,STATUS_SEQ
+			       				  ,TITLE
+			       				  ,SDATE
+			       				  ,EDATE
+			       				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.TYPE_SEQ) AS TYPE
+			       				  ,TYPE_SEQ
+			       				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.EMP_SEQ) AS EMP
+			       				  ,EMP_SEQ
+			       				  ,EMP_INT
+			       				  ,SEX
+			       				  ,SEX_CNT
+			       				  ,JOB_FAMILY
+			       				  ,CONTENT
+			       				  ,AGE_STR
+			       				  ,AGE_INT
+			       				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.MARRY_SEQ) AS MARRY
+			       				  ,MARRY_SEQ
+			       				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.EDU_SEQ) AS EDU
+			       				  ,EDU_SEQ
+			       				  ,CERT
+			       				  ,DOCUMENT1_YN
+			       				  ,DOCUMENT2_YN
+			       				  ,DOCUMENT3_YN
+			       				  ,DOCUMENT4_YN
+			       				  ,DOCUMENT5_YN
+			       				  ,DOCUMENT6_YN
+			       				  ,DOCUMENT_ETC
+			       				  ,SHOUR
+			       				  ,SMINUTE
+			       				  ,EHOUR
+			       				  ,EMINUTE
+			       				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.SALARY_KIND_SEQ) AS SALARY_KIND
+			       				  ,SALARY_KIND_SEQ
+			       				  ,SALARY
+			       				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.GUGUN_SEQ) AS GUGUN
+			       				  ,GUGUN_SEQ
+			       				  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.DONGRI_SEQ) AS DONGRI
+			       				  ,DONGRI_SEQ
+			       				  ,EAT1_YN
+			       				  ,EAT2_YN
+			       				  ,EAT3_YN
+			       				  ,DORMITORY_YN
+			       				  ,SERVERANCEPAY_YN
+			       				  ,COMPANY_NAME
+			       				  ,COMPANY_CEO_NAME
+			       				  ,COMPANY_NUMBER
+			       				  ,COMPANY_DOMAIN
+			       				  ,COMPANY_TEL
+			       				  ,COMPANY_FAX
+			       				  ,COMPANY_SECTORS
+			       				  ,COMPANY_PRODUCT
+			       				  ,INSURANCE1_YN
+								 ,INSURANCE2_YN
+								 ,INSURANCE3_YN
+								 ,INSURANCE4_YN
+								 ,PERSON1
+								 ,PERSON2
+								 ,MANAGER_NAME
+								 ,MANAGER_TEL
+								 ,DISABLES_EMP_YN
+								 ,DISABLES_EMP
+								 ,ZIP_CD
+								 ,ADDR1
+								 ,ADDR2       			
+				     		 FROM (SELECT * 
+				     		 			  FROM JOB_OFFER M
+				    					WHERE DEL_YN = 'N'
+				    					<if test="search_gugun_seq !='' and search_gugun_seq != null">
+								    		AND GUGUN_SEQ = ${search_gugun_seq}
+										</if>
+										<if test="search_dongri_seq !='' and search_dongri_seq != null">
+								    		AND DONGRI_SEQ = ${search_dongri_seq}
+										</if>
+								    	<if test="search_content !='' and search_content != null">
+								    		AND (
+								    				TITLE LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				COMPANY_NAME LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    			)
+										</if>
+										<if test="BASE == 'user'">
+											AND STATUS_SEQ = 155
+										</if>
+								   )T1
+						   	 ORDER BY SEQ DESC
+	    				) T2 
+	    				ORDER BY SEQ DESC
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="listCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM JOB_OFFER M
+    					WHERE DEL_YN = 'N'
+	    					<if test="search_gugun_seq !='' and search_gugun_seq != null">
+					    		AND GUGUN_SEQ = ${search_gugun_seq}
+							</if>
+							<if test="search_dongri_seq !='' and search_dongri_seq != null">
+					    		AND DONGRI_SEQ = ${search_dongri_seq}
+							</if>
+					    	<if test="search_content !='' and search_content != null">
+					    		AND (
+					    				TITLE LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+					    				OR
+					    				COMPANY_NAME LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+					    			)
+							</if>
+							<if test="BASE == 'user'">
+								AND STATUS_SEQ = 155
+							</if>
+				   )T1
+
+	</select>	
+	
+	<update id="update" parameterType="java.util.Map">
+		UPDATE JOB_OFFER SET
+			  STATUS_SEQ = ${status_seq}
+			  ,TITLE = #{title		,jdbcType=VARCHAR}
+			  ,SDATE = STR_TO_DATE(CONCAT(#{sdate_year,jdbcType=VARCHAR},#{sdate_month,jdbcType=VARCHAR},#{sdate_day,jdbcType=VARCHAR}), '%Y%m%d')
+			  ,EDATE = STR_TO_DATE(CONCAT(#{edate_year,jdbcType=VARCHAR},#{edate_month,jdbcType=VARCHAR},#{edate_day,jdbcType=VARCHAR}), '%Y%m%d')
+			  ,TYPE_SEQ = ${type_seq}
+			  ,EMP_SEQ = ${emp_seq}
+			  ,SEX = #{sex		,jdbcType=VARCHAR}
+			  ,SEX_CNT = ${sex_cnt}
+			  ,JOB_FAMILY = #{job_family		,jdbcType=VARCHAR}
+			  ,CONTENT = #{content		,jdbcType=VARCHAR}
+			  ,AGE_STR = #{age_str		,jdbcType=VARCHAR}
+			  ,AGE_INT = #{age_int		,jdbcType=VARCHAR}
+			  ,MARRY_SEQ = ${marry_seq}
+			  ,EDU_SEQ = ${edu_seq}
+			  ,CERT = #{cert		,jdbcType=VARCHAR}
+			  ,DOCUMENT1_YN = #{document1_yn		,jdbcType=VARCHAR}
+			  ,DOCUMENT2_YN = #{document2_yn		,jdbcType=VARCHAR}
+			  ,DOCUMENT3_YN = #{document3_yn		,jdbcType=VARCHAR}
+			  ,DOCUMENT4_YN = #{document4_yn		,jdbcType=VARCHAR}
+			  ,DOCUMENT5_YN = #{document5_yn		,jdbcType=VARCHAR}
+			  ,DOCUMENT6_YN = #{document6_yn		,jdbcType=VARCHAR}
+			  ,DOCUMENT_ETC = #{document_etc		,jdbcType=VARCHAR}
+			  ,SHOUR = #{shour		,jdbcType=VARCHAR} 
+			  ,SMINUTE = #{sminute		,jdbcType=VARCHAR} 
+			  ,EHOUR = #{ehour		,jdbcType=VARCHAR}
+			  ,EMINUTE = #{eminute		,jdbcType=VARCHAR}
+			  ,SALARY_KIND_SEQ = ${salary_kind_seq}
+			  ,SALARY = #{salary		,jdbcType=VARCHAR}
+			  ,GUGUN_SEQ = ${gugun_seq}
+			  ,DONGRI_SEQ = ${dongri_seq}
+			  ,EAT1_YN = #{eat1_yn		,jdbcType=VARCHAR}
+			  ,EAT2_YN = #{eat2_yn		,jdbcType=VARCHAR}
+			  ,EAT3_YN = #{eat3_yn		,jdbcType=VARCHAR}
+			  ,DORMITORY_YN = #{dormitory_yn		,jdbcType=VARCHAR}
+			  ,SERVERANCEPAY_YN = #{serverancepay_yn		,jdbcType=VARCHAR}
+			  ,COMPANY_NAME = #{company_name		,jdbcType=VARCHAR}
+			  ,COMPANY_CEO_NAME = #{company_ceo_name		,jdbcType=VARCHAR}
+			  ,COMPANY_NUMBER = #{company_number		,jdbcType=VARCHAR}
+			  ,COMPANY_DOMAIN = #{company_domain		,jdbcType=VARCHAR}
+			  ,COMPANY_TEL = #{company_tel		,jdbcType=VARCHAR}
+			  ,COMPANY_FAX = #{company_fax		,jdbcType=VARCHAR}
+			  ,COMPANY_SECTORS = #{company_sectors		,jdbcType=VARCHAR}
+			  ,COMPANY_PRODUCT = #{company_product		,jdbcType=VARCHAR}
+			  ,INSURANCE1_YN = #{insurance1_yn		,jdbcType=VARCHAR}
+			  ,INSURANCE2_YN = #{insurance2_yn		,jdbcType=VARCHAR}
+			  ,INSURANCE3_YN = #{insurance3_yn		,jdbcType=VARCHAR}
+			  ,INSURANCE4_YN = #{insurance4_yn		,jdbcType=VARCHAR}
+			  ,PERSON1 = #{person1		,jdbcType=VARCHAR}
+			  ,PERSON2 = #{person2		,jdbcType=VARCHAR}
+			  ,MANAGER_NAME = #{manager_name		,jdbcType=VARCHAR}
+			  ,MANAGER_TEL = #{manager_tel		,jdbcType=VARCHAR}
+			  ,DISABLES_EMP_YN = #{disables_emp_yn		,jdbcType=VARCHAR}
+			  ,DISABLES_EMP = #{disables_emp		,jdbcType=VARCHAR}
+			  ,ZIP_CD = #{zip_cd		,jdbcType=VARCHAR}
+			  ,ADDR1 = #{addr1		,jdbcType=VARCHAR}
+			  ,ADDR2 = #{addr2		,jdbcType=VARCHAR}
+			  ,EMP_INT = ${emp_int}
+		WHERE SEQ = ${seq}
+	</update>
+	
+	<delete id="del" parameterType="java.util.Map" >
+		UPDATE JOB_OFFER
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ = ${seq}
+	</delete>
+	
+</mapper>

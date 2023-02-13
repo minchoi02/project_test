@@ -1,0 +1,90 @@
+<<<<<<< HEAD
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="t" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page isELIgnored ="false" %>
+					<div class="contsArea communicationNotice">
+						<p class="textParaList">장애인 복지에 관련된 사항을 편리하게 상담을 받아보실 수 있습니다.</p>
+						<div class="commView">
+							<h4>문의하신 내용 답변드립니다.</h4>
+							<div class="dateInfo">
+								<span><b>작성일 : </b><em>2018-11-20</em></span>
+								<span><b>조회수 : </b><em>298</em></span>
+								<span><b>등록자 : </b><em>김영희</em></span>
+							</div>
+
+							<!-- 상담게시판 질문 -->
+							<div class="textInfoAnswer">
+								<b>질문내용 : </b>
+								<p>대전시 장애인 콜센터 번호가 궁금합니다.</p>
+							</div>
+							<!--//상담게시판 질문 -->
+
+							<div class="textInfo">
+								<p class="answer"></p>
+								<p>문의하신 대전시 장애인 콜센터 번호는 000번 입니다.<br>감사합니다.</p>
+							</div>
+							<div class="fileInfo">
+								<b>첨부파일</b>
+								<ul>
+									<li><a href="#">정보드림 홈페이지 사이트맵.hwp</a></li>
+								</ul>
+							</div>
+							<div class="prevNext">
+								<p class="prev"><b>이전글 : </b><a href="#">게시판이 오픈되었습니다.</a></p>
+								<p class="next"><b>다음글 : </b><a href="#">대전지역 버스노선도 업데이트입니다.</a></p>
+							</div>
+						</div>
+						<div class="btnArea">
+							<a href="#" class="btnTypeBasic sizeM colorGreen2"><span>수정</span></a>
+							<a href="#" class="btnTypeBasic sizeM colorGray"><span>삭제</span></a>
+							<a href="#" class="btnTypeBasic sizeM"><span>목록보기</span></a>
+						</div>
+=======
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="t" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page isELIgnored ="false" %>
+					<div class="contsArea communicationNotice">
+						<p class="textParaList">장애인 복지에 관련된 사항을 편리하게 상담을 받아보실 수 있습니다.</p>
+						<div class="commView">
+							<h4>문의하신 내용 답변드립니다.</h4>
+							<div class="dateInfo">
+								<span><b>작성일 : </b><em>2018-11-20</em></span>
+								<span><b>조회수 : </b><em>298</em></span>
+								<span><b>등록자 : </b><em>김영희</em></span>
+							</div>
+
+							<!-- 상담게시판 질문 -->
+							<div class="textInfoAnswer">
+								<b>질문내용 : </b>
+								<p>대전시 장애인 콜센터 번호가 궁금합니다.</p>
+							</div>
+							<!--//상담게시판 질문 -->
+
+							<div class="textInfo">
+								<p class="answer"></p>
+								<p>문의하신 대전시 장애인 콜센터 번호는 000번 입니다.<br>감사합니다.</p>
+							</div>
+							<div class="fileInfo">
+								<b>첨부파일</b>
+								<ul>
+									<li><a href="#">정보드림 홈페이지 사이트맵.hwp</a></li>
+								</ul>
+							</div>
+							<div class="prevNext">
+								<p class="prev"><b>이전글 : </b><a href="#">게시판이 오픈되었습니다.</a></p>
+								<p class="next"><b>다음글 : </b><a href="#">대전지역 버스노선도 업데이트입니다.</a></p>
+							</div>
+						</div>
+						<div class="btnArea">
+							<a href="#" class="btnTypeBasic sizeM colorGreen2"><span>수정</span></a>
+							<a href="#" class="btnTypeBasic sizeM colorGray"><span>삭제</span></a>
+							<a href="#" class="btnTypeBasic sizeM"><span>목록보기</span></a>
+						</div>
+>>>>>>> refs/heads/202204
+					</div>

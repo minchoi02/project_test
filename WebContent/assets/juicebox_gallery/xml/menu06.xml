@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<juiceboxgallery 
+	useFlickr="false"
+	resizeOnImport="true"
+	cropToFit="true"
+	showOpenButton="FALSE"
+	showExpandButton="FALSE">
+
+
+<image imageURL="img/menu06/01.jpg"    
+thumbURL="thumbs/menu06/01.jpg"			
+linkURL="img/menu06/01.jpg"				
+linkTarget="_blank">					
+<caption><![CDATA[]]> </caption>		
+</image>
+
+
+</juiceboxgallery>

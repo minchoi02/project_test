@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>djid</groupId>
+  <artifactId>djid</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <build>
+  <defaultGoal>install</defaultGoal>
+    <sourceDirectory>src</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource> 
+    </resources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.2.3</version>
+        <configuration>
+          <warSourceDirectory>WebContent</warSourceDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
+  
+  <!-- Build Encoding UTF-8 Setting -->
+ <properties>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+ </properties>
+ 
+ 
+ 
+ 
+  <dependencies>
+  
+  	<dependency>
+  		<groupId>com.google.firebase</groupId>
+  		<artifactId>firebase-admin</artifactId>
+  		<version>8.0.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.google.auto.value</groupId>
+  		<artifactId>auto-value</artifactId>
+  		<version>1.8.2</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.google.http-client</groupId>
+  		<artifactId>google-http-client</artifactId>
+  		<version>1.40.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.google.http-client</groupId>
+  		<artifactId>google-http-client-jackson2</artifactId>
+  		<version>1.40.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.fasterxml.jackson.core</groupId>
+  		<artifactId>jackson-core</artifactId>
+  		<version>2.9.6</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.httpcomponents</groupId>
+  		<artifactId>httpclient</artifactId>
+  		<version>4.5.13</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.google.auto.value</groupId>
+  		<artifactId>auto-value-annotations</artifactId>
+  		<version>1.8.2</version>
+  	</dependency>
+
+  </dependencies>
+</project>

@@ -1,0 +1,269 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="t" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page isELIgnored ="false" %>
+	<!-- footerWr -->
+	<div id="footerWr">
+		<div id="footer">
+			Copyright ⓒ 대전장애인단체총연합회 2018. All right reserved.
+		</div>
+	</div>
+	<!-- //footerWr -->
+	<style>
+		#adminChat, #adminChat * { box-sizing : border-box; }
+		#adminChat { position : fixed; bottom : 0; right : 0; background-color : white; z-index : 100; }
+		#adminChat .sample { display : none !important; }
+		#adminChat .none { display : none !important; }
+		#adminChatList { }
+		#adminChatList .adminChatItem { padding : 5px; cursor : pointer; display : inline-block; }
+		#adminChatList .adminChatItem.on { color : white; background-color : orange; }
+		#adminChatList .adminChatItem.active { color : white; background-color : #004ea2; }
+		
+		#adminChatRoomList { }
+		#adminChatRoomList .adminChatRoomBtns { text-align : right; padding : 0 5px; }
+		#adminChatRoomList .adminChatRoomBtns span.btn { cursor : pointer; } 
+		
+		
+		#adminChatRoomList .adminChatRoomItem { padding : 5px; }
+		#adminChatRoomList .adminChatRoomItem .chatTextArea { width : 300px; height : 200px; border : 1px solid black; overflow-y : auto; }
+		#adminChatRoomList .adminChatRoomItem .chatTextArea .chatTextItem { max-width : 100%; padding : 5px; white-space: normal; word-break: break-all; }
+		#adminChatRoomList .adminChatRoomItem .chatInputArea { }
+		#adminChatRoomList .adminChatRoomItem .chatInputArea .txtChatInput { border : 1px solid black; width : 100%; }
+		
+		#adminChatStatus { text-align : right; }
+	</style>
+	<div id="adminChat">
+		
+		<form name="frm_conf">
+			<input type="hidden" name="start_time" value="${chatConf.STARTTIME }" />
+			<input type="hidden" name="end_time" value="${chatConf.ENDTIME }" />
+			<input type="hidden" name="chat_use" value="${chatConf.CHAT_USE }" />
+		</form>
+		
+		<div id="adminChatList">
+			<div class="adminChatItem on sample">-</div>
+		</div>
+		<div id="adminChatRoomList" class="none">
+			<div class="adminChatRoomBtns">
+				<span class="btn btnEnd">상담종료</span>
+				<span class="btn btnClose">창닫기</span>
+			</div>
+			<div class="adminChatRoomItem none sample">
+				<div class="chatTextArea">
+					<p class="chatTextItem sample"></p>
+				</div>
+				<div class="chatInputArea">
+					<input class="txtChatInput">
+				</div>
+			</div>
+		</div>
+		<div id="adminChatStatus"></div>
+	</div>
+	
+	<script>
+	var f = document.frm_conf;
+    var chat_use = f.chat_use.value;
+    var start_time = f.start_time.value;
+    var end_time = f.end_time.value;
+
+    var nowDate = new Date();
+    var nowTimeStr = ("0" + nowDate.getHours()).slice(-2) +("0" + nowDate.getMinutes()).slice(-2);
+    
+    
+    console.log(chat_use);
+    console.log(nowTimeStr);
+    console.log(end_time);
+    console.log(start_time);
+
+	if(chat_use == "Y" && nowTimeStr < end_time && nowTimeStr > start_time) {
+	    var textarea = document.getElementById("messageWindow");
+	    //var webSocket = new WebSocket('wss://www.djid.or.kr/broadcasting.do');
+	    var webSocket = new WebSocket('wss://www.djid.or.kr/broadcasting');
+	    var inputMessage = document.getElementById('inputMessage');
+		webSocket.onerror = function(event) {
+			onError(event)
+		};
+		webSocket.onopen = function(event) {
+			
+			onOpen(event)
+			var chatObj = {};
+			chatObj.mode = "set";
+			chatObj.admin = "Y";
+
+			console.log(chatObj);
+			
+			webSocket.send(JSON.stringify(chatObj));
+		};
+		webSocket.onmessage = function(event) {
+			console.log("onmessage = " + event)
+			onMessage(event);
+		};
+		function onMessage(event) {
+		    var chatObj = JSON.parse(event.data);
+		    //var chatObj = event.data;
+			
+		    console.log(chatObj);
+		    console.log(chatObj);
+		    console.log(chatObj);
+		    console.log("chatObj.mode = " + chatObj.mode);
+		    console.log("chatObj.mode = " + chatObj.admin);
+			
+		    switch(chatObj.mode) {
+		    	case "set": {
+		    		switch(chatObj.result) {
+		    			case "AdminSetting": {
+		    				$("#adminChatStatus").html("실시간 상담중..")
+		    			} 
+		    			break;
+		    			case "adminExist": {
+		    				$("#adminChatStatus").html("다른 관리자가 상담중입니다.")
+		    			} 
+		    			break;
+		    		}
+		    	}
+		    	break;
+		    	
+		    	case "msg": {
+		    		var chatCno = chatObj.cno;
+		    		var $chatItem = $("#adminChatList .adminChatItem[data-cno='" + chatCno + "']");
+		    		
+		    		// 상담중인 사용자 리스트 추가
+		    		if($chatItem.length) {
+		    			$chatItem.addClass("on");
+		    		}
+		    		else {
+		    			var $i = $("#adminChatList .adminChatItem.sample").clone().removeClass("sample");
+		    			$i.html("사용자" + chatCno).attr("data-cno", chatCno);
+		    			$("#adminChatList").append($i);
+		    		}
+		    		
+		    		// 상담중인 사용자 채팅룸 추가
+		    		var $chatRoomItem = $("#adminChatRoomList .adminChatRoomItem[data-cno='" + chatCno + "']");
+		    		if(!$chatRoomItem.length) {
+		    			var $i = $("#adminChatRoomList .adminChatRoomItem.sample").clone().removeClass("sample");
+		    			$i.attr("data-cno", chatCno);
+		    			$("#adminChatRoomList").append($i);
+		    		}
+		    		
+		    		var $textItem = $("#adminChatRoomList .adminChatRoomItem[data-cno='" + chatCno + "'] .chatTextItem.sample").clone().removeClass("sample");
+		    		if(chatObj.admin == "Y") {
+		    			$textItem.html("관리자 : " + chatObj.msg);
+		    		}
+		    		else {
+		    			$textItem.html("사용자" + chatCno + " : " + chatObj.msg);
+		    		}
+		    		
+		    		var $chatTextArea = $("#adminChatRoomList .adminChatRoomItem[data-cno='" + chatCno + "'] .chatTextArea");
+		    		var chatTextAreaScrollHeight = $chatTextArea.prop('scrollHeight');
+		    		var chatTextAreaHeight = $chatTextArea.height();
+		    		var chatTextAreaMaxScroll = chatTextAreaScrollHeight - chatTextAreaHeight;
+		    		var chatTextAreaScrollTop = $chatTextArea.scrollTop();
+		    		
+		    		$chatTextArea.append($textItem);
+		    		
+		    		if(chatTextAreaMaxScroll <= chatTextAreaScrollTop) {
+		    			$chatTextArea.scrollTop($chatTextArea.prop('scrollHeight'));
+		    		}   		
+		    		
+		    	}
+		    	break;
+		    	
+		    	case "close": {
+		    		console.log("close");
+		    		var chatCno = chatObj.cno;
+		    		var $chatItem = $("#adminChatList .adminChatItem[data-cno='" + chatCno + "']");
+		    		
+		    		// 상담중인 사용자 리스트 추가
+		    		if($chatItem.length) {
+		    			$chatItem.addClass("on");
+		    		}
+		    		
+		    		// 상담중인 사용자 채팅룸이 있을 경우 종료 메세지 추가
+		    		var $chatTextArea = $("#adminChatRoomList .adminChatRoomItem[data-cno='" + chatCno + "'] .chatTextArea");
+		    		console.log($chatTextArea);
+		    		if($chatTextArea.length) {
+			    		var $textItem = $("#adminChatRoomList .adminChatRoomItem[data-cno='" + chatCno + "'] .chatTextItem.sample").clone().removeClass("sample");
+		    			$textItem.html("=== 상담이 종료되었습니다. ===");
+		    			
+		    			$chatTextArea.append($textItem);
+		    		}
+		    	}
+		    	break;
+		    }
+		    
+		    
+		}
+		function onOpen(event) {
+		    //console.log(event);
+		}
+		function onError(event) {
+		  	console.log("error = " + event.data);
+		}
+		function send() {
+		    textarea.value += "ME : " + inputMessage.value + "\n";
+		    webSocket.send(inputMessage.value);
+		    inputMessage.value = "";
+		}
+		
+		$("#adminChatList").on("click", ".adminChatItem", function() {
+			var $t = $(this);
+			var cno = $t.data("cno");
+			//console.log($t, cno);
+			$("#adminChatList .adminChatItem").not(".sample").removeClass("active");
+			$t.removeClass("on").addClass("active");
+			$("#adminChatRoomList .adminChatRoomItem").addClass("none");
+			$("#adminChatRoomList .adminChatRoomItem[data-cno='" + cno + "']").removeClass("none");
+			$("#adminChatRoomList").removeClass("none");
+		})
+		
+		// 현재 상담창 닫기
+		$("#adminChatRoomList .btnClose").click(function() {
+			$("#adminChatList .adminChatItem").not(".sample").removeClass("active");
+			$("#adminChatRoomList").addClass("none");
+			$("#adminChatRoomList .adminChatRoomItem").addClass("none");
+		});
+		
+		// 현재 상담 종료
+		$("#adminChatRoomList .btnEnd").click(function() {
+			if(!confirm("현재 상담을 종료하시겠습니까?")) return false;
+			
+			var $adminChatRoomItem = $("#adminChatRoomList .adminChatRoomItem").not(".none,.sample");
+			var cno = $adminChatRoomItem.data("cno");
+			
+			//console.log(cno);
+			$adminChatRoomItem.remove();
+			$("#adminChatList .adminChatItem[data-cno='" + cno + "']").remove();
+			
+			$("#adminChatRoomList").addClass("none");
+		});
+		
+		$("#adminChatRoomList").on("keydown", ".txtChatInput", function(e) {
+			if(e.keyCode == 13) {
+				
+				var $t = $(this);
+				var $adminChatRoomItem = $t.closest(".adminChatRoomItem");
+				var cno = $adminChatRoomItem.data("cno");
+				var msg = $t.val();
+				if(cno) {
+					if(msg) {
+						var chatObj = {};
+						chatObj.mode = "msg";
+						chatObj.cno = cno.toString();
+						chatObj.msg = msg;
+						chatObj.admin = "Y";
+						console.log(chatObj);
+						webSocket.send(JSON.stringify(chatObj));
+						
+						$t.val("");
+					}
+				}
+			}
+		});
+	}
+	else {
+		$("#adminChatStatus").html("상담시간이 아닙니다.")
+	}
+
+	</script>

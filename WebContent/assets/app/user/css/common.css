@@ -1,0 +1,345 @@
+﻿@charset "utf-8";
+@font-face { font-family: 'NanumSquare'; font-weight: 400; src: url(/assets/app/user/fonts/NanumSquareR.eot); src: url(/assets/app/user/fonts/NanumSquareR.eot?#iefix) format('embedded-opentype'), url(/assets/app/user/fonts/NanumSquareR.woff) format('woff'), url(/assets/app/user/fonts/NanumSquareR.ttf) format('truetype'); }
+@font-face { font-family: 'NanumSquare'; font-weight: 700; src: url(/assets/app/user/fonts/NanumSquareB.eot); src: url(/assets/app/user/fonts/NanumSquareB.eot?#iefix) format('embedded-opentype'), url(/assets/app/user/fonts/NanumSquareB.woff) format('woff'), url(/assets/app/user/fonts/NanumSquareB.ttf) format('truetype'); }
+@font-face { font-family: 'NanumSquare'; font-weight: 800; src: url(/assets/app/user/fonts/NanumSquareEB.eot); src: url(/assets/app/user/fonts/NanumSquareEB.eot?#iefix) format('embedded-opentype'), url(/assets/app/user/fonts/NanumSquareEB.woff) format('woff'), url(/assets/app/user/fonts/NanumSquareEB.ttf) format('truetype'); }
+@font-face { font-family: 'NanumSquare'; font-weight: 300; src: url(/assets/app/user/fonts/NanumSquareL.eot); src: url(/assets/app/user/fonts/NanumSquareL.eot?#iefix) format('embedded-opentype'), url(/assets/app/user/fonts/NanumSquareL.woff) format('woff'), url(/assets/app/user/fonts/NanumSquareL.ttf) format('truetype'); }
+/* reset */
+a,
+abbr,
+acronym,
+address,
+applet,
+article,
+aside,
+audio,
+b,
+bdi,
+bdo,
+big,
+blockquote,
+body,
+button,
+canvas,
+caption,
+center,
+cite,
+code,
+data,
+datalist,
+dd,
+del,
+details,
+dfn,
+dialog,
+dir,
+div,
+dl,
+dt,
+em,
+embed,
+fieldset,
+figcaption,
+figure,
+font,
+footer,
+form,
+frame,
+frameset,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+hgroup,
+hr,
+html,
+i,
+iframe,
+img,
+input,
+ins,
+kbd,
+keygen,
+label,
+legend,
+li,
+main,
+map,
+mark,
+menu,
+menuitem,
+meter,
+nav,
+object,
+ol,
+output,
+p,
+picture,
+pre,
+progress,
+q,
+rp,
+rt,
+ruby,
+s,
+samp,
+section,
+select,
+small,
+source,
+span,
+strike,
+strong,
+sub,
+summary,
+sup,
+table,
+tbody,
+td,
+textarea,
+tfoot,
+th,
+thead,
+time,
+tr,
+track,
+tt,
+u,
+ul,
+var,
+video,
+wbr { margin: 0; padding: 0; border: 0; }
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section { display: block; }
+audio,
+canvas,
+progress,
+video { display: inline-block; vertical-align: baseline; }
+/* normalize */
+a { /* background-color: transparent; */ -webkit-text-decoration-skip: objects; color: #686868; text-decoration: none; }
+a:active,
+a:hover { outline-width: 0; text-decoration: underline; }
+abbr[title] { text-decoration: underline; text-decoration: underline dotted; border-bottom: none; -webkit-text-decoration: underline dotted; }
+b,
+strong { font-weight: inherit;/* font-weight:bolder; */ }
+img { border-style: none; }
+sub,
+sup { position: relative; font-size: 75%; line-height: 0; vertical-align: baseline; }
+sub { bottom: -.25em; }
+sup { top: -.5em; }
+small { font-size: 80%; }
+hr { overflow: visible; -webkit-box-sizing: content-box; box-sizing: content-box; height: 0; }
+pre { overflow: auto; }
+code,
+kbd,
+pre,
+samp { font-family: monospace, monospace; }
+audio,
+canvas,
+video { display: inline-block; }
+audio:not([controls]) { display: none; height: 0; }
+svg:not(:root) { overflow: hidden; }
+textarea { overflow: auto; }
+summary { display: list-item; }
+template { display: none; }
+[hidden] {
+display:none;
+}
+button,
+input { overflow: visible; }
+button,
+select { text-transform: none; }
+[type=reset], [type=submit], button, html [type=button] {
+-webkit-appearance:button;
+}
+[type=button]::-moz-focus-inner, [type=reset]::-moz-focus-inner, [type=submit]::-moz-focus-inner, button::-moz-focus-inner {
+padding:0;
+border-style:none;
+}
+[type=button]:-moz-focusring, [type=reset]:-moz-focusring, [type=submit]:-moz-focusring, button:-moz-focusring {
+outline:ButtonText dotted 1px;
+}
+[type=checkbox], [type=radio] {
+-webkit-box-sizing:border-box;
+box-sizing:border-box;
+padding:0;
+width:1.5rem;
+height:1.5rem;
+}
+[type=number]::-webkit-inner-spin-button, [type=number]::-webkit-outer-spin-button {
+height:auto;
+}
+[type=search] {
+outline-offset:-2px;
+-webkit-appearance:textfield;
+}
+[type=search]::-webkit-search-cancel-button, [type=search]::-webkit-search-decoration {
+-webkit-appearance:none;
+}
+::-webkit-file-upload-button {
+font:inherit;
+-webkit-appearance:button;
+}
+/* a,button {outline:1px dotted red;} */
+
+/* 기본설정 */
+html { height: 100%; font-size: 10px; }
+body { font-size: 1em; font-family: 'NanumSquare', Sans-Serif; color: #2a2a2a; -webkit-text-size-adjust: none; background: #ededed; }
+table { table-layout: fixed; border-spacing: 0; border-collapse: collapse; }
+blockquote,
+q { quotes: none; }
+blockquote:after,
+blockquote:before,
+q:after,
+q:before { content: ''; content: none; }
+ol,
+ul { list-style: none; }
+em,
+i { font-style: normal; }
+mark { color: #000000; background: #ffff00; }
+label,
+select,
+input { vertical-align: middle; }
+label { display: inline-block; }
+input[type=text],
+input[type=password] { border: 1px solid #d3d3d3; height: 3rem; padding-left: 1rem; box-sizing: border-box; }
+select { border: 1px solid #d3d3d3; padding-left: 1rem; padding-right: 3rem; border-radius: 0; box-sizing: border-box; color: #1d1d1d; font-size: 1.4rem; appearance: none; -moz-appearance: none; -webkit-appearance: none; text-indent: 0.01px; text-overflow: ''; background: #fff url(/assets/app/user/images/bg_select_arrw.png) 100% 50% no-repeat; background-size: 2rem auto; }
+input[type=checkbox] { -webkit-appearance: unset !important; background-color: #fff; border: 1px solid #d3d3d3; }
+input[type="checkbox"],
+input[type="radio"] { width: 1.2em; height: 1.2em; vertical-align: middle; margin: 0; border: 1px solid rgba(0, 0, 0, 0.3); background: #fff; -webkit-appearance: none; -webkit-transition: box-shadow 200ms; /* 	 box-shadow:inset 1px 1px 0 #fff, 0 1px 1px rgba(0,0,0,0.1); */ }
+input[type="radio"] { -webkit-border-radius: 100%; border-radius: 100%; }
+input[type="checkbox"] { -webkit-border-radius: 2px; border-radius: 2px; }
+/* state */
+input[type="radio"]:not(:disabled):hover,
+input[type="checkbox"]:not(:disabled):hover { border-color: rgba(0,0,0,0.5); box-shadow: inset 1px 1px 0 #fff, 0 0 4px rgba(0,0,0,0.3); }
+input[type="radio"]:active:not(:disabled),
+input[type="checkbox"]:active:not(:disabled) { background-image: -webkit-linear-gradient(#C2C2C2, #EFEFEF); border-color: rgba(0,0,0,0.5); /* box-shadow:inset 1px 1px 0 rgba(0,0,0,0.2), inset -1px -1px 0 rgba(255,255,255,0.6); */ }
+input[type="radio"]:focus,
+input[type="checkbox"]:focus { outline: none;/* box-shadow: 0 0 1px 2px rgba(0, 240, 255, 0.4); */ }
+/* input checked border color */
+input[type="radio"]:checked,
+input[type="checkbox"]:checked { border-color: rgba(0, 0, 0, 0.5) }
+input[type="radio"]:checked:before { display: block; height: 0.3em; width: 0.3em; position: relative; left: 0.4em; top: 0.4em; background: rgba(0, 0, 0, 0.7); border-radius: 100%; content: ''; }
+input[type="checkbox"]:checked:before { font-weight: bold; color: rgba(0, 0, 0, 0.7); content: '\2713'; -webkit-margin-start: 0; margin-left: 2px; font-size: 1em; line-height: 1; }
+/* disabled */
+input:disabled { opacity: .6; box-shadow: none; background: rgba(0, 0, 0, 0.1); box-shadow: none; }
+input:disabled + label { opacity: .6; cursor: default; -webkit-user-select: none; }
+/* skip */
+#skipToContent { position: absolute; width: 100%; }
+#skipToContent a { position: fixed; z-index: 9999; top: 0; left: 0; display: block; width: 100%; height: 0; margin-top: -1px; text-align: center; font-size: 0; }
+#skipToContent a:active,
+#skipToContent a:focus { height: auto; margin-top: 0; padding: 10px 0; color: #ffffff; background: #0075b1; font-size: 1.4rem; font-weight: bold; line-height: 1; }
+/* clear */
+.clearfix:after,
+.clearfix:before { display: block; content: ''; }
+.clearfix:after { clear: both; }
+/* 웹접근성 스크린리더 코드 */
+.hidden,
+caption,
+legend { position: absolute; overflow: hidden; clip: rect(0, 0, 0, 0); width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; }
+/* --- Layout --- */
+.appWrapper { box-sizing: border-box; font-size: 1.4rem; }
+.appWrapper * { box-sizing: border-box; }
+/* height */
+.appWrapper { height: 100%; height: 100vh; }
+.appWrapper > header { height: 30vh; }
+.appWrapper > section { min-height: 57vh; }
+.appWrapper > footer { height: 13vh; }
+/* intro */
+.appWrapper.intro { display: table; width: 100%; background: url(/assets/app/user/images/intro_bg.png) 0 0 no-repeat; background-size: cover; }
+.appWrapper.intro .section { display: table-cell; text-align: center; vertical-align: middle; }
+#headerIntro { color: #fff; }
+#headerIntro h1.title { padding-top: 20.6rem; font-size: 2.3rem; font-weight: 800; letter-spacing: -1px; line-height: 150%; background: url(/assets/app/user/images/intro_icon_01.png) 50% 0 no-repeat; background-size: 22.3rem auto; }
+#headerIntro h1.title > span { display: block; font-weight: normal; }
+/* header */
+.appWrapper > header { position: relative; display: table; width: 100%; text-align: center; background: #729f85 url(/assets/app/user/images/bg_top1.png) 0 0 no-repeat; background-size: cover; border-bottom: 1px solid #5b8a72; }
+header .header { display: table-cell; vertical-align: middle; }
+header .header .top_logo { background: url(/assets/app/user/images/top_logo.png) 0 0 no-repeat; background-size: 200px 36px; width: 200px; height: 36px; position: relative; top: -15px; left: 15px;}
+header .header .top_logo h1 { text-indent: -9999vh; overflow: hidden; }
+header .header .top_logo h1 a { float: left; width: 200px; height: 36px; }
+/**/
+header .header .homeBtnBox { height: 2.3rem; }
+header .header h1 { font-size: 2.4rem; font-weight: normal; line-height: 140%; }
+header .header h1 > span { font-weight: 800; display: block; }
+header .btnHome { position: absolute; top: 2.8rem; right: 1rem; display: block; width: 1.9rem; height: 1.9rem; background: transparent url(/assets/app/user/images/intro_icon_02.png) 0 0 no-repeat; background-size: 1.9rem auto; }
+/**/
+header .header .p_text { margin: 20px 0px 0px 0px; line-height:18px; }
+/* footer */
+.appWrapper > footer { display: table; width: 100%; background: #424243; }
+.appWrapper > footer p { display: table-cell; text-align: center; vertical-align: middle; font-size: 1rem; line-height: 150%; color: #787878; }
+.appWrapper > footer .address { display: block; color: #afafaf; font-size: 1.1rem; }
+/* --- Contents --- */
+.btn { height: 3.5rem; color: #fff; font-size: 1.5rem; background: #262e53; border: 1px solid #262e53; cursor: pointer; }
+/* 순환번스 목록 */
+.circulatingBus { padding: 6.25vw 4.6875vw; }
+.circulatingBus a { display: block; font-size: 1.5rem; font-weight: 700; text-align: center; }
+.circulatingBus a>p { padding: 2rem; border: 1px solid #d0d0d0; background: #fff; border-radius: 1.1rem; }
+.circulatingBus a>p * { display: inline-block; }
+.circulatingBus li { margin-top: 6vw; }
+.circulatingBus li:first-child { margin-top: 0; }
+.circulatingBus .drivingInfo {
+padding:.8rem 3rem .6rem 5rem; background: #a8b0b0; color: #fff; border-radius: 1.5rem; }
+.circulatingBus .runing .drivingInfo { background: #004ea2; }
+.circulatingBus .drivingInfo + span { margin-top: 1.2rem; }
+.circulatingBus a span { display: block; margin-top:.8rem
+}
+.circulatingBus .noData { color: #a5a5a5; }
+.btnTabWrapper { display: block; margin-top: 1.4rem; }
+.btnTabWrapper ul { overflow: hidden; }
+.btnTabWrapper ul>li { display: inline-block; width: 11rem; height: 2.5rem; box-sizing: border-box; }
+.btnTabWrapper ul>li+li { margin-left: 1rem; }
+.btnTabWrapper a { display: inline-block; width: 100%; height: 2.5rem; color: #fff; border: 1px solid #fff; border-radius: 1.25rem }
+.btnTabWrapper a > span { display: block; line-height: 2.5rem; }
+.btnTabWrapper a.on { border-color: #93e0a4; background-color: #269c40; }
+.currentInfoBox { padding: 2.7vh; text-align: center; font-size: 1.5rem; font-weight: 700; background: #fff; }
+.currentInfoBox strong,
+.currentInfoBox span { position: relative; display: inline-block; }
+.currentInfoBox span { padding-left: 2rem; margin-left: 1.3rem; }
+.currentInfoBox span:before { content: ''; position: absolute; top: 0; left: 0; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: #9f9f9f; }
+.currentInfoBox>p { font-size: 1rem; margin-top: 1.1rem; color: #2a2a2a; }
+.currentInfoBox .statusTxts.waiting { color: #a8b0b0; }
+.currentInfoBox .statusTxts.finished { color: #dd526a; }
+.currentInfoBox .statusTxts.runing { color: #004ea2; }
+.currentInfoBox .statusTxts.waiting:before { background: #a8b0b0; }
+.currentInfoBox .statusTxts.finished:before { background: #dd526a; }
+.currentInfoBox .statusTxts.runing:before { background: #004ea2; }
+.tabMenu > div { overflow: hidden; box-sizing: border-box; border: 1px solid #d0d0d0; border-width: 1px 0; }
+.tabMenu > div > .btnTab { float: left; height: 3.5rem; text-align: center; border-right: 1px solid #d0d0d0; background: #f8f8f8; }
+.tabMenu > div > .btnTab:last-child { border-right: 0; }
+.tabMenu .btnTab > a { display: table; width: 100%; height: 100%; box-sizing: border-box; font-size: 15px; font-weight: 700; color: #696969; text-decoration: none; }
+.tabMenu .btnTab > a > span { display: table-cell; vertical-align: middle; }
+.tabMenu .btnTab.on { background: #004ea2; }
+.tabMenu .btnTab.on > a { color: #fff; }
+.tabMenu.num4 .btnTab { width: 25%; }
+.tabContBox { display: none; }
+.tabContBox.opened { display: block; }
+.busTimeTblWrapper { position: relative; }
+.busTimeTblWrapper .iconDrivingBus { position: absolute; left: 4rem; z-index: 10; width: 2.2rem; height: 2.2rem; background: url(/assets/app/user/images/icon_bus.png) no-repeat; background-size: 100% auto; }
+.busTimeTable { margin: 1.1rem 0 9rem; }
+.busTimeTable li { padding-left: 5rem; font-size: 1.3rem; }
+.busTimeTable li:first-child { padding-top: 1rem; }
+.busTimeTable li:first-child .busStopBox > div { padding-top: 0; }
+.busTimeTable li:first-child .busStopBox:before { top: 0; margin-top: 0 }
+.busStopBox { position: relative; }
+.busStopBox:before { content: ''; position: absolute; left: -0.6rem; top: 50%; width: 1.3rem; height: 1.3rem; margin-top: -0.6rem; background: url(/assets/app/user/images/icon_bus_stop.png) no-repeat; background-size: cover; }
+.busStopBox > div { overflow: hidden; color: #1d1d1d; border: 1px solid #d9d9d9; border-width: 0 0 1px 1px; padding: 1.1rem 0 1rem 2rem; }
+.busStopBox > div > strong { float: left; }
+.busStopBox > div .stopTime { float: right; width: 5.7rem; }
+.busTimeTable li.active { background-color: #d5dde5; margin-top: -1px }
+.busTimeTable li.active .busStopBox > div { border-left: 1px solid #d5dde5; }
+ @media (max-width:320px) {
+.appWrapper > header { height: 29vh; }
+.appWrapper > section { min-height: 54vh; }
+.appWrapper > footer { height: 16vh; }
+}

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="support">
+
+	<insert id="insert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO SUPPORT
+						  ( SEQ
+						  , MEMBER_SEQ	
+						  , DEL_YN
+						  , REG_DATE
+						  , NAME
+						  , SEX
+					 	  , TEL1
+					 	  , TEL2
+					 	  , TEL3
+					 	  , BIRTH_YEAR
+					 	  , BIRTH_MONTH
+					 	  , BIRTH_DAY
+					 	  , EMAIL1
+					 	  , EMAIL2
+					 	  , ZIP_CD
+					 	  , ADDR1
+					 	  , ADDR2
+					 	  , SUPPORT_KIND
+					 	  , SUPPORT_PRICE
+					 	  , SUPPORT_TRANSFER_DAY
+					 	  , REG_NO1
+					 	  , REG_NO2
+					 	  , ETC
+					 	  , CONTENT
+				  )VALUES(  
+				  	  ${seq}
+					 ,${member_seq}
+					 ,'N'
+					 ,NOW()
+					 ,HEX(AES_ENCRYPT(#{name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,#{sex,jdbcType=VARCHAR}
+					 ,HEX(AES_ENCRYPT(#{tel1,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{tel2,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{tel3,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,#{birth_year,jdbcType=VARCHAR}
+					 ,#{birth_month,jdbcType=VARCHAR}
+					 ,#{birth_day,jdbcType=VARCHAR}					 
+					 ,HEX(AES_ENCRYPT(#{email1,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{email2,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,#{zip_cd,jdbcType=VARCHAR}
+					 ,#{addr1,jdbcType=VARCHAR}
+					 ,#{addr2,jdbcType=VARCHAR}
+					 ,#{support_kind,jdbcType=VARCHAR}
+					 ,${support_price}
+					 ,#{support_transfer_day,jdbcType=VARCHAR}
+					 ,HEX(AES_ENCRYPT(#{reg_no1,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{reg_no2,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,#{etc,jdbcType=VARCHAR}
+					 ,#{content,jdbcType=VARCHAR}
+				 )
+	</insert>
+	
+	<select id="getMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM SUPPORT
+	</select>
+
+
+	<select id="view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT SEQ							  
+		  , MEMBER_SEQ
+		  , DEL_YN
+		  , REG_DATE							  
+		  , CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS NAME
+		  , (SELECT CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) AS MEMBER_ID FROM MEMBER WHERE SEQ = MEMBER_SEQ) AS MEMBER_ID
+		  , SEX
+		  , CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL1
+	 	  , CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL2
+	 	  , CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL3
+	 	  , BIRTH_YEAR
+	 	  , BIRTH_MONTH
+	 	  , BIRTH_DAY	
+	 	  , CAST(AES_DECRYPT(UNHEX(EMAIL1), #{key,jdbcType=VARCHAR}) AS CHAR) AS EMAIL1
+	 	  , CAST(AES_DECRYPT(UNHEX(EMAIL2), #{key,jdbcType=VARCHAR}) AS CHAR) AS EMAIL2
+	 	  , ZIP_CD
+	 	  , ADDR1
+	 	  , ADDR2
+	 	  , SUPPORT_KIND
+	 	  , SUPPORT_PRICE
+	 	  , SUPPORT_TRANSFER_DAY
+	 	  , CAST(AES_DECRYPT(UNHEX(REG_NO1), #{key,jdbcType=VARCHAR}) AS CHAR) AS REG_NO1
+	 	  , CAST(AES_DECRYPT(UNHEX(REG_NO2), #{key,jdbcType=VARCHAR}) AS CHAR) AS REG_NO2
+	 	  , ETC
+	 	  , CONTENT
+	 	  <![CDATA[,REPLACE(CONTENT, '\r\n', '<br>') AS VIEW_CONTENT]]>
+		FROM SUPPORT
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<select id="list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT T1.SEQ							  
+							  , T1.MEMBER_SEQ
+							  , T1.DEL_YN
+							  , T1.REG_DATE							  
+							  , CAST(AES_DECRYPT(UNHEX(T1.NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS NAME
+							  , (SELECT CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) AS MEMBER_ID FROM MEMBER WHERE SEQ = T1.MEMBER_SEQ) AS MEMBER_ID
+							  , T1.SEX
+							  , CAST(AES_DECRYPT(UNHEX(T1.TEL1), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL1
+						 	  , CAST(AES_DECRYPT(UNHEX(T1.TEL2), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL2
+						 	  , CAST(AES_DECRYPT(UNHEX(T1.TEL3), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL3
+						 	  , T1.BIRTH_YEAR
+						 	  , T1.BIRTH_MONTH
+						 	  , T1.BIRTH_DAY	
+						 	  , CAST(AES_DECRYPT(UNHEX(T1.EMAIL1), #{key,jdbcType=VARCHAR}) AS CHAR) AS EMAIL1
+						 	  , CAST(AES_DECRYPT(UNHEX(T1.EMAIL2), #{key,jdbcType=VARCHAR}) AS CHAR) AS EMAIL2
+						 	  , T1.ZIP_CD
+						 	  , T1.ADDR1
+						 	  , T1.ADDR2
+						 	  , T1.SUPPORT_KIND
+						 	  , T1.SUPPORT_PRICE
+						 	  , T1.SUPPORT_TRANSFER_DAY
+						 	  , CAST(AES_DECRYPT(UNHEX(T1.REG_NO1), #{key,jdbcType=VARCHAR}) AS CHAR) AS REG_NO1
+						 	  , CAST(AES_DECRYPT(UNHEX(T1.REG_NO2), #{key,jdbcType=VARCHAR}) AS CHAR) AS REG_NO2
+						 	  , T1.ETC
+						 	  , T1.CONTENT
+				     		 FROM (SELECT * 
+				     		 			  FROM SUPPORT M
+				    					WHERE DEL_YN = 'N'
+								    	<if test="search_value != null" >
+									  		<if test="search_value != ''" >
+									  				AND 
+									  				(
+									  					CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  					OR
+									  					CONCAT(CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR)) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  				)
+									  		</if>
+							          	</if>
+								   )T1
+						   	 ORDER BY SEQ DESC
+	    				) T2 
+	    				ORDER BY SEQ DESC
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="listCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM SUPPORT M
+    					WHERE DEL_YN = 'N'
+					    	<if test="search_value != null" >
+						  		<if test="search_value != ''" >
+						  				AND
+						  				(
+						  					CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+						  					OR
+						  					CONCAT(CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR)) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+						  				)
+					  			</if>
+				          	</if>
+				   )T1
+
+	</select>	
+	
+	<update id="update" parameterType="java.util.Map">
+		UPDATE SUPPORT SET
+				    NAME = HEX(AES_ENCRYPT(#{name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+				  , SEX = #{sex,jdbcType=VARCHAR}				  
+			 	  , TEL1 = HEX(AES_ENCRYPT(#{tel1,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+			 	  , TEL2 = HEX(AES_ENCRYPT(#{tel2,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+			 	  , TEL3 = HEX(AES_ENCRYPT(#{tel3,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+			 	  , BIRTH_YEAR = #{birth_year,jdbcType=VARCHAR}
+			 	  , BIRTH_MONTH = #{birth_month,jdbcType=VARCHAR}
+			 	  , BIRTH_DAY = #{birth_day,jdbcType=VARCHAR}
+			 	  , EMAIL1 = HEX(AES_ENCRYPT(#{email1,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+			 	  , EMAIL2 = HEX(AES_ENCRYPT(#{email2,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+			 	  , ZIP_CD = #{zip_cd,jdbcType=VARCHAR}
+			 	  , ADDR1 = #{addr1,jdbcType=VARCHAR}
+			 	  , ADDR2 = #{addr2,jdbcType=VARCHAR}
+			 	  , SUPPORT_KIND = #{support_kind,jdbcType=VARCHAR}
+			 	  , SUPPORT_PRICE = ${support_price}
+			 	  , SUPPORT_TRANSFER_DAY = #{support_transfer_day,jdbcType=VARCHAR}
+			 	  , REG_NO1 = HEX(AES_ENCRYPT(#{reg_no1,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+			 	  , REG_NO2 = HEX(AES_ENCRYPT(#{reg_no2,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+			 	  , CONTENT = #{content,jdbcType=VARCHAR}
+			 	  , ETC = #{etc,jdbcType=VARCHAR}
+			WHERE SEQ = ${seq}
+	</update>
+	
+	<delete id="del" parameterType="java.util.Map" >
+		UPDATE SUPPORT
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ = ${seq}
+	</delete>
+	
+	<delete id="check_del" parameterType="java.util.Map" >
+		UPDATE SUPPORT
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ IN (${check_seq})
+	</delete>
+
+	<insert id="insertKind" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO SUPPORT_MOTIVE
+		(
+			SEQ
+			,CODE_SEQ
+			,SUPPORT_SEQ
+			,DEL_YN
+			,REG_DATE
+		) VALUES
+		(
+			( SELECT SEQ FROM (SELECT IFNULL(MAX(SEQ),0)+1 AS SEQ FROM SUPPORT_MOTIVE) TT )
+			,${motive_seq}
+			,${seq}
+			,'N'
+			,NOW()
+		)
+		
+	</insert>
+	
+	<select id="motive_list" parameterType="kr.co.o2i.util.CommonMap" resultType="String">
+		SELECT 
+		  GROUP_CONCAT((SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = K.CODE_SEQ)) AS MOTIVE_DESC
+		FROM SUPPORT_MOTIVE K
+			WHERE SUPPORT_SEQ = ${seq}
+			AND DEL_YN = 'N'
+		ORDER BY SEQ ASC
+	</select>
+	
+	<delete id="motive_delete" parameterType="java.util.Map" >
+		UPDATE SUPPORT_MOTIVE
+	       SET DEL_YN    = 'Y'
+		 WHERE SUPPORT_SEQ = ${seq}
+	</delete>
+	
+	<select id="get_menu_info" parameterType="java.util.Map" resultType="java.util.Map">
+		select
+			SEQ, LINK, MENU1, MENU2, MENU3, MENU4, MENU5
+		from
+			MENU
+		where
+			instr(LINK, '${url}') > 0
+	</select>
+	
+	<insert id="insert_menu_statistics" parameterType="java.util.Map">
+		insert into MENU_STATISTICS (
+			MENU_SEQ,
+			MENU_URL,
+			USER_IP,
+			REG_DATE
+		) values (
+			#{menuSeq},
+			#{menuUrl},
+			#{userIp},
+			now()
+		)
+	</insert>
+	
+	<select id="get_menu_statistics" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT a.SEQ, a.MENU1, a.MENU2, a.MENU3, a.MENU4, a.MENU5, a.LINK, ifnull(COUNT(b.STA_SEQ),0) AS CNT
+		FROM MENU a
+		LEFT JOIN MENU_STATISTICS b ON a.SEQ = b.MENU_SEQ
+			<if test="(startDate != null) and (startDate != '')">
+				AND b.REG_DATE BETWEEN '${startDate} 00:00:00' AND '${endDate} 23:59:59'
+			</if>
+		GROUP BY a.SEQ, a.MENU1, a.MENU2, a.MENU3, a.MENU4, a.MENU5, a.LINK
+	</select>
+	
+	<select id="get_menu_log" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT a.SEQ, a.MENU1, a.MENU2, a.MENU3, a.MENU4, a.MENU5, a.LINK, b.USER_IP, b.REG_DATE
+		FROM MENU a 
+		JOIN MENU_STATISTICS b ON a.SEQ = b.MENU_SEQ
+		<if test="(startDate != null) and (startDate != '')">
+			WHERE b.REG_DATE BETWEEN '${startDate} 00:00:00' AND '${endDate} 23:59:59'
+		</if>
+		ORDER BY b.REG_DATE DESC
+		LIMIT #{startNum}, #{limit}
+	</select>
+	
+	<select id="get_menu_log_cnt" parameterType="java.util.Map" resultType="Integer">
+		SELECT COUNT(a.SEQ) as CNT
+		FROM MENU a 
+		JOIN MENU_STATISTICS b ON a.SEQ = b.MENU_SEQ
+		<if test="(startDate != null) and (startDate != '')">
+			WHERE b.REG_DATE BETWEEN '${startDate} 00:00:00' AND '${endDate} 23:59:59'
+		</if>
+	</select>
+
+	
+</mapper>

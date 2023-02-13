@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<juiceboxgallery 
+	useFlickr="false"
+	resizeOnImport="true"
+	cropToFit="true"
+	showOpenButton="FALSE"
+	showExpandButton="FALSE">
+
+<image imageURL="img/menu04/01.gif"    
+thumbURL="thumbs/menu04/01.jpg"			
+linkURL="img/menu04/01.gif"				
+linkTarget="_blank">					
+<caption><![CDATA[]]> </caption>		
+</image> 
+
+
+<image imageURL="img/menu04/02.gif"    
+thumbURL="thumbs/menu04/02.jpg"			
+linkURL="img/menu04/02.gif"				
+linkTarget="_blank">					
+<caption><![CDATA[]]> </caption>		
+</image> 
+
+
+<image imageURL="img/menu04/03.gif"    
+thumbURL="thumbs/menu04/03.jpg"			
+linkURL="img/menu04/03.gif"				
+linkTarget="_blank">					
+<caption><![CDATA[]]> </caption>		
+</image> 
+
+
+<image imageURL="img/menu04/04.gif"    
+thumbURL="thumbs/menu04/04.jpg"			
+linkURL="img/menu04/04.gif"				
+linkTarget="_blank">					
+<caption><![CDATA[]]> </caption>		
+</image> 
+
+
+<image imageURL="img/menu04/05.gif"    
+thumbURL="thumbs/menu04/05.jpg"			
+linkURL="img/menu04/05.gif"				
+linkTarget="_blank">					
+<caption><![CDATA[]]> </caption>		
+</image> 
+
+
+
+
+
+
+
+</juiceboxgallery>

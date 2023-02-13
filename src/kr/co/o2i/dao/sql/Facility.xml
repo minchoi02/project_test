@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="facility">
+
+	<insert id="insert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO FACILITY
+						  ( SEQ
+						  , AREA_SEQ
+						  , KIND_SEQ
+						  , NAME
+					 	  , TEL1
+					 	  , TEL2
+					 	  , TEL3
+					 	  , FAX1
+					 	  , FAX2
+					 	  , FAX3
+					 	  , ADDR1
+					 	  , ADDR2
+					 	  , ZIP_CD
+					 	  , DOMAIN
+					 	  , DEL_YN
+					 	  , REG_DATE
+					 	  , LAT
+					 	  , LON
+				  )VALUES(  
+				  	  ${seq}
+					 ,${area_seq}
+					 ,${kind_seq}
+					 ,#{name,jdbcType=VARCHAR}
+					 ,#{tel1,jdbcType=VARCHAR}
+					 ,#{tel2,jdbcType=VARCHAR}
+					 ,#{tel3,jdbcType=VARCHAR}
+					 ,#{fax1,jdbcType=VARCHAR}
+					 ,#{fax2,jdbcType=VARCHAR}
+					 ,#{fax3,jdbcType=VARCHAR}
+					 ,#{addr1,jdbcType=VARCHAR}
+					 ,#{addr2,jdbcType=VARCHAR}
+					 ,#{zip_cd,jdbcType=VARCHAR}
+					 ,#{domain,jdbcType=VARCHAR}
+					 ,'N'
+					 ,NOW()
+					 ,#{lat,jdbcType=VARCHAR}
+					 ,#{lon,jdbcType=VARCHAR}
+				 )
+	</insert>
+	
+	<select id="getMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM FACILITY
+	</select>
+
+
+	<select id="view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT 
+			SEQ
+			,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = F.AREA_SEQ) AS AREA
+			,AREA_SEQ
+			,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = F.KIND_SEQ) AS KIND
+			,KIND_SEQ
+			,NAME
+			,CONCAT(TEL1, '-', TEL2, '-', TEL3) AS TEL
+			,TEL1
+			,TEL2
+			,TEL3
+			,CONCAT(FAX1, '-', FAX2, '-', FAX3) AS FAX
+			,FAX1
+			,FAX2
+			,FAX3
+			,ADDR1
+			,ADDR2
+			,ZIP_CD
+			,DOMAIN
+			,DEL_YN
+			,REG_DATE
+			,LAT
+			,LON
+			,(SELECT COUNT(*) AS FAVORITE_CNT FROM FAVORITE WHERE GUBUN = 'facility' AND FACILITY_SEQ = F.SEQ) AS FAVORITE_CNT
+			<if test="member_seq != null and member_seq != ''">
+			,(SELECT COUNT(*) FROM FAVORITE WHERE MEMBER_SEQ = ${member_seq} AND GUBUN = 'facility' AND FACILITY_SEQ = F.SEQ) AS MEMBER_FAVORITE_CNT
+			</if>
+		FROM FACILITY F
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<select id="list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				SELECT 
+					idx AS SEQ
+					, NAME
+					, CREATED
+					, THUMB
+				FROM video
+	</select>
+			
+	<select id="listCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+    	SELECT COUNT(*)
+     	FROM (
+     		SELECT 
+				idx AS SEQ
+				, NAME
+				, CREATED
+				, THUMB
+			FROM video
+		)T1
+	</select>	
+	
+	<update id="update" parameterType="java.util.Map">
+		UPDATE FACILITY SET 
+					 AREA_SEQ = ${area_seq}
+					,KIND_SEQ = ${kind_seq}
+					,NAME = #{name,jdbcType=VARCHAR}
+					,TEL1 = #{tel1,jdbcType=VARCHAR}
+					,TEL2 = #{tel2,jdbcType=VARCHAR}
+					,TEL3 = #{tel3,jdbcType=VARCHAR}
+					,FAX1 = #{fax1,jdbcType=VARCHAR}
+					,FAX2 = #{fax2,jdbcType=VARCHAR}
+					,FAX3 = #{fax3,jdbcType=VARCHAR}
+					,ADDR1 = #{addr1,jdbcType=VARCHAR}
+					,ADDR2 = #{addr2,jdbcType=VARCHAR}
+					,ZIP_CD = #{zip_cd,jdbcType=VARCHAR}
+					,DOMAIN = #{domain,jdbcType=VARCHAR}
+					,LAT = #{lat,jdbcType=VARCHAR}
+					,LON = #{lon,jdbcType=VARCHAR}					
+			WHERE SEQ = ${seq}
+	</update>
+	
+	<delete id="del" parameterType="java.util.Map" >
+		UPDATE FACILITY
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ = ${seq}
+	</delete>	
+	
+	
+	
+	
+	
+	<insert id="conInsert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO CONVENIENCE
+						  ( SEQ
+						  , AREA_SEQ
+						  , KIND_SEQ
+						  , NAME
+					 	  , TEL1
+					 	  , TEL2
+					 	  , TEL3
+					 	  , FAX1
+					 	  , FAX2
+					 	  , FAX3
+					 	  , ADDR1
+					 	  , ADDR2
+					 	  , ZIP_CD
+					 	  , DOMAIN
+					 	  , DEL_YN
+					 	  , REG_DATE
+					 	  , LAT
+					 	  , LON
+					 	  , IMG1
+					 	  , IMG2
+					 	  , IMG3
+					 	  , KIND_STR
+				  )VALUES(  
+				  	  ${seq}
+					 ,${area_seq}
+					 ,${kind_seq}
+					 ,#{name,jdbcType=VARCHAR}
+					 ,#{tel1,jdbcType=VARCHAR}
+					 ,#{tel2,jdbcType=VARCHAR}
+					 ,#{tel3,jdbcType=VARCHAR}
+					 ,#{fax1,jdbcType=VARCHAR}
+					 ,#{fax2,jdbcType=VARCHAR}
+					 ,#{fax3,jdbcType=VARCHAR}
+					 ,#{addr1,jdbcType=VARCHAR}
+					 ,#{addr2,jdbcType=VARCHAR}
+					 ,#{zip_cd,jdbcType=VARCHAR}
+					 ,#{domain,jdbcType=VARCHAR}
+					 ,'N'
+					 ,NOW()
+					 ,#{lat,jdbcType=VARCHAR}
+					 ,#{lon,jdbcType=VARCHAR}
+					 ,#{img1,jdbcType=VARCHAR}
+					 ,#{img2,jdbcType=VARCHAR}
+					 ,#{img3,jdbcType=VARCHAR}
+					 ,#{kind_str,jdbcType=VARCHAR}
+				 )
+	</insert>
+	
+	<select id="conGetMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM CONVENIENCE
+	</select>
+
+
+	<select id="conView" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT 
+			SEQ
+			,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = F.AREA_SEQ) AS AREA
+			,AREA_SEQ
+			,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = F.KIND_SEQ) AS KIND
+			,KIND_SEQ
+			,NAME
+			,CONCAT(TEL1, '-', TEL2, '-', TEL3) AS TEL
+			,TEL1
+			,TEL2
+			,TEL3
+			,CONCAT(FAX1, '-', FAX2, '-', FAX3) AS FAX
+			,FAX1
+			,FAX2
+			,FAX3
+			,ADDR1
+			,ADDR2
+			,ZIP_CD
+			,DOMAIN
+			,DEL_YN
+			,REG_DATE
+			,LAT
+			,LON
+			,IMG1
+			,IMG2
+			,IMG3
+			,KIND_STR
+			,(SELECT COUNT(*) AS FAVORITE_CNT FROM FAVORITE WHERE GUBUN = 'convenience' AND FACILITY_SEQ = F.SEQ) AS FAVORITE_CNT
+			<if test="member_seq != null and member_seq != ''">
+			,(SELECT COUNT(*) FROM FAVORITE WHERE MEMBER_SEQ = ${member_seq} AND GUBUN = 'convenience' AND FACILITY_SEQ = F.SEQ) AS MEMBER_FAVORITE_CNT
+			</if>
+		FROM CONVENIENCE F
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<select id="conList" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT T1.SEQ
+								,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.AREA_SEQ) AS AREA
+								,T1.AREA_SEQ
+								,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.KIND_SEQ) AS KIND
+								,T1.KIND_SEQ
+								,T1.NAME
+								,CONCAT(T1.TEL1, '-', T1.TEL2, '-', T1.TEL3) AS TEL
+								,T1.TEL1
+								,T1.TEL2
+								,T1.TEL3
+								,CONCAT(T1.FAX1, '-', T1.FAX2, '-', T1.FAX3) AS FAX
+								,T1.FAX1
+								,T1.FAX2
+								,T1.FAX3
+								,T1.ADDR1
+								,T1.ADDR2
+								,T1.ZIP_CD
+								,T1.DOMAIN
+								,T1.DEL_YN
+								,T1.REG_DATE
+								,T1.IMG1
+								,T1.IMG2
+								,T1.IMG3
+								,T1.KIND_STR
+								,(SELECT COUNT(*) FROM FACILITY_COMMENT WHERE DEL_YN = 'N' AND P_SEQ = T1.SEQ) AS COMMENT_CNT
+								,T1.LAT
+								,T1.LON 
+								,(SELECT COUNT(*) AS FAVORITE_CNT FROM FAVORITE WHERE GUBUN = 'convenience' AND FACILITY_SEQ = T1.SEQ) AS FAVORITE_CNT
+								<if test="member_seq != null and member_seq != ''">
+								,(SELECT COUNT(*) FROM FAVORITE WHERE MEMBER_SEQ = ${member_seq} AND GUBUN = 'convenience' AND FACILITY_SEQ = T1.SEQ) AS MEMBER_FAVORITE_CNT
+								</if>
+				     		 FROM (SELECT * 
+				     		 			  FROM CONVENIENCE M
+				    					WHERE DEL_YN = 'N'
+				    					<if test="search_area_seq !='' and search_area_seq != null">
+								    		AND AREA_SEQ = ${search_area_seq}
+										</if>
+										<if test="search_kind_seq !='' and search_kind_seq != null">
+								    		<!-- AND KIND_STR LIKE CONCAT('%', #{search_kind_seq,jdbcType=VARCHAR}, '%') -->
+								    		AND KIND_SEQ = ${search_kind_seq}								    		 
+										</if>
+										<if test="ajax_kind_seq !='' and ajax_kind_seq != null">
+								    		AND KIND_SEQ IN (${ajax_kind_seq}) 
+										</if>
+										<if test="ajax_area_seq !='' and ajax_area_seq != null">
+								    		AND AREA_SEQ IN (${ajax_area_seq}) 
+										</if>
+										<if test="searchWords !='' and searchWords != null">
+								    		AND NAME LIKE CONCAT('%', #{searchWords,jdbcType=VARCHAR}, '%') 
+										</if>
+										<if test="search_content !='' and search_content != null">
+								    		AND (
+								    				NAME LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				CONCAT(TEL1, TEL2, TEL3) LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				CONCAT(FAX1, FAX2, FAX3) LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				ADDR1 LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				ADDR2 LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				DOMAIN LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    			)
+										</if>
+										<if test="(search_facility01 !='' and search_facility01 != null) or (search_facility02 !='' and search_facility02 != null) or (search_facility03 !='' and search_facility03 != null) or (search_facility04 !='' and search_facility04 != null) or (search_facility05 !='' and search_facility05 != null)
+										or (search_facility06 !='' and search_facility06 != null) or (search_facility07 !='' and search_facility07 != null) or (search_facility08 !='' and search_facility08 != null)
+										or (search_facility09 !='' and search_facility09 != null) or (search_facility10 !='' and search_facility10 != null) or (search_facility11 !='' and search_facility11 != null)
+										or (search_facility12 !='' and search_facility12 != null) or (search_facility13 !='' and search_facility13 != null) or (search_facility14 !='' and search_facility14 != null) or (search_facility15 !='' and search_facility15 != null)">
+										
+							    		AND (
+							    				1 = 2
+							    				<if test="search_facility01 !='' and search_facility01 != null">
+							    				OR KIND_STR LIKE '%186%' 
+							    				</if>
+							    				<if test="search_facility02 !='' and search_facility02 != null">
+							    				OR KIND_STR LIKE '%187%' 
+							    				</if>
+							    				<if test="search_facility03 !='' and search_facility03 != null">
+							    				OR KIND_STR LIKE '%188%' 
+							    				</if>
+							    				<if test="search_facility04 !='' and search_facility04 != null">
+							    				OR KIND_STR LIKE '%189%' 
+							    				</if>
+							    				<if test="search_facility05 !='' and search_facility05 != null">
+							    				OR KIND_STR LIKE '%190%' 
+							    				</if>
+							    				<if test="search_facility06 !='' and search_facility06 != null">
+							    				OR KIND_STR LIKE '%192%' 
+							    				</if>
+							    				<if test="search_facility07 !='' and search_facility07 != null">
+							    				OR KIND_STR LIKE '%193%' 
+							    				</if>
+							    				<if test="search_facility08 !='' and search_facility08 != null">
+							    				OR KIND_STR LIKE '%194%' 
+							    				</if>
+							    				<if test="search_facility09 !='' and search_facility09 != null">
+							    				OR KIND_STR LIKE '%195%' 
+							    				</if>
+							    				<if test="search_facility10 !='' and search_facility10 != null">
+							    				OR KIND_STR LIKE '%196%' 
+							    				</if>
+							    				<if test="search_facility11 !='' and search_facility11 != null">
+							    				OR KIND_STR LIKE '%197%' 
+							    				</if>
+							    				<if test="search_facility12 !='' and search_facility12 != null">
+							    				OR KIND_STR LIKE '%198%' 
+							    				</if>
+							    				<if test="search_facility13 !='' and search_facility13 != null">
+							    				OR KIND_STR LIKE '%199%' 
+							    				</if>
+							    				<if test="search_facility14 !='' and search_facility14 != null">
+							    				OR KIND_STR LIKE '%200%' 
+							    				</if>
+							    				<if test="search_facility15 !='' and search_facility15 != null">
+							    				OR KIND_STR LIKE '%211%' 
+							    				</if>
+								    		)
+								    	</if>
+								   )T1
+						   	 <!-- <choose>
+								<when test="sort == 'name'">
+									ORDER BY NAME ASC
+								</when>
+								<otherwise>
+									ORDER BY SEQ DESC
+								</otherwise>
+							</choose> -->
+							ORDER BY (SELECT COUNT(*) AS FAVORITE_CNT FROM FAVORITE WHERE GUBUN = 'convenience' AND FACILITY_SEQ = T1.SEQ) DESC, NAME ASC
+	    				) T2
+	    				 ORDER BY (SELECT COUNT(*) AS FAVORITE_CNT FROM FAVORITE WHERE GUBUN = 'convenience' AND FACILITY_SEQ = T2.SEQ) DESC, NAME ASC
+	    				 LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="conListCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM CONVENIENCE M
+    					WHERE DEL_YN = 'N'
+    					<if test="search_area_seq !='' and search_area_seq != null">
+				    		AND AREA_SEQ = ${search_area_seq}
+						</if>
+						<if test="search_kind_seq !='' and search_kind_seq != null">
+				    		<!-- AND KIND_STR LIKE CONCAT('%', #{search_kind_seq,jdbcType=VARCHAR}, '%') -->
+				    		AND KIND_SEQ = ${search_kind_seq}								    		 
+						</if>
+						<if test="ajax_kind_seq !='' and ajax_kind_seq != null">
+				    		AND KIND_SEQ IN (${ajax_kind_seq}) 
+						</if>
+						<if test="ajax_area_seq !='' and ajax_area_seq != null">
+				    		AND AREA_SEQ IN (${ajax_area_seq}) 
+						</if>
+						<if test="searchWords !='' and searchWords != null">
+				    		AND NAME LIKE CONCAT('%', #{searchWords,jdbcType=VARCHAR}, '%') 
+						</if>
+						<if test="search_content !='' and search_content != null">
+				    		AND (
+				    				NAME LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				CONCAT(TEL1, TEL2, TEL3) LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				CONCAT(FAX1, FAX2, FAX3) LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				ADDR1 LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				ADDR2 LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				DOMAIN LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+				    			)
+						</if>
+						<if test="(search_facility01 !='' and search_facility01 != null) or (search_facility02 !='' and search_facility02 != null) or (search_facility03 !='' and search_facility03 != null) or (search_facility04 !='' and search_facility04 != null) or (search_facility05 !='' and search_facility05 != null)
+							or (search_facility06 !='' and search_facility06 != null) or (search_facility07 !='' and search_facility07 != null) or (search_facility08 !='' and search_facility08 != null)
+							or (search_facility09 !='' and search_facility09 != null) or (search_facility10 !='' and search_facility10 != null) or (search_facility11 !='' and search_facility11 != null)
+							or (search_facility12 !='' and search_facility12 != null) or (search_facility13 !='' and search_facility13 != null) or (search_facility14 !='' and search_facility14 != null) or (search_facility15 !='' and search_facility15 != null)">
+							
+				    		AND (
+				    				1 = 2
+				    				<if test="search_facility01 !='' and search_facility01 != null">
+				    				OR KIND_STR LIKE '%186%' 
+				    				</if>
+				    				<if test="search_facility02 !='' and search_facility02 != null">
+				    				OR KIND_STR LIKE '%187%' 
+				    				</if>
+				    				<if test="search_facility03 !='' and search_facility03 != null">
+				    				OR KIND_STR LIKE '%188%' 
+				    				</if>
+				    				<if test="search_facility04 !='' and search_facility04 != null">
+				    				OR KIND_STR LIKE '%189%' 
+				    				</if>
+				    				<if test="search_facility05 !='' and search_facility05 != null">
+				    				OR KIND_STR LIKE '%190%' 
+				    				</if>
+				    				<if test="search_facility06 !='' and search_facility06 != null">
+				    				OR KIND_STR LIKE '%192%' 
+				    				</if>
+				    				<if test="search_facility07 !='' and search_facility07 != null">
+				    				OR KIND_STR LIKE '%193%' 
+				    				</if>
+				    				<if test="search_facility08 !='' and search_facility08 != null">
+				    				OR KIND_STR LIKE '%194%' 
+				    				</if>
+				    				<if test="search_facility09 !='' and search_facility09 != null">
+				    				OR KIND_STR LIKE '%195%' 
+				    				</if>
+				    				<if test="search_facility10 !='' and search_facility10 != null">
+				    				OR KIND_STR LIKE '%196%' 
+				    				</if>
+				    				<if test="search_facility11 !='' and search_facility11 != null">
+				    				OR KIND_STR LIKE '%197%' 
+				    				</if>
+				    				<if test="search_facility12 !='' and search_facility12 != null">
+				    				OR KIND_STR LIKE '%198%' 
+				    				</if>
+				    				<if test="search_facility13 !='' and search_facility13 != null">
+				    				OR KIND_STR LIKE '%199%' 
+				    				</if>
+				    				<if test="search_facility14 !='' and search_facility14 != null">
+				    				OR KIND_STR LIKE '%200%' 
+				    				</if>
+				    				<if test="search_facility15 !='' and search_facility15 != null">
+				    				OR KIND_STR LIKE '%211%' 
+				    				</if>
+					    		)
+					    	</if>
+				   )T1
+
+	</select>	
+	
+	<update id="conUpdate" parameterType="java.util.Map">
+		UPDATE CONVENIENCE SET 
+					 AREA_SEQ = ${area_seq}
+					,KIND_SEQ = ${kind_seq}
+					,NAME = #{name,jdbcType=VARCHAR}
+					,TEL1 = #{tel1,jdbcType=VARCHAR}
+					,TEL2 = #{tel2,jdbcType=VARCHAR}
+					,TEL3 = #{tel3,jdbcType=VARCHAR}
+					,FAX1 = #{fax1,jdbcType=VARCHAR}
+					,FAX2 = #{fax2,jdbcType=VARCHAR}
+					,FAX3 = #{fax3,jdbcType=VARCHAR}
+					,ADDR1 = #{addr1,jdbcType=VARCHAR}
+					,ADDR2 = #{addr2,jdbcType=VARCHAR}
+					,ZIP_CD = #{zip_cd,jdbcType=VARCHAR}
+					,DOMAIN = #{domain,jdbcType=VARCHAR}
+					,LAT = #{lat,jdbcType=VARCHAR}
+					,LON = #{lon,jdbcType=VARCHAR}
+					<if test="img1 != null and img1 != ''">
+					,IMG1 = #{img1,jdbcType=VARCHAR}
+					</if>
+					<if test="img2 != null and img1 != ''">
+					,IMG2 = #{img2,jdbcType=VARCHAR}
+					</if>
+					<if test="img3 != null and img1 != ''">
+					,IMG3 = #{img3,jdbcType=VARCHAR}
+					</if>
+					,KIND_STR = #{kind_str,jdbcType=VARCHAR}					
+			WHERE SEQ = ${seq}
+	</update>
+	
+	<delete id="conDel" parameterType="java.util.Map" >
+		UPDATE CONVENIENCE
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ = ${seq}
+	</delete>	
+	
+	<select id="commentList" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT T1.SEQ
+			       				,T1.P_SEQ
+			       				,
+			       				(
+			       					CASE 
+				       					WHEN T1.GUBUN = 'facility' THEN (SELECT NAME FROM FACILITY WHERE SEQ = T1.P_SEQ)
+				       					WHEN T1.GUBUN = 'convenience' THEN (SELECT NAME FROM CONVENIENCE WHERE SEQ = T1.P_SEQ)
+				       					ELSE 'X'
+			       					END
+			       				) AS FACILITY_NAME
+								,T1.DEL_YN
+								,T1.REG_DATE
+								,T1.GUBUN
+								,T1.NAME
+								,T1.PWD
+								,T1.CONTENT
+				     		 FROM (SELECT * 
+				     		 			  FROM FACILITY_COMMENT M
+				    					WHERE DEL_YN = 'N'
+				    					<if test="search_gubun !='' and search_gubun != null">
+								    		AND GUBUN = #{search_gubun,jdbcType=VARCHAR}
+										</if>
+										<if test="search_content !='' and search_content != null">
+								    		AND (
+								    				NAME LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				CONTENT LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				(SELECT NAME FROM FACILITY WHERE SEQ = M.P_SEQ) LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				(SELECT NAME FROM CONVENIENCE WHERE SEQ = M.P_SEQ) LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    			)
+										</if>		    	
+								   )T1
+						   	 ORDER BY SEQ DESC
+	    				) T2 
+	    				ORDER BY SEQ DESC
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="commentListCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM FACILITY_COMMENT M
+    					WHERE DEL_YN = 'N'
+    					<if test="search_gubun !='' and search_gubun != null">
+				    		AND GUBUN = #{search_gubun,jdbcType=VARCHAR}
+						</if>
+    					<if test="search_content !='' and search_content != null">
+				    		AND (
+				    				NAME LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				CONTENT LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				(SELECT NAME FROM FACILITY WHERE SEQ = M.P_SEQ) LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				(SELECT NAME FROM CONVENIENCE WHERE SEQ = M.P_SEQ) LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+				    			)
+						</if>	
+				   )T1
+
+	</select>
+	
+	<delete id="commentDel" parameterType="java.util.Map" >
+		UPDATE FACILITY_COMMENT
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ = ${seq}
+	</delete>	
+	
+	
+	<insert id="commentInsert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO FACILITY_COMMENT
+						  ( SEQ
+						  , P_SEQ
+						  , DEL_YN
+						  , REG_DATE
+						  , GUBUN
+					 	  , NAME
+					 	  , PWD
+					 	  , CONTENT
+				  )VALUES(  
+				  	  ${seq}
+				  	 ,${p_seq}
+					 ,'N'
+					 ,NOW()
+					 ,#{gubun,jdbcType=VARCHAR}
+					 ,#{name,jdbcType=VARCHAR}
+					 ,#{pwd,jdbcType=VARCHAR}
+					 ,#{content,jdbcType=VARCHAR}
+				 )
+	</insert>
+	
+	<select id="commentGetMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM FACILITY_COMMENT
+	</select>
+
+	<update id="commentUpdate" parameterType="java.util.Map">
+		UPDATE FACILITY_COMMENT SET 
+					 NAME = #{name,jdbcType=VARCHAR}
+					,CONTENT = #{content,jdbcType=VARCHAR}
+			WHERE SEQ = ${seq}
+	</update>
+	
+	<select id="userCommentList" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT T1.SEQ
+			       				,T1.P_SEQ
+								,T1.DEL_YN
+								,T1.REG_DATE
+								,T1.GUBUN
+								,T1.NAME
+								,T1.PWD
+								,T1.CONTENT
+				     		 FROM (SELECT * 
+				     		 			  FROM FACILITY_COMMENT M
+				    					WHERE DEL_YN = 'N'
+										  AND P_SEQ = ${p_seq}    	
+								   )T1
+						   	 ORDER BY SEQ ASC
+	    				) T2
+	    				ORDER BY SEQ ASC
+	</select>
+			
+	<select id="userCommentListCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM FACILITY_COMMENT M
+    					WHERE DEL_YN = 'N'
+    					AND P_SEQ = ${p_seq}
+				   )T1
+
+	</select>
+	
+	<delete id="comment_check_del" parameterType="java.util.Map" >
+		UPDATE FACILITY_COMMENT
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ IN (${check_seq})
+	</delete>
+	
+	<select id="comment_view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT 
+			SEQ,
+			DEL_YN,
+			DATE_FORMAT(REG_DATE, '%Y-%m-%d') AS REG_DATE,
+			GUBUN,
+			NAME,
+			PWD,
+			CONTENT,
+			P_SEQ
+		FROM FACILITY_COMMENT F
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<select id="comment_pwd_check" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+		SELECT COUNT(*) FROM FACILITY_COMMENT
+		WHERE SEQ = ${seq}
+		  AND PWD = #{pwd,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="favoriteGetMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM FAVORITE
+	</select>
+	
+	<insert id="favoriteInsert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO FAVORITE
+						  ( SEQ
+						  , MEMBER_SEQ
+						  , GUBUN
+						  , FACILITY_SEQ
+					 	  , REG_DATE
+				  )VALUES(  
+				  	  ${seq}
+					 ,${member_seq}
+					 ,#{gubun,jdbcType=VARCHAR}
+					 ,${facility_seq}
+					 ,NOW()
+				 )
+	</insert>
+	
+	<select id="getFavoriteCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		FROM FAVORITE
+     		WHERE MEMBER_SEQ = ${member_seq}
+     		  AND GUBUN = #{gubun,jdbcType=VARCHAR}
+     		  AND FACILITY_SEQ = ${facility_seq}
+	</select>
+	
+	<delete id="favoriteDelete" parameterType="kr.co.o2i.util.CommonMap">
+		DELETE FROM FAVORITE 
+			WHERE FACILITY_SEQ = ${facility_seq}
+			  AND MEMBER_SEQ = ${member_seq}
+			  AND GUBUN = #{gubun,jdbcType=VARCHAR}					
+	</delete>
+	
+</mapper>

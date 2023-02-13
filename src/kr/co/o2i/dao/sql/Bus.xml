@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="bus">
+
+	<select id="getStationList" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT * FROM BUS_STATION
+			WHERE BUS = ${bus}
+	</select>
+	
+	<select id="getStationOne" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT * FROM BUS_STATION
+			WHERE BUS = ${bus}
+			  AND ROTATION = ${rotation}
+			  AND STATION_SEQ = ${location}
+	</select>
+	
+	<insert id="location_insert" parameterType="kr.co.o2i.util.CommonMap">
+			INSERT INTO BUS_LOCATION 
+			(
+				SEQ,
+				BUS,
+				ROTATION,
+				LAT,
+				LON,
+				REG_DATE
+			)
+			VALUES
+			(
+				( SELECT SEQ FROM (SELECT IFNULL(MAX(SEQ),0)+1 AS SEQ FROM BUS_LOCATION) TT )
+				,${bus}
+				,${rotation}
+				,${lat}
+				,${lon}
+				,NOW() 
+			)			
+	</insert>
+	
+	<select id="busTest" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT * FROM BUS_LOCATION
+			WHERE BUS = ${bus}
+			  AND ROTATION = ${rotation}
+			  AND DATE_FORMAT(REG_DATE, '%Y-%m-%d') = '2018-11-22' 
+			  ORDER BY SEQ ASC
+	</select>
+	
+	<select id="getBusStation" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT STATION_SEQ, NAME FROM BUS_STATION
+		WHERE BUS = ${bus} 
+		  AND ROTATION = ${rotation}
+		GROUP BY NAME
+		ORDER BY STATION_SEQ
+	</select>
+	
+</mapper>

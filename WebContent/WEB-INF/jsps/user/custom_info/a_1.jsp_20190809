@@ -1,0 +1,610 @@
+<<<<<<< HEAD
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="t" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page isELIgnored ="false" %>
+<script>
+
+function setIFrameHeight(obj){
+    if(obj.contentDocument){
+        obj.height = obj.contentDocument.body.offsetHeight + 40;
+    } else {
+        obj.height = obj.contentWindow.document.body.scrollHeight;
+    }
+}
+
+$(document).ready(function(){
+
+
+	$('#btnSearch').click(function () {
+	//	if(! valCheck('search_value','검색어를 입력하세요')) return;
+	//	if(! lenCheck('search_value',2, '검색어는 2글자 이상 입력하세요')) return;
+		//$('#page').val(1);
+		//$('#pagelistno').val(1);
+		$('#searchForm').submit();
+	});
+	
+	$('.panelTitle').click(function () {
+		var seq = $(this).attr("param");		
+		$(this).next().children("iframe").attr("src", "/custom_info/getContent.do?seq=" + seq);
+	});
+	
+	
+});
+</script>
+
+		<form name="searchForm" id="searchForm" method="post" action="/custom_info/a_1.do">
+					<div class="contsArea personalizedInfo">
+						<p class="textPara_top">'개별맞춤' 메뉴를 선택 후 검색하시면 원하시는 '복지서비스' 정보를 보실 수 있습니다.</p>
+
+						<!-- 검색박스 -->
+						<div class="searchBoxWrap">
+							<p class="rowOptions">
+								<span>
+									<label for="search_type_seq">장애유형</label>
+									<select name="search_type_seq" id="search_type_seq">
+										<option value="">전체</option>
+										<c:forEach var="list" items="${selType4List}">
+											<option value="${list.SEQ}" <c:if test="${list.SEQ != '' and list.SEQ == bean.search_type_seq}">selected="selected"</c:if>>${list.CODE_DESC}</option>
+										</c:forEach>
+									</select>	
+								</span>
+								<span>
+									<label for="search_grade_seq">장애등급</label>
+									<select name="search_grade_seq" id="search_grade_seq">
+										<option value="">전체</option>
+										<c:forEach var="list" items="${selType5List}">
+											<option value="${list.SEQ}" <c:if test="${list.SEQ != '' and list.SEQ == bean.search_grade_seq}">selected="selected"</c:if>>${list.CODE_DESC}</option>
+										</c:forEach>
+									</select>
+								</span>
+								<span>
+									<label for="search_area_seq">지역</label>
+									<select name="search_area_seq" id="search_area_seq">
+										<option value="">전체</option>
+										<c:forEach var="list" items="${selType6List}">
+											<option value="${list.SEQ}" <c:if test="${list.SEQ != '' and list.SEQ == bean.search_area_seq}">selected="selected"</c:if>>${list.CODE_DESC}</option>
+										</c:forEach>
+									</select>	
+								</span>
+								<span class="">
+									<label for="search_sex_seq">성별</label>
+									<select id="search_sex_seq" name="search_sex_seq">
+										<option value="">선택</option>
+										<c:forEach var="list" items="${selType3List}">
+											<option value="${list.SEQ}" <c:if test="${list.SEQ != '' and list.SEQ == bean.search_sex_seq}">selected="selected"</c:if>>${list.CODE_DESC}</option>
+										</c:forEach>
+									</select>
+								</span>
+							</p>
+							<p class="rowSrchWords">
+								<span><label for="search_content">검색어</label><input type="text" id="search_content" name="search_content" value="${bean.search_content}"></span>
+								<span><button type="button" id="btnSearch" class="btnTypeBasic">검색</button></span>
+							</p>
+						</div>
+						<!-- //검색박스 -->
+
+						<!-- 탭 -->
+						<div class="tabMenuWrapper">
+							<div class="tabMenu num6">
+								<div>
+									<div class="btnTab"><a href="#personalizedTab01"><span>생활안정 (<em>${search_count_1}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab02"><span>가족지원 (<em>${search_count_2}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab03"><span>고용 (<em>${search_count_3}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab04"><span>거주이용 (<em>${search_count_4}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab05"><span>교육·상담 (<em>${search_count_5}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab06"><span>건강·의료 (<em>${search_count_6}</em>)</span></a></div>
+
+									<div class="btnTab"><a href="#personalizedTab07"><span>문화·여가 (<em>${search_count_7}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab08"><span>편의 (<em>${search_count_8}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab09"><span>보조기기 (<em>${search_count_9}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab10"><span>바우처 (<em>${search_count_10}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab11"><span>기타 (<em>${search_count_11}</em>)</span></a></div>
+									<div class="btnTab typeViewAll"><a href="#personalizedViewAll"><span>전체 정보보기</span></a></div>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab01">
+								<p class="contsSubTit">생활안정(<span>${search_count_1}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_1}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab02">
+								<p class="contsSubTit">가족지원(<span>${search_count_2}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_2}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab03">
+								<p class="contsSubTit">고용(<span>${search_count_3}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_3}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab04">
+								<p class="contsSubTit">거주이용(<span>${search_count_4}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_4}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab05">
+								<p class="contsSubTit">교육·상담(<span>${search_count_5}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_5}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab06">
+								<p class="contsSubTit">건강·의료(<span>${search_count_6}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_6}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab07">
+								<p class="contsSubTit">문화·여가(<span>${search_count_7}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_7}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab08">
+								<p class="contsSubTit">편의(<span>${search_count_8}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_8}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab09">
+								<p class="contsSubTit">보조기기(<span>${search_count_9}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_9}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab10">
+								<p class="contsSubTit">바우처(<span>${search_count_10}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_10}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab11">
+								<p class="contsSubTit">기타(<span>${search_count_11}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_11}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedViewAll">
+								<p class="contsSubTit">전체 정보보기(<span>${search_count_total}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_total}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+
+						</div>
+						<!-- //탭 -->
+					</div>
+=======
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="t" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page isELIgnored ="false" %>
+<script>
+
+function setIFrameHeight(obj){
+    if(obj.contentDocument){
+        obj.height = obj.contentDocument.body.offsetHeight + 40;
+    } else {
+        obj.height = obj.contentWindow.document.body.scrollHeight;
+    }
+}
+
+$(document).ready(function(){
+
+
+	$('#btnSearch').click(function () {
+	//	if(! valCheck('search_value','검색어를 입력하세요')) return;
+	//	if(! lenCheck('search_value',2, '검색어는 2글자 이상 입력하세요')) return;
+		//$('#page').val(1);
+		//$('#pagelistno').val(1);
+		$('#searchForm').submit();
+	});
+	
+	$('.panelTitle').click(function () {
+		var seq = $(this).attr("param");		
+		$(this).next().children("iframe").attr("src", "/custom_info/getContent.do?seq=" + seq);
+	});
+	
+	
+});
+</script>
+
+		<form name="searchForm" id="searchForm" method="post" action="/custom_info/a_1.do">
+					<div class="contsArea personalizedInfo">
+						<p class="textPara_top">'개별맞춤' 메뉴를 선택 후 검색하시면 원하시는 '복지서비스' 정보를 보실 수 있습니다.</p>
+
+						<!-- 검색박스 -->
+						<div class="searchBoxWrap">
+							<p class="rowOptions">
+								<span>
+									<label for="search_type_seq">장애유형</label>
+									<select name="search_type_seq" id="search_type_seq">
+										<option value="">전체</option>
+										<c:forEach var="list" items="${selType4List}">
+											<option value="${list.SEQ}" <c:if test="${list.SEQ != '' and list.SEQ == bean.search_type_seq}">selected="selected"</c:if>>${list.CODE_DESC}</option>
+										</c:forEach>
+									</select>	
+								</span>
+								<span>
+									<label for="search_grade_seq">장애등급</label>
+									<select name="search_grade_seq" id="search_grade_seq">
+										<option value="">전체</option>
+										<c:forEach var="list" items="${selType5List}">
+											<option value="${list.SEQ}" <c:if test="${list.SEQ != '' and list.SEQ == bean.search_grade_seq}">selected="selected"</c:if>>${list.CODE_DESC}</option>
+										</c:forEach>
+									</select>
+								</span>
+								<span>
+									<label for="search_area_seq">지역</label>
+									<select name="search_area_seq" id="search_area_seq">
+										<option value="">전체</option>
+										<c:forEach var="list" items="${selType6List}">
+											<option value="${list.SEQ}" <c:if test="${list.SEQ != '' and list.SEQ == bean.search_area_seq}">selected="selected"</c:if>>${list.CODE_DESC}</option>
+										</c:forEach>
+									</select>	
+								</span>
+								<span class="">
+									<label for="search_sex_seq">성별</label>
+									<select id="search_sex_seq" name="search_sex_seq">
+										<option value="">선택</option>
+										<c:forEach var="list" items="${selType3List}">
+											<option value="${list.SEQ}" <c:if test="${list.SEQ != '' and list.SEQ == bean.search_sex_seq}">selected="selected"</c:if>>${list.CODE_DESC}</option>
+										</c:forEach>
+									</select>
+								</span>
+							</p>
+							<p class="rowSrchWords">
+								<span><label for="search_content">검색어</label><input type="text" id="search_content" name="search_content" value="${bean.search_content}"></span>
+								<span><button type="button" id="btnSearch" class="btnTypeBasic">검색</button></span>
+							</p>
+						</div>
+						<!-- //검색박스 -->
+
+						<!-- 탭 -->
+						<div class="tabMenuWrapper">
+							<div class="tabMenu num6">
+								<div>
+									<div class="btnTab"><a href="#personalizedTab01"><span>생활안정 (<em>${search_count_1}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab02"><span>가족지원 (<em>${search_count_2}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab03"><span>고용 (<em>${search_count_3}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab04"><span>거주이용 (<em>${search_count_4}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab05"><span>교육·상담 (<em>${search_count_5}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab06"><span>건강·의료 (<em>${search_count_6}</em>)</span></a></div>
+
+									<div class="btnTab"><a href="#personalizedTab07"><span>문화·여가 (<em>${search_count_7}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab08"><span>편의 (<em>${search_count_8}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab09"><span>보조기기 (<em>${search_count_9}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab10"><span>바우처 (<em>${search_count_10}</em>)</span></a></div>
+									<div class="btnTab"><a href="#personalizedTab11"><span>기타 (<em>${search_count_11}</em>)</span></a></div>
+									<div class="btnTab typeViewAll"><a href="#personalizedViewAll"><span>전체 정보보기</span></a></div>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab01">
+								<p class="contsSubTit">생활안정(<span>${search_count_1}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_1}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab02">
+								<p class="contsSubTit">가족지원(<span>${search_count_2}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_2}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab03">
+								<p class="contsSubTit">고용(<span>${search_count_3}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_3}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab04">
+								<p class="contsSubTit">거주이용(<span>${search_count_4}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_4}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab05">
+								<p class="contsSubTit">교육·상담(<span>${search_count_5}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_5}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab06">
+								<p class="contsSubTit">건강·의료(<span>${search_count_6}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_6}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab07">
+								<p class="contsSubTit">문화·여가(<span>${search_count_7}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_7}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab08">
+								<p class="contsSubTit">편의(<span>${search_count_8}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_8}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab09">
+								<p class="contsSubTit">보조기기(<span>${search_count_9}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_9}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab10">
+								<p class="contsSubTit">바우처(<span>${search_count_10}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_10}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedTab11">
+								<p class="contsSubTit">기타(<span>${search_count_11}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_11}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="personalizedViewAll">
+								<p class="contsSubTit">전체 정보보기(<span>${search_count_total}</span>)</p>
+								<div class="accordionConts">
+									<ul>
+										<c:forEach var="list" items="${search_list_total}">
+											<li>
+												<a href="#" class="panelTitle" param="${list.SEQ}"><strong>${list.TITLE}</strong><span class="hidden">내용열기</span></a>
+												<div class="panelContent">
+													<iframe src="" style="width: 100%; height: 150vh;"  title="복지 내용"></iframe>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+
+						</div>
+						<!-- //탭 -->
+					</div>
+>>>>>>> refs/heads/202204
+			</form>

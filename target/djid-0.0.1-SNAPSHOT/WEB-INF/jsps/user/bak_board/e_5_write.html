@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=1280">
+	<title>상담게시판 - 글쓰기 | 대전 장애인 맞춤 복지정보 정보드림</title>
+	<link rel="stylesheet" type="text/css" href="../common/css/public.css">
+	<script type="text/javascript" src="../common/js/lib/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../common/js/lib/owl.carousel.js"></script>
+	<script type="text/javascript" src="../common/js/common_ui.js"></script>
+	<script type="text/javascript" src="../common/js/publisherOnly.js"></script><!-- 퍼블리싱 전용(개발은 사용안함) -->
+</head>
+<body>
+	<div id="skipToContent">
+		<a href="#LNB">서브메뉴 바로가기 </a>
+		<a href="#contents">본문 바로가기 </a>
+	</div>
+	<div class="wrapper">
+		<!-- header -->
+		<div class="headerWrapper" id="header"><!-- load ( inc_header.html ) --></div>
+		<!-- //header -->
+
+		<!-- contents -->
+		<div class="container sub"><!-- 서브 .sub -->
+			<div class="innerBox">
+				<!-- LNB -->
+				<div class="localMenu" id="LNB">
+					<span class="hidden">서브메뉴 시작</span>
+					<h2><span>소통과 알림</span></h2>
+					<div class="lnbDepth">
+						<ul class="lnbDep1List">
+							<li><a href="#" class="lnbDep1">공지사항</a></li>
+							<li><a href="#" class="lnbDep1">행사달력</a></li>
+							<li><a href="#" class="lnbDep1">홍보게시판</a>
+								<ul class="lnbDep2List">
+									<li><a href="#" class="lnbDep2">우리기관 홍보</a></li>
+									<li><a href="#" class="lnbDep2">나눔/이벤트</a></li>
+								</ul>
+							</li>
+							<li><a href="#" class="lnbDep1">자유게시판</a></li>
+							<li><a href="#" class="lnbDep1 on">상담게시판</a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- //LNB -->
+
+				<!-- 본문 -->
+				<div class="contents" id="contents">
+					<span class="hidden">본문시작</span>
+
+					<!-- 컨텐츠 상단공통 -->
+					<div class="contsTopBox">
+						<h3 class="contsTit">상담게시판</h3>
+						<div class="breadcrumbsBox">
+							<strong class="hidden">현위치</strong>
+							<span>HOME</span><span>소통과알림</span><span>홍보게시판</span><strong class="active">상담게시판</strong>
+						</div>
+					</div>
+					<!-- //컨텐츠 상단공통 -->
+					<div class="contsArea communicationNotice">
+						<p class="textParaList">장애인 복지에 관련된 사항을 편리하게 상담을 받아보실 수 있습니다.</p>
+						<div class="commWrite">
+							<table class="boardTypeRow">
+								<caption>상담게시판 글쓰기이며 제목, 파일첨부, 내용, 자동등록방지 내용을 입력합니다.</caption><!-- 2018.11.19 캡션 내용에서 등록일 삭제 -->
+								<colgroup>
+									<col style="width: 170px">
+									<col style="width: *">
+								</colgroup>
+								<tbody>
+									<tr>
+										<th scope="row"><label for="subject">제목</label></th>
+										<td><input type="text" id="subject" class="wid85"></td>
+									</tr>
+									<tr>
+										<th scope="row"><label for="file">파일첨부</label></th>
+										<td>
+											<input type="file" id="file">
+											<p class="fileNoti">* 파일첨부용량은 최대 5MB이며,<strong>파일이 여러개일 경우 압축하여 1개의 파일</strong>로 올려주세요.</p>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row"><label for="contents">내용</label></th>
+										<td><textarea id="contents"></textarea></td>
+									</tr>
+									<tr>
+										<th scope="row"><label for="captcha">자동등록방지</label></th>
+										<td class="captchaArea">
+											<span class="captcha"><img src="../common/images/@captcha.png" alt=""></span>
+											<input type="text" id="captcha">
+											<button type="button" class="btnTypeBasic  colorGray"><span>새로고침</span></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="btnArea center">
+							<button type="button" class="btnTypeBasic sizeM"><span>완료</span></button>
+							<button type="button" class="btnTypeBasic sizeM colorGray"><span>취소</span></button>
+						</div>
+					</div>
+				</div>
+				<!-- //본문 -->
+			</div>
+		</div>
+		<!-- //contents -->
+
+		<!-- footer -->
+		<div class="footerWrapper" id="footer"><!-- load ( inc_footer.html ) --></div>
+		<!-- //footer -->
+	</div>
+</body>
+</html>

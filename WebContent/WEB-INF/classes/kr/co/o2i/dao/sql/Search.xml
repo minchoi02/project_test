@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="search">
+	
+	<select id="menuTop3List" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+			SELECT T1.* FROM (
+					SELECT 
+						SEQ
+						,LINK
+						<![CDATA[,REPLACE(MENU1, '${keyword}', '<strong>${keyword}</strong>') AS MENU1]]>
+						<![CDATA[,REPLACE(MENU2, '${keyword}', '<strong>${keyword}</strong>') AS MENU2]]>
+						<![CDATA[,REPLACE(MENU3, '${keyword}', '<strong>${keyword}</strong>') AS MENU3]]>
+						<![CDATA[,REPLACE(MENU4, '${keyword}', '<strong>${keyword}</strong>') AS MENU4]]>
+						<![CDATA[,REPLACE(MENU5, '${keyword}', '<strong>${keyword}</strong>') AS MENU5]]>
+					   FROM MENU 
+					 WHERE (MENU1 like '%${keyword}%'
+					   OR MENU2 like '%${keyword}%'
+					   OR MENU3 like '%${keyword}%'
+					   OR MENU4 like '%${keyword}%'
+					   OR MENU5 like '%${keyword}%'
+					   )
+					 ORDER BY SEQ DESC 
+				 )T1
+			ORDER BY SEQ DESC
+			LIMIT 0, 3
+	</select>
+			
+	<select id="menuCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 		 FROM MENU 
+					 WHERE (MENU1 like '%${keyword}%'
+					   OR MENU2 like '%${keyword}%'
+					   OR MENU3 like '%${keyword}%'
+					   OR MENU4 like '%${keyword}%'
+					   OR MENU5 like '%${keyword}%'
+					   )
+				   )T1
+	</select>
+	
+	<select id="menuList" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT 
+								SEQ
+								,LINK
+								<![CDATA[,REPLACE(MENU1, '${keyword}', '<strong>${keyword}</strong>') AS MENU1]]>
+								<![CDATA[,REPLACE(MENU2, '${keyword}', '<strong>${keyword}</strong>') AS MENU2]]>
+								<![CDATA[,REPLACE(MENU3, '${keyword}', '<strong>${keyword}</strong>') AS MENU3]]>
+								<![CDATA[,REPLACE(MENU4, '${keyword}', '<strong>${keyword}</strong>') AS MENU4]]>
+								<![CDATA[,REPLACE(MENU5, '${keyword}', '<strong>${keyword}</strong>') AS MENU5]]>
+							   FROM (
+							   SELECT * FROM MENU 
+								 WHERE (MENU1 like '%${keyword}%'
+								   OR MENU2 like '%${keyword}%'
+								   OR MENU3 like '%${keyword}%'
+								   OR MENU4 like '%${keyword}%'
+								   OR MENU5 like '%${keyword}%') 
+								)T1
+						   	 ORDER BY SEQ DESC
+	    				) T2 
+	    				ORDER BY SEQ DESC
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="menuListCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM MENU M
+    					WHERE (MENU1 like '%${keyword}%'
+						   OR MENU2 like '%${keyword}%'
+						   OR MENU3 like '%${keyword}%'
+						   OR MENU4 like '%${keyword}%'
+						   OR MENU5 like '%${keyword}%') 
+				   )T1
+	</select>
+	
+	<select id="welfareTop3List" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+			SELECT T1.* FROM (
+					SELECT 
+						 SEQ
+    			 <![CDATA[,REPLACE(TITLE, '${keyword}', '<strong>${keyword}</strong>') AS TITLE]]>
+    			 <![CDATA[,REPLACE(FUNC_DELETETAG(CONTENT), '&nbsp;', '') AS CONTENT]]>
+    					  , DEL_YN
+    					  , REG_DATE
+    					  , BOARD_NAME
+    					  , (
+    					  	CASE BOARD_NAME
+    					  	WHEN 'welfare' THEN '/custom_info/a_1.do?search_content=${keyword}'
+    					  	WHEN 'life_cycle' THEN '/custom_info/a_2.do?search_content=${keyword}'
+    					  	END
+    					  ) AS LINK
+					   FROM WELFARE 
+					 WHERE DEL_YN = 'N' 
+					 AND
+					 (TITLE like '%${keyword}%'
+					   OR CONTENT like '%${keyword}%')
+					 ORDER BY SEQ DESC 
+				 )T1
+			ORDER BY SEQ DESC
+			LIMIT 0, 3
+	</select>
+			
+	<select id="welfareCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 		 FROM WELFARE 
+					 WHERE DEL_YN = 'N' 
+					 AND
+					 (TITLE like '%${keyword}%'
+					   OR CONTENT like '%${keyword}%')
+				   )T1
+	</select>
+	
+	<select id="welfareList" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT 
+								SEQ
+	    			 <![CDATA[,REPLACE(TITLE, '${keyword}', '<strong>${keyword}</strong>') AS TITLE]]>
+	    			 <![CDATA[,REPLACE(FUNC_DELETETAG(CONTENT), '&nbsp;', '') AS CONTENT]]>
+	    					  , DEL_YN
+	    					  , REG_DATE
+	    					  , BOARD_NAME
+	    					  , (
+	    					  	CASE BOARD_NAME
+	    					  	WHEN 'welfare' THEN '/custom_info/a_1.do?search_content=${keyword}'
+	    					  	WHEN 'life_cycle' THEN '/custom_info/a_2.do?search_content=${keyword}'
+	    					  	END
+	    					  ) AS LINK
+							   FROM (
+							   SELECT * FROM WELFARE 
+								 WHERE DEL_YN = 'N' 
+								 AND
+								 (TITLE like '%${keyword}%'
+								   OR CONTENT like '%${keyword}%') 
+								)T1
+						   	 ORDER BY SEQ DESC
+	    				) T2 
+	    				ORDER BY SEQ DESC
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="welfareListCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM WELFARE M
+    					WHERE DEL_YN = 'N' 
+								 AND
+								 (TITLE like '%${keyword}%'
+								   OR CONTENT like '%${keyword}%') 
+				   )T1
+	</select>
+	
+	<select id="facilityTop3List" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+			SELECT T1.* FROM (
+					SELECT 
+						  SEQ
+				<![CDATA[,REPLACE((SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = AREA_SEQ), '${keyword}', '<strong>${keyword}</strong>') AS AREA]]>
+						,AREA_SEQ
+						,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = KIND_SEQ) AS KIND
+						,KIND_SEQ
+						<![CDATA[,REPLACE(NAME, '${keyword}', '<strong>${keyword}</strong>') AS NAME]]>
+						,CONCAT(TEL1, '-', TEL2, '-', TEL3) AS TEL
+						,TEL1
+						,TEL2
+						,TEL3
+						,CONCAT(FAX1, '-', FAX2, '-', FAX3) AS FAX
+						,FAX1
+						,FAX2
+						,FAX3
+						<![CDATA[,REPLACE(ADDR1, '${keyword}', '<strong>${keyword}</strong>') AS ADDR1]]>
+						<![CDATA[,REPLACE(ADDR2, '${keyword}', '<strong>${keyword}</strong>') AS ADDR2]]>
+						,ZIP_CD
+						,DOMAIN
+						,DEL_YN
+						,REG_DATE
+					   FROM FACILITY 
+					 WHERE DEL_YN = 'N' 
+					 AND (
+	    				NAME LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+	    				OR
+	    				CONCAT(TEL1, TEL2, TEL3) LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+	    				OR
+	    				CONCAT(FAX1, FAX2, FAX3) LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+	    				OR
+	    				ADDR1 LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+	    				OR
+	    				ADDR2 LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+	    				OR
+	    				DOMAIN LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+	    			)
+				 )T1
+			LIMIT 0, 3
+	</select>
+			
+	<select id="facilityCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 		 FROM FACILITY 
+					 WHERE DEL_YN = 'N' 
+					 AND (
+	    				NAME LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+	    				OR
+	    				CONCAT(TEL1, TEL2, TEL3) LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+	    				OR
+	    				CONCAT(FAX1, FAX2, FAX3) LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+	    				OR
+	    				ADDR1 LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+	    				OR
+	    				ADDR2 LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+	    				OR
+	    				DOMAIN LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+	    			)
+				   )T1
+	</select>
+	
+	
+	<select id="facilityList" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT 
+								SEQ
+						<![CDATA[,REPLACE((SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = AREA_SEQ), '${keyword}', '<strong>${keyword}</strong>') AS AREA]]>
+								,AREA_SEQ
+								,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = KIND_SEQ) AS KIND
+								,KIND_SEQ
+								<![CDATA[,REPLACE(NAME, '${keyword}', '<strong>${keyword}</strong>') AS NAME]]>
+								,CONCAT(TEL1, '-', TEL2, '-', TEL3) AS TEL
+								,TEL1
+								,TEL2
+								,TEL3
+								,CONCAT(FAX1, '-', FAX2, '-', FAX3) AS FAX
+								,FAX1
+								,FAX2
+								,FAX3
+								<![CDATA[,REPLACE(ADDR1, '${keyword}', '<strong>${keyword}</strong>') AS ADDR1]]>
+								<![CDATA[,REPLACE(ADDR2, '${keyword}', '<strong>${keyword}</strong>') AS ADDR2]]>
+								,ZIP_CD
+								,DOMAIN
+								,DEL_YN
+								,REG_DATE
+							   FROM (
+							   SELECT * FROM FACILITY 
+								 WHERE DEL_YN = 'N' 
+								 AND (
+				    				NAME LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				CONCAT(TEL1, TEL2, TEL3) LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				CONCAT(FAX1, FAX2, FAX3) LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				ADDR1 LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				ADDR2 LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				DOMAIN LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+				    			)
+								)T1
+						   	 ORDER BY SEQ DESC
+	    				) T2 
+	    				ORDER BY SEQ DESC
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="facilityListCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM FACILITY M
+    					WHERE DEL_YN = 'N' 
+					 AND (
+		    				NAME LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+		    				OR
+		    				CONCAT(TEL1, TEL2, TEL3) LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+		    				OR
+		    				CONCAT(FAX1, FAX2, FAX3) LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+		    				OR
+		    				ADDR1 LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+		    				OR
+		    				ADDR2 LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+		    				OR
+		    				DOMAIN LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+		    			)
+				   )T1
+	</select>
+	
+	
+	<select id="boardTop3List" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+			SELECT T1.* FROM (
+					SELECT 
+						SEQ
+						  SEQ
+				<![CDATA[,REPLACE(TITLE, '${keyword}', '<strong>${keyword}</strong>') AS TITLE]]>
+				<![CDATA[,REPLACE(FUNC_DELETETAG(CONTENT), '&nbsp;', '') AS CONTENT]]>
+						 ,REG_DATE
+						 ,(
+    					  	CASE BOARD_NAME
+    					  	WHEN 'data' THEN '/welfare_info/c_3/view.do'
+    					  	WHEN 'notice' THEN '/board/e_1/view.do'
+    					  	WHEN 'promote' THEN '/board/e_3_1/view.do'
+    					  	WHEN 'event' THEN '/board/e_3_2/view.do'
+    					  	WHEN 'free' THEN '/board/e_4/view.do'
+    					  	WHEN 'gallery' THEN '/federation/g_3_1/view.do'
+    					  	WHEN 'movie' THEN '/federation/g_3_2/view.do'
+    					  	END
+    					  ) AS LINK
+					   FROM BOARD 
+					 WHERE DEL_YN = 'N' 
+					   AND BOARD_NAME IN ('data', 'notice', 'promote', 'event', 'free', 'gallery', 'movie')
+					   AND (
+	    				  TITLE LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+	    				  OR
+	    				  CONTENT LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+						   )
+					)T1
+			LIMIT 0, 3
+	</select>
+			
+	<select id="boardCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 		 FROM BOARD 
+					 WHERE DEL_YN = 'N' 
+					   AND BOARD_NAME IN ('data', 'notice', 'promote', 'event', 'free', 'gallery', 'movie')
+					   AND (
+	    				  TITLE LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+	    				  OR
+	    				  CONTENT LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+						   )
+				   )T1
+	</select>
+	
+	<select id="boardList" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT 
+								  SEQ
+						<![CDATA[,REPLACE(TITLE, '${keyword}', '<strong>${keyword}</strong>') AS TITLE]]>
+						<![CDATA[,REPLACE(FUNC_DELETETAG(CONTENT), '&nbsp;', '') AS CONTENT]]>
+								 ,REG_DATE
+								 ,(
+		    					  	CASE BOARD_NAME
+		    					  	WHEN 'data' THEN '/welfare_info/c_3/view.do'
+		    					  	WHEN 'notice' THEN '/board/e_1/view.do'
+		    					  	WHEN 'promote' THEN '/board/e_3_1/view.do'
+		    					  	WHEN 'event' THEN '/board/e_3_2/view.do'
+		    					  	WHEN 'free' THEN '/board/e_4/view.do'
+		    					  	WHEN 'gallery' THEN '/federation/g_3_1/view.do'
+		    					  	WHEN 'movie' THEN '/federation/g_3_2/view.do'
+		    					  	END
+		    					  ) AS LINK
+							   FROM (
+							   SELECT * FROM BOARD 
+								 WHERE DEL_YN = 'N' 
+								   AND BOARD_NAME IN ('data', 'notice', 'promote', 'event', 'free', 'gallery', 'movie')
+								   AND (
+				    				  TITLE LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+				    				  OR
+				    				  CONTENT LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+									   )
+								)T1
+						   	 ORDER BY SEQ DESC
+	    				) T2 
+	    				ORDER BY SEQ DESC
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="boardListCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM BOARD M
+    					WHERE DEL_YN = 'N' 
+						   AND BOARD_NAME IN ('data', 'notice', 'promote', 'event', 'free', 'gallery', 'movie')
+						   AND (
+		    				  TITLE LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+		    				  OR
+		    				  CONTENT LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+							   )
+				   )T1
+	</select>
+	
+	<select id="searchCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      	SELECT COUNT(*) FROM SEARCH
+		WHERE KEYWORD = #{keyword, jdbcType=VARCHAR}
+	</select>
+	
+	<update id="searchUpdate" parameterType="kr.co.o2i.util.CommonMap">
+		UPDATE SEARCH SET HIT = HIT + 1 WHERE KEYWORD = #{keyword, jdbcType=VARCHAR}
+	</update>
+	
+	<insert id="searchInsert"  parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO SEARCH 
+		(
+		    SEQ
+		    ,KEYWORD
+		    ,REG_DATE
+		    ,HIT
+		) VALUES (
+		    ( SELECT SEQ FROM (SELECT IFNULL(MAX(SEQ),0)+1 AS SEQ FROM SEARCH) TT )
+		    ,#{keyword, jdbcType=VARCHAR}
+		    ,NOW()
+		    ,1
+		)
+	</insert>
+	
+	<select id="searchList" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+			select * from  (
+		       			SELECT 
+							SEQ
+							,KEYWORD
+							,REG_DATE
+							,HIT	
+						FROM SEARCH							
+					   	 ORDER BY HIT DESC
+    				) T2 
+    				ORDER BY HIT DESC
+    				LIMIT 0, ${cnt} 
+	</select>
+	
+</mapper>

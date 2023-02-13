@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="master">
+
+	<insert id="insert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO MASTER
+						  ( SEQ
+						  , ID
+						  , NAME 	
+						  , PWD
+					 	  , MEMO
+					 	  , DEL_YN
+					 	  , REG_DATE
+					 	  , UPT_DATE
+					 	  , GRADE
+					 	  , MENU
+				  )VALUES(  
+				  	  ${seq}
+					 ,HEX(AES_ENCRYPT(#{id,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,PASSWORD(#{pwd,jdbcType=VARCHAR})			
+					 ,#{memo		,jdbcType=VARCHAR}
+					 ,'N'
+					 , NOW()
+					 , null
+					 , 'B'
+					 ,#{menu		,jdbcType=VARCHAR}
+				 )
+	</insert>
+	
+	<insert id="member_insert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO MASTER
+						  ( SEQ
+						  , ID
+						  , NAME 	
+						  , PWD
+					 	  , MEMO
+					 	  , DEL_YN
+					 	  , REG_DATE
+					 	  , UPT_DATE
+					 	  , GRADE
+					 	  , MENU
+				  )VALUES(  
+				  	  ${seq}
+					 ,HEX(AES_ENCRYPT(#{id,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,( SELECT PWD FROM (SELECT PWD FROM MEMBER WHERE SEQ = ${member_seq}) TT )		
+					 ,#{memo		,jdbcType=VARCHAR}
+					 ,'N'
+					 , NOW()
+					 , null
+					 , 'B'
+					 ,#{menu		,jdbcType=VARCHAR}
+				 )
+	</insert>
+	
+	<select id="getMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM MASTER
+	</select>
+
+
+	<select id="view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT SEQ
+			  , CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) AS ID
+			  , CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS NAME
+			  , PWD
+		 	  , MEMO
+		 	  , DEL_YN
+		 	  , REG_DATE
+		 	  , UPT_DATE
+		 	  , GRADE
+		 	  , MENU
+		FROM MASTER
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<select id="list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT T1.SEQ
+								  , CAST(AES_DECRYPT(UNHEX(T1.ID), #{key,jdbcType=VARCHAR}) AS CHAR) AS ID
+								  , CAST(AES_DECRYPT(UNHEX(T1.NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS NAME
+							 	  , T1.MEMO
+							 	  , T1.DEL_YN
+							 	  , T1.REG_DATE
+							 	  , T1.UPT_DATE
+							 	  , T1.GRADE
+							 	  , T1.MENU
+				     		 FROM (SELECT * 
+				     		 			  FROM MASTER M
+				    					WHERE DEL_YN = 'N'
+								    	<if test="search_value != null" >
+									  		<if test="search_value != ''" >
+									  				<if test="search_title == 'name'">
+									  				AND CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  				</if>
+									  				<if test="search_title == 'id'">
+									  				AND CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  				</if>
+									  				<if test="search_title == ''">
+									  				AND (
+									  						CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  						OR
+									  						CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  					)
+									  				</if>
+									  		</if>
+							          	</if>
+								   )T1
+						   	 ORDER BY SEQ DESC
+	    				) T2 
+	    				ORDER BY SEQ DESC
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="listCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM MASTER M
+    					WHERE DEL_YN = 'N'
+				    	<if test="search_value != null" >
+					  		<if test="search_value != ''" >
+					  				<if test="search_title == 'name'">
+					  				AND CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+					  				</if>
+					  				<if test="search_title == 'id'">
+					  				AND CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+					  				</if>
+					  		</if>
+			          	</if>
+				   )T1
+
+	</select>	
+	
+	<update id="update" parameterType="java.util.Map">
+		UPDATE MASTER SET
+					NAME = HEX(AES_ENCRYPT(#{name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))			
+					,MEMO = #{memo		,jdbcType=VARCHAR} 
+					<if test="change_pwd == 'OK'">
+						,PWD = PASSWORD(#{pwd,jdbcType=VARCHAR})
+					</if>
+					,MENU = #{menu		,jdbcType=VARCHAR}					 
+			WHERE SEQ = ${seq}
+	</update>
+	
+	<delete id="del" parameterType="java.util.Map" >
+		UPDATE MASTER
+	       SET DEL_YN  = 'Y'
+	       	  ,UPT_DATE = NOW()
+		 WHERE SEQ = ${seq}
+	</delete>
+	
+	<select id="check_id" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM MASTER
+     		 WHERE CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) = #{id,jdbcType=VARCHAR}
+     		   AND DEL_YN = 'N'
+	</select>
+	
+	<delete id="check_del" parameterType="java.util.Map" >
+		UPDATE MASTER
+	       SET DEL_YN  = 'Y'
+	       	  ,UPT_DATE = NOW()
+		 WHERE SEQ IN (${check_seq})
+	</delete>
+		
+</mapper>

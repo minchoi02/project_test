@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="news">
+	
+	<select id="list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT T1.SEQ
+								  <![CDATA[, REPLACE(REPLACE(T1.TITLE, '<b>', ''), '</b>','') AS TITLE]]>
+								  , T1.LINK
+							 	  , T1.DESCRIPTION
+							 	  , T1.PUB_DATE
+							 	  , T1.CHANNEL
+							 	  , T1.REG_DATE
+							 	  , T1.THUM_IMG
+							 	  , T1.THUM_ALT
+				     		 FROM (SELECT * 
+				     		 			  FROM NEWS M
+				    					WHERE DEL_YN = 'N'
+								    	<if test="search_content !='' and search_content != null">
+								    		AND (
+								    				TITLE LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				DESCRIPTION LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				LINK LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    			)
+										</if>
+										<if test="search_channel !='' and search_channel != null">
+								    		AND CHANNEL = #{search_channel, jdbcType=VARCHAR}
+										</if>
+								   )T1
+						   	 ORDER BY PUB_DATE DESC
+	    				) T2 
+	    				ORDER BY PUB_DATE DESC
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="listCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM NEWS M
+    					WHERE DEL_YN = 'N'
+					    	<if test="search_content !='' and search_content != null">
+					    		AND (
+					    				TITLE LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+					    				OR
+					    				DESCRIPTION LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+					    				OR
+					    				LINK LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+					    			)
+							</if>
+				   )T1
+
+	</select>	
+	
+	<delete id="check_del" parameterType="java.util.Map" >
+		UPDATE NEWS
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ IN (${check_seq})
+	</delete>
+	
+	<select id="mainList" parameterType="String" resultType="java.util.Map">
+		SELECT T1.* FROM (
+										SELECT SEQ, LINK
+										<![CDATA[, REPLACE(REPLACE(TITLE, '<b>', ''), '</b>','') AS TITLE]]>
+										<![CDATA[, REPLACE(REPLACE(DESCRIPTION, '<b>', ''), '</b>','') AS DESCRIPTION]]>
+										, PUB_DATE
+										, THUM_IMG
+										, THUM_ALT
+										   FROM NEWS 
+										 	 WHERE DEL_YN='N'
+										 ORDER BY PUB_DATE DESC 
+									 )T1
+							ORDER BY PUB_DATE DESC
+							LIMIT 0, ${cnt}
+						
+		 
+	</select>	
+	
+	<select id="view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+			SELECT * FROM NEWS
+			WHERE SEQ = ${seq}
+	</select>
+	
+	<update id="thum_update" parameterType="java.util.Map" >
+		UPDATE NEWS
+	       SET THUM_IMG  = #{thum_img,	jdbcType=VARCHAR}
+	          ,THUM_ALT  = #{thum_alt,	jdbcType=VARCHAR}
+		 WHERE SEQ = ${seq}
+	</update>
+	
+	<select id="config_view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+			SELECT * FROM NEWS_CONFIG
+			LIMIT 0, 1
+	</select>
+	
+	<update id="config_update" parameterType="java.util.Map" >
+		UPDATE NEWS_CONFIG
+	       SET KEYWORD_1  = #{keyword_1,	jdbcType=VARCHAR}
+	          ,KEYWORD_2  = #{keyword_2,	jdbcType=VARCHAR}
+	          ,KEYWORD_3  = #{keyword_3,	jdbcType=VARCHAR}
+	</update>
+	
+	<update id="thum_default_update" parameterType="java.util.Map" >
+		UPDATE NEWS
+	       SET THUM_IMG = #{thum_img,	jdbcType=VARCHAR}
+	          ,THUM_ALT = #{thum_alt,	jdbcType=VARCHAR}
+	       WHERE SEQ = ${seq}
+	</update>
+	
+</mapper>

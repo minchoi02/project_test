@@ -1,0 +1,2862 @@
+<<<<<<< HEAD
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="t" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page isELIgnored ="false" %>
+					<div class="contsArea history">
+						<div class="tabMenu num2">
+							<div>
+								<div class="btnTab on"><a href="#personalizedTab01"><span>조직도</span></a></div>
+								<div class="btnTab"><a href="#personalizedTab02"><span>회원단체</span></a></div>
+							</div>
+						</div>
+						<div class="tabContBox" id="personalizedTab01">
+							<span class="hidden">조직도</span>
+
+							<div  class="organizationChart">
+								<ul class="chartDepth1">
+									<li><strong class="organText horizonlLine"><span>고문/자문</span></strong></li>
+									<li>
+										<a href="#organText01" class="organText verticalLine"><span>회장</span></a>
+										<div class="chartDep1Box">
+											<ul class="chartDepth2">
+												<li>
+													<a href="#organText02" class="organText"><span>회장단</span></a>
+													<div class="chartDep2Box">
+														<ul class="chartDepth3">
+															<li><a href="#organText03" class="organText horizonlLine"><span>제위원회</span></a></li>
+															<li><strong class="organText"><span>후원회</span></strong></li>
+															<li>
+																<a href="#organText04" class="organText"><span>사무처장</span></a>
+																<div class="chartDep3Box">
+																	<ul class="chartDepth4">
+																		<li>
+																			<a href="#organText05" class="organText horizonlLine"><span>본부장</span></a>
+																			<div class="chartDep4Box">
+																				<ul class="chartDepth5">
+																					<li><a href="#organText06" class="organText horizonlLine"><span>기획실</span></a></li>
+																					<li><a href="#organText07" class="organText darkBg verticalLine"><span>대회홍보협력실</span></a></li>
+																					<li><a href="#organText08" class="organText darkBg verticalLine"><span>행정실</span></a></li>
+																				</ul>
+																			</div>
+																		</li>
+																		<li><strong class="organText"><span>의료지원센터</span></strong></li>
+																	</ul>
+																</div>
+															</li>
+															<li><strong class="organText"><span>편의시설설치 시민촉진단</span></strong></li>
+														</ul>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</li>
+									<li><strong class="organText"><span>이사회/총회</span></strong></li>
+								</ul>
+							</div>
+
+
+							<!-- 조직도 상세정보 -->
+							<div class="organizationInfo" id="organText01">
+								<p class="contsSubTit tyBullet">회장</p>
+								<div class="organcon01">
+									<p class="name">황 경 아</p>
+									<p class="organtit">약력</p>
+									<ul class="listLDotted02">
+										<li><span class="w100">성 명</span>황 경 아 (黃敬兒, Hwang Kyoung ah)</li>
+										<!--
+										<li><span class="w100">주 소</span>대전광역시 중구 서문로 32, 103동 112호(문화동, 한밭우성아파트)</li>
+										-->
+										<li><span class="w100">생년월일</span>1968년 01월 19일(음력)</li>
+										<!--
+										<li><span class="w100">휴대폰</span>010-5446-3890</li>
+										-->
+										<li><span class="w100">출 생 지</span>대전광역시</li>
+									</ul>
+								</div>
+								<p class="organtit">학력</p>
+								<ul class="listLDotted02">
+									<li><span>2013. 02. 22.</span>대전대학교 경영행정·사회복지대학원 공공정책학 수료</li>
+									<li><span>2013.</span>충남기계공업고등학교 명예졸업</li>
+									<li><span>2009. 02. 14.</span>서울사이버대학교 법무행정학 졸업</li>
+									<li><span>2006. 08. 19.</span>세계사이버대학 사회복지학 졸업</li>
+									<li><span>1986. 02. 14.</span>청주기계공업고등학교 졸업</li>
+									<li><span>1983. 02. 11.</span>동중학교 졸업</li>
+									<li><span>1980. 02. 20.</span>대동초등학교 졸업</li>
+								</ul>
+								<p class="organtit">수 상</p>
+								<ul class="listLDotted02">
+									<li><span>2018. 01. 10.</span>자유한국당대표 홍준표 표창장</li>
+									<li><span>2017. 12. 27.</span>시민인권대상 수상(인권복지부문)</li>
+									<li><span>2017. 12. 09.</span>청렴지도자 인증패 </li>
+									<li><span>2017. 04. 22.</span>국제로타리 3680지구 공로패</li>
+									<li><span>2017. 02. 21.</span>55사단 정보통신대대 감사패 </li>
+									<li><span>2016. 05. 03.</span>이재오국회의원 감사장</li>
+									<li><span>2015. 10. 31.</span>한국공공행정연구원 이사장 표창패</li>
+									<li><span>2015. 01. 29.</span>배재대학교 공동채 지도자상</li>
+									<li><span>2014. 12. 30.</span>최고 장애인복지상 수상</li>
+									<li><span>2013. 10. 01.</span>보건복지부장관 표창</li>
+									<li><span>2005. 11. 03.</span>대전광역시장 표창</li>
+									<li><span>2000. 05. 09.</span>산림청장 표창</li>
+									<li><span>1990. 11. 12.</span>보병 제215연대장 표창</li>
+								</ul>
+								<p class="organtit">정당 및 사회경력</p>
+								<ul class="listLDotted02">
+									<li><span>2018. 01. 28. ~ 現</span>대전광역시장애인체육회 이사</li>
+									<li><span>2017. 03. 15. ~ 現</span>(사)한국장애인단체총연맹 공동대표</li>
+									<li><span>2017. 02. 13. ~ 現</span>자유한국당 대전시당 장애인위원회 위원장</li> 
+									<li><span>2017. 12. 09. ~ 現</span>(사)부패방지국민운동총연합 청렴지도자</li>
+									<li><span>2017. 10. 26. ~ 現</span>대전광역시장애인복지위원회 위원</li>
+									<li><span>2017. 09. 15. ~ 現</span>대전광역시복지재단 이사</li>
+									<li><span>2016. 03. 01. ~ 現</span>열린사이버대학교 사회복지학과 특임교수</li>
+									<li><span>2016. 05. 13. ~ 現</span>대전광역시시청자미디어센터 발전협의회 위원</li>
+									<li><span>2016. 04. 24. ~ 現</span>대전광역시편의시설설치시민촉진단 단장</li>
+									<li><span>2016. 02. 24. ~ 現</span>정신장애인인권침해감시차별철폐국민운동본부 공동대표</li>
+									<li><span>2016. 01. 17. ~ 現</span>성균관 청년유도회 중앙회 중앙위원</li>
+									<li><span>2016. 01. 17. ~ 現</span>성균관 청년유도회 대전광역시본부 부회장</li>
+									<li><span>2015. 04. 25. ~ 現</span>대전광역시장애인단체총연합회 회장</li>
+									<li><span>2015. 12. ~ 現</span>대전광역시장애인정책포럼 상임대표</li>
+									<li><span>2014. 02. 21. ~ 2017. 02. 13.</span>새누리당 대전시당 장애인위원회 위원장</li>
+									<li><span>2014. 02. 02. ~ 現</span>(사)대전광역시척수장애인협회 회장</li>
+									<li><span>2013. 01. 29. ~ 2016. 04.</span>대전광역시편의시설시민촉진단 부단장</li>
+									<li><span>2012. 11. 13.</span>새누리당 제18대 대통령선거장애인대책특별본부 척수장애대책위원 위원장</li>
+									<li><span>2012. 09. 14. ~ 2015. 09. 27.</span>(사)대전장애인단체총연합회 부회장</li>
+									<li><span>2012. 06. 01. ~ 現</span>㈜에이블월드 대표이사</li>
+									<li><span>2011. 10. 21. ~ 現</span>대전광역시 장애인차별금지 및 인권보장 위원회 위원</li>
+									<li><span>2011. 06. 30. ~ 2013. 12. 31.</span>대전광역시장애인콜택시 운영위원회 운영위원</li>
+									<li><span>2010. 06. 22. ~ 現</span>대전광역시보호관찰소 강사</li> 
+									<li><span>2008 09. 10. ~ 2014. 09.</span>(사)대전광역시사회복지사협회 정책분과위원</li>
+									<li><span>2007. 11. 10.</span>한나라당 대전광역시선거대책위원회 장애인특별위원회</li>
+									<li><span>2007. 10. 16. ~ 2008. 12.</span>헤스티아헤어 대표</li>
+									<li><span>2007. 07. 10.</span>한나라당 제17대 대통령선거 지역보좌역</li>
+									<li><span>2007. 02. 26. ~ 2008. 10.</span>(사)충북황정장애인문화예술원 상임이사</li>
+									<li><span>2007. 01. ~ 2012. 09. 14</span>(사)대전광역시장애인단체총연합회 이사</li>
+									<li><span>2006. 05. ~ 2014. 02.</span>(사)대전광역시장애인럭비협회 회장</li>
+									<li><span>2006. 05. ~ 2006. 12</span>한국장애인미술협회 충청지부 지부장</li>
+								</ul>
+								<p class="organtit">위촉 및 표창</p>
+								<div class="organList">
+									<table class="type05">
+										<caption> 회장 이며 위촉 및 표창 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:225px">
+											<col style="width:225px">
+											<col style="width:225px">
+											<col style="width:225px">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td><img src="/assets/user/images/prize_01.png" alt="상장01" /></td>
+												<td><img src="/assets/user/images/prize_02.png" alt="상장02" /></td>
+												<td><img src="/assets/user/images/prize_03.png" alt="상장03" /></td>
+												<td><img src="/assets/user/images/prize_04.png" alt="상장04" /></td>
+											</tr>
+											<tr>
+												<td class="bg01">1990. 11. 12.<br/>보병215연대장 표창</td>
+												<td class="bg01">2000. 05. 09.<br/>산림청장 표창</td>
+												<td class="bg01">2005. 11. 03.<br/>대전광역시장 표창</td>
+												<td class="bg01">2008. 09. 10.<br/>사회복지사협회 정책분과위원<br/>위촉장</td>
+											</tr>
+											<tr>
+												<td><img src="/assets/user/images/prize_05.png" alt="상장05" /></td>
+												<td><img src="/assets/user/images/prize_06.png" alt="상장06" /></td>
+												<td><img src="/assets/user/images/prize_07.png" alt="상장07" /></td>
+												<td><img src="/assets/user/images/prize_08.png" alt="상장08" /></td>
+											</tr>
+											<tr>
+												<td class="bg01">2011. 06. 30.<br/>대전사랑나눔콜센터 운영위원<br/>위촉장</td>
+												<td class="bg01">2011. 10. 21.<br/>대전장애인차별금지 및<br/>인권보장위원회 위원 위촉장</td>
+												<td class="bg01">2013. 03. 14.<br/>대전시립체육재활원<br/>운영위원 위촉장</td>
+												<td class="bg01">2013. 04. 15.<br/>대전편의시설촉진단 위촉장</td>
+											</tr>
+											<tr>
+												<td><img src="/assets/user/images/prize_09.png" alt="상장09" /></td>
+												<td><img src="/assets/user/images/prize_10.png" alt="상장10" /></td>
+												<td><img src="/assets/user/images/prize_11.png" alt="상장11" /></td>
+												<td><img src="/assets/user/images/prize_12.png" alt="상장12" /></td>
+											</tr>
+											<tr>
+												<td class="bg01">2013. 07. 09.<br/>대전보조기구관리센터<br/>자문위원 위촉장</td>
+												<td class="bg01">2013. 10. 01.<br/>보건복지부장관 표창</td>
+												<td class="bg01">2013. 11. 01.<br/>한국마사회 대전지사<br/>기부심의위원 위촉장</td>
+												<td class="bg01">2014. 04. 17.<br/>대전럭비장애인협회 명예회장<br/>추대장</td>
+											</tr>
+											<tr>
+												<td><img src="/assets/user/images/prize_13.png" alt="상장13" /></td>
+												<td><img src="/assets/user/images/prize_14.png" alt="상장14" /></td>
+												<td><img src="/assets/user/images/prize_15.png" alt="상장15" /></td>
+												<td><img src="/assets/user/images/prize_16.png" alt="상장16" /></td>
+											</tr>
+											<tr>
+												<td class="bg01">2014. 10. 23.<br/>대전지체장애인협회 운영위원회<br/>임명장</td>
+												<td class="bg01">2015. 01. 29.<br/>배제대학교 <br/>공동체지도자상</td>
+												<td class="bg01">2015. 01. 29.<br/>민족공동체지도자 수료증</td>
+												<td class="bg01">2015. 04. 07.<br/>한국척수장애인협회<br/>대전광역시협회 임명장</td>
+											</tr>
+											<tr>
+												<td><img src="/assets/user/images/prize_17.png" alt="상장17" /></td>
+												<td><img src="/assets/user/images/prize_18.png" alt="상장18" /></td>
+												<td><img src="/assets/user/images/prize_19.png" alt="상장19" /></td>
+												<td><img src="/assets/user/images/prize_20.png" alt="상장20" /></td>
+											</tr>
+											<tr>
+												<td class="bg01">2014. 12. 20.<br/>최고장애인봉사상 표창패</td>
+												<td class="bg01">2015. 02. 20.<br/>대전럭비장애인협회 감사패</td>
+												<td class="bg01">2015. 10. 31.<br/>미래정치아카데미 수료패</td>
+												<td class="bg01">2015. 10. 31.<br/>미래정치아카데미 표창패</td>
+											</tr>
+											<tr>
+												<td><img src="/assets/user/images/prize_21.png" alt="상장21" /></td>
+												<td><img src="/assets/user/images/prize_22.png" alt="상장22" /></td>
+												<td><img src="/assets/user/images/prize_23.png" alt="상장23" /></td>
+												<td><img src="/assets/user/images/prize_24.png" alt="상장24" /></td>
+											</tr>
+											<tr>
+												<td class="bg01">2017. 02. 21.<br/>55사단 정보통신대대 감사패</td>
+												<td class="bg01">2017. 12. 09.<br/>청렴지도자 인증패</td>
+												<td class="bg01">2017. 12. 27.<br/>시민인권대상 (인권복지부문)</td>
+												<td class="bg01">2018. 01. 10.<br/>자유한국당대표 홍준표 표창장</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="organizationInfo" id="organText02">
+								<p class="contsSubTit tyBullet">회장단</p>
+								<div class="commList">
+									<table class="boardTypeCol type03">
+										<caption> 회장단 이며 부회장 성명,직책,소속기관 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:140px">
+											<col style="width:150px">
+											<col style="width:auto">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">구분</th>
+												<th scope="col">성명</th>
+												<th scope="col">직책</th>
+												<th scope="col">소속기관</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>부회장</td>
+												<td>-</td>
+												<td>-</td>
+												<td class="left">-</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="organizationInfo" id="organText03">
+								<p class="contsSubTit tyBullet">제위원회</p>
+								<div class="commList">
+									<table class="boardTypeCol type03">
+										<caption> 제위원회 이며 성명,직책,소속기관 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:140px">
+											<col style="width:150px">
+											<col style="width:auto">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">구분</th>
+												<th scope="col">성명</th>
+												<th scope="col">직책</th>
+												<th scope="col">소속기관</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>-</td>
+												<td>-</td>
+												<td>-</td>
+												<td class="left">-</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="organizationInfo" id="organText04">
+								<p class="contsSubTit tyBullet">사무처장</p>
+								<div class="commList">
+									<table class="boardTypeCol type03">
+										<caption> 사무처장 이며 성명,직책,소속기관 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:140px">
+											<col style="width:150px">
+											<col style="width:auto">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">구분</th>
+												<th scope="col">성명</th>
+												<th scope="col">직책</th>
+												<th scope="col">소속기관</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>사무처장</td>
+												<td>김현기</td>
+												<td>-</td>
+												<td class="left">-</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="organizationInfo" id="organText05">
+								<p class="contsSubTit tyBullet">본부장</p>
+								<div class="commList">
+									<table class="boardTypeCol type03">
+										<caption> 본부장 이며 성명,직책,소속기관 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:140px">
+											<col style="width:150px">
+											<col style="width:auto">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">구분</th>
+												<th scope="col">성명</th>
+												<th scope="col">직책</th>
+												<th scope="col">소속기관</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>본부장</td>
+												<td>조성주</td>
+												<td>-</td>
+												<td class="left">-</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="organizationInfo" id="organText06">
+								<p class="contsSubTit tyBullet">기획실</p>
+								<div class="commList">
+									<table class="boardTypeCol type03">
+										<caption> 기획실 이며 전화,팩스 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:410px">
+											<col style="width:110px">
+											<col style="width:auto">
+										</colgroup>
+										<tbody>
+											<tr>
+												<th scope="row">전화</th>
+												<td>042-625-4678</td>
+												<th scope="row">팩스</th>
+												<td class="left line">042-635-4679</td>
+											</tr>
+										</tbody>
+									</table>
+									<table class="boardTypeCol type03">
+										<caption> 기획실 이며 성명,직책,소속기관 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:110px">
+											<col style="width:150px">
+											<col style="width:150px">
+											<col style="width:auto">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">구분</th>
+												<th scope="col">직책</th>
+												<th scope="col">성명</th>
+												<th scope="col">전화</th>
+												<th scope="col">주요업무</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th scope="row" rowspan="3">기획실</th>
+												<td>팀장</td>
+												<td>석상배</td>
+												<td>070-4481-0358</td>
+												<td class="left">중증장애인직업재활지원</td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>정은지</td>
+												<td>070-4469-9996</td>
+												<td class="left">법인회계운영</td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>김송희</td>
+												<td>070-4481-0357</td>
+												<td class="left">장애인 홈페이지 운영사업</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="organizationInfo" id="organText07">
+								<p class="contsSubTit tyBullet">대외홍보협력실</p>
+								<div class="commList">
+									<table class="boardTypeCol type03">
+										<caption> 대외홍보협력실 이며 전화,팩스 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:410px">
+											<col style="width:110px">
+											<col style="width:auto">
+										</colgroup>
+										<tbody>
+											<tr>
+												<th scope="row">전화</th>
+												<td>042-625-4678</td>
+												<th scope="row">팩스</th>
+												<td class="left line">042-635-4679</td>
+											</tr>
+										</tbody>
+									</table>
+									<table class="boardTypeCol type03">
+										<caption> 대외홍보협력실 이며 성명,직책,소속기관 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:110px">
+											<col style="width:150px">
+											<col style="width:150px">
+											<col style="width:auto">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">구분</th>
+												<th scope="col">직책</th>
+												<th scope="col">성명</th>
+												<th scope="col">전화</th>
+												<th scope="col">주요업무</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th scope="row" rowspan="4">대외홍보<br>협력실</th>
+												<td>실장</td>
+												<td>김락현</td>
+												<td>070-4282-3696</td>
+												<td class="left">중증장애인직업재활지원 </td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>박정선</td>
+												<td>042-633-0420</td>
+												<td class="left">장애인 상담전화사업</td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>신성용</td>
+												<td>042-345-0035</td>
+												<td class="left">초록여행 </td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>문요섭</td>
+												<td>042-335-0663</td>
+												<td class="left">민들레카</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="organizationInfo" id="organText08">
+								<p class="contsSubTit tyBullet">행정실</p>
+								<div class="commList">
+									<table class="boardTypeCol type03">
+										<caption> 대외홍보협력실 이며 전화,팩스 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:410px">
+											<col style="width:110px">
+											<col style="width:auto">
+										</colgroup>
+										<tbody>
+											<tr>
+												<th scope="row">전화</th>
+												<td>042-625-4678</td>
+												<th scope="row">팩스</th>
+												<td class="left line">042-635-4679</td>
+											</tr>
+										</tbody>
+									</table>
+									<table class="boardTypeCol type03">
+										<caption> 행정실 이며 성명,직책,소속기관 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:110px">
+											<col style="width:150px">
+											<col style="width:150px">
+											<col style="width:auto">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">구분</th>
+												<th scope="col">직책</th>
+												<th scope="col">성명</th>
+												<th scope="col">전화</th>
+												<th scope="col">주요업무</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th scope="row" rowspan="5">행정실</th>
+												<td>실장</td>
+												<td>이서희</td>
+												<td>070-4481-0359</td>
+												<td class="left">편의시설</td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>이현주</td>
+												<td>042-625-8258</td>
+												<td class="left">장애인 특별운송사업</td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>이미숙</td>
+												<td>070-4282-3695</td>
+												<td class="left">건강카페 대전시청점(1호점) </td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>이명열</td>
+												<td>-</td>
+												<td class="left">순환버스 1호차</td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>강승호</td>
+												<td>-</td>
+												<td class="left">순환버스 2호차</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<!-- //조직도 상세정보 -->
+						</div>
+
+						<div class="tabContBox" id="personalizedTab02">
+							<span class="hidden">회원단체</span>
+							<p class="dateRight">2018. 07. 04.</p>
+							<ul class="memberList">
+								<li>
+									<strong>1</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 1번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">국제장애인문화교류 대전시협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">문선우</td>
+													<th scope="row">전화</th>
+													<td class="left">042-631-7007</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042-672-4482</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">seonu3003@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">대덕구 오정동 495-6</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>2</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 2번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전교통장애인재활협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">최정규</td>
+													<th scope="row">전화</th>
+													<td class="left">042)631-1010</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042-672-4482</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">cjg0409@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 703호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>3</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 3번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전근육장애인협회(준)</td>
+													<th scope="row">대표자</th>
+													<td class="left">정민영</td>
+													<th scope="row">전화</th>
+													<td class="left">042)524-6778</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)524-6779</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">readymix@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 계룡로 825(용두동) 희영빌딩 1층 </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>4</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 4번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전뇌병변장애인인권협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">유선경</td>
+													<th scope="row">전화</th>
+													<td class="left">042)252-0512</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)226-0524</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djkshb@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 708호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>5</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 5번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전시각장애인연합회</td>
+													<th scope="row">대표자</th>
+													<td class="left">이상용</td>
+													<th scope="row">전화</th>
+													<td class="left">042)226-8038</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)226-8041</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djbu8040@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문산로 44, 3층  </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>6</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 6번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전장애우권익문제연구소</td>
+													<th scope="row">대표자</th>
+													<td class="left">김동철</td>
+													<th scope="row">전화</th>
+													<td class="left">042)672-1482~3</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)672-1484</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djcowalk@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">동구 대전로 913, 온누리빌딩 3층  </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>7</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 7번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전장애인문화협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">김지환</td>
+													<th scope="row">전화</th>
+													<td class="left">042)274-5581</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)320-5590</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">tjmunwha7232@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">동구 삼성동 272-9번지 은호빌딩6층</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>8</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 8번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전장애인부모회</td>
+													<th scope="row">대표자</th>
+													<td class="left">이선옥</td>
+													<th scope="row">전화</th>
+													<td class="left">042)488-9457</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)538-9457</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">dotori-hanal@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 704호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>9</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 9번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전장애인자립생활센터총연합회</td>
+													<th scope="row">대표자</th>
+													<td class="left">정민영</td>
+													<th scope="row">전화</th>
+													<td class="left">042)524-6778</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)524-6779</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">ddil2008@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">- </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>10</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 10번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전장애인정보화협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">송희성</td>
+													<th scope="row">전화</th>
+													<td class="left">-</td>
+													<th scope="row">팩스</th>
+													<td class="left line">-</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">suurek@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">- </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>11</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 11번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전점자도서관</td>
+													<th scope="row">대표자</th>
+													<td class="left">이재화</td>
+													<th scope="row">전화</th>
+													<td class="left">042)252-0055</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)252-0013</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djdosg@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 서문로 10 </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>12</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 12번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전정신장애인애호인협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">노정호</td>
+													<th scope="row">전화</th>
+													<td class="left">-</td>
+													<th scope="row">팩스</th>
+													<td class="left line">-</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">no670722@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">유성구 와룡로136번길 75 203동2105호(봉산동,봉산휴먼시아2단지) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>13</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 13번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전지적발달장애인복지협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">정학수</td>
+													<th scope="row">전화</th>
+													<td class="left">042)625-3010</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)625-3095</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djaidd@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">대덕구 대화10길 103</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>14</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 14번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전척수장애인협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">황경아</td>
+													<th scope="row">전화</th>
+													<td class="left">042)255-0080</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)255-0081</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">kscia0080@daum.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 707호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>15</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 16번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대한안마사협회 대전지회</td>
+													<th scope="row">대표자</th>
+													<td class="left">진준영</td>
+													<th scope="row">전화</th>
+													<td class="left">042)222-0353~4</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)222-0320</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">anma0320@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 대흥로 10번길 53  </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>16</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 16번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">새날장애인이룸센터(준)</td>
+													<th scope="row">대표자</th>
+													<td class="left">조태흥</td>
+													<th scope="row">전화</th>
+													<td class="left">042)226-0527</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)226-0524</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djdpi@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 708호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>17</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption>17번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국농아인협회 대전시협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">박종희</td>
+													<th scope="row">전화</th>
+													<td class="left">042)673-1518</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)673-1517</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">deafss@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">동구 중앙로 200번길 66, 205호(중앙스퀘어)</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>18</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 18번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국예술문화진흥회 대전충남장애인예술협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">이환수</td>
+													<th scope="row">전화</th>
+													<td class="left">042)221-0423</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)226-8462</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">hwansoo423@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">유성구 원신흥로37, 1004동 1906호(원신흥동,휴먼시아10단지)</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>19</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 19번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국장루장애인협회 대전지부</td>
+													<th scope="row">대표자</th>
+													<td class="left">박현택</td>
+													<th scope="row">전화</th>
+													<td class="left">042)536-5070</td>
+													<th scope="row">팩스</th>
+													<td class="left line">-</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">pht1964@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 702호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>20</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 20번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국장애경제인협회 대전ㆍ충남지회</td>
+													<th scope="row">대표자</th>
+													<td class="left">배영철</td>
+													<th scope="row">전화</th>
+													<td class="left">042)637-0025</td>
+													<th scope="row">팩스</th>
+													<td class="left line">044-865-0719</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">kc0025@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">세종시 다솜1로 164, 202-703(도램마을 2단지) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>21</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 21번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국장애인문화관광진흥회 대전시협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">송영섭</td>
+													<th scope="row">전화</th>
+													<td class="left">042-255-3119</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)226-3112</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">ktad3112@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 708호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>22</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption>22번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국장애인선교단체총연합회 대전충청지부</td>
+													<th scope="row">대표자</th>
+													<td class="left">여광조</td>
+													<th scope="row">전화</th>
+													<td class="left">042)221-0813</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)254-0817</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djmilal@daum.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 대둔산로 200번길 23-11, 101호 </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>23</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption>23번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국장애인IT협회대전IT협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">최지환</td>
+													<th scope="row">전화</th>
+													<td class="left">070-8125-3131</td>
+													<th scope="row">팩스</th>
+													<td class="left line">070-8125-3131</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djitad@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">동구 중앙로 193번길 33(중동) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>24</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption>24번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국장애인연맹 대전DPI</td>
+													<th scope="row">대표자</th>
+													<td class="left">신석훈</td>
+													<th scope="row">전화</th>
+													<td class="left">042)226-0527</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)226-0524</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djdpi@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 708호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+							</ul>
+						</div>
+
+=======
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="t" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page isELIgnored ="false" %>
+					<div class="contsArea history">
+						<div class="tabMenu num2">
+							<div>
+								<div class="btnTab on"><a href="#personalizedTab01"><span>조직도</span></a></div>
+								<div class="btnTab"><a href="#personalizedTab02"><span>회원단체</span></a></div>
+							</div>
+						</div>
+						<div class="tabContBox" id="personalizedTab01">
+							<span class="hidden">조직도</span>
+
+							<div  class="organizationChart">
+								<ul class="chartDepth1">
+									<li><strong class="organText horizonlLine"><span>고문/자문</span></strong></li>
+									<li>
+										<a href="#organText01" class="organText verticalLine"><span>회장</span></a>
+										<div class="chartDep1Box">
+											<ul class="chartDepth2">
+												<li>
+													<a href="#organText02" class="organText"><span>회장단</span></a>
+													<div class="chartDep2Box">
+														<ul class="chartDepth3">
+															<li><a href="#organText03" class="organText horizonlLine"><span>제위원회</span></a></li>
+															<li><strong class="organText"><span>후원회</span></strong></li>
+															<li>
+																<a href="#organText04" class="organText"><span>사무처장</span></a>
+																<div class="chartDep3Box">
+																	<ul class="chartDepth4">
+																		<li>
+																			<a href="#organText05" class="organText horizonlLine"><span>본부장</span></a>
+																			<div class="chartDep4Box">
+																				<ul class="chartDepth5">
+																					<li><a href="#organText06" class="organText horizonlLine"><span>기획실</span></a></li>
+																					<li><a href="#organText07" class="organText darkBg verticalLine"><span>대회홍보협력실</span></a></li>
+																					<li><a href="#organText08" class="organText darkBg verticalLine"><span>행정실</span></a></li>
+																				</ul>
+																			</div>
+																		</li>
+																		<li><strong class="organText"><span>의료지원센터</span></strong></li>
+																	</ul>
+																</div>
+															</li>
+															<li><strong class="organText"><span>편의시설설치 시민촉진단</span></strong></li>
+														</ul>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</li>
+									<li><strong class="organText"><span>이사회/총회</span></strong></li>
+								</ul>
+							</div>
+
+
+							<!-- 조직도 상세정보 -->
+							<div class="organizationInfo" id="organText01">
+								<p class="contsSubTit tyBullet">회장</p>
+								<div class="organcon01">
+									<p class="name">황 경 아</p>
+									<p class="organtit">약력</p>
+									<ul class="listLDotted02">
+										<li><span class="w100">성 명</span>황 경 아 (黃敬兒, Hwang Kyoung ah)</li>
+										<!--
+										<li><span class="w100">주 소</span>대전광역시 중구 서문로 32, 103동 112호(문화동, 한밭우성아파트)</li>
+										-->
+										<li><span class="w100">생년월일</span>1968년 01월 19일(음력)</li>
+										<!--
+										<li><span class="w100">휴대폰</span>010-5446-3890</li>
+										-->
+										<li><span class="w100">출 생 지</span>대전광역시</li>
+									</ul>
+								</div>
+								<p class="organtit">학력</p>
+								<ul class="listLDotted02">
+									<li><span>2013. 02. 22.</span>대전대학교 경영행정·사회복지대학원 공공정책학 수료</li>
+									<li><span>2013.</span>충남기계공업고등학교 명예졸업</li>
+									<li><span>2009. 02. 14.</span>서울사이버대학교 법무행정학 졸업</li>
+									<li><span>2006. 08. 19.</span>세계사이버대학 사회복지학 졸업</li>
+									<li><span>1986. 02. 14.</span>청주기계공업고등학교 졸업</li>
+									<li><span>1983. 02. 11.</span>동중학교 졸업</li>
+									<li><span>1980. 02. 20.</span>대동초등학교 졸업</li>
+								</ul>
+								<p class="organtit">수 상</p>
+								<ul class="listLDotted02">
+									<li><span>2018. 01. 10.</span>자유한국당대표 홍준표 표창장</li>
+									<li><span>2017. 12. 27.</span>시민인권대상 수상(인권복지부문)</li>
+									<li><span>2017. 12. 09.</span>청렴지도자 인증패 </li>
+									<li><span>2017. 04. 22.</span>국제로타리 3680지구 공로패</li>
+									<li><span>2017. 02. 21.</span>55사단 정보통신대대 감사패 </li>
+									<li><span>2016. 05. 03.</span>이재오국회의원 감사장</li>
+									<li><span>2015. 10. 31.</span>한국공공행정연구원 이사장 표창패</li>
+									<li><span>2015. 01. 29.</span>배재대학교 공동채 지도자상</li>
+									<li><span>2014. 12. 30.</span>최고 장애인복지상 수상</li>
+									<li><span>2013. 10. 01.</span>보건복지부장관 표창</li>
+									<li><span>2005. 11. 03.</span>대전광역시장 표창</li>
+									<li><span>2000. 05. 09.</span>산림청장 표창</li>
+									<li><span>1990. 11. 12.</span>보병 제215연대장 표창</li>
+								</ul>
+								<p class="organtit">정당 및 사회경력</p>
+								<ul class="listLDotted02">
+									<li><span>2018. 01. 28. ~ 現</span>대전광역시장애인체육회 이사</li>
+									<li><span>2017. 03. 15. ~ 現</span>(사)한국장애인단체총연맹 공동대표</li>
+									<li><span>2017. 02. 13. ~ 現</span>자유한국당 대전시당 장애인위원회 위원장</li> 
+									<li><span>2017. 12. 09. ~ 現</span>(사)부패방지국민운동총연합 청렴지도자</li>
+									<li><span>2017. 10. 26. ~ 現</span>대전광역시장애인복지위원회 위원</li>
+									<li><span>2017. 09. 15. ~ 現</span>대전광역시복지재단 이사</li>
+									<li><span>2016. 03. 01. ~ 現</span>열린사이버대학교 사회복지학과 특임교수</li>
+									<li><span>2016. 05. 13. ~ 現</span>대전광역시시청자미디어센터 발전협의회 위원</li>
+									<li><span>2016. 04. 24. ~ 現</span>대전광역시편의시설설치시민촉진단 단장</li>
+									<li><span>2016. 02. 24. ~ 現</span>정신장애인인권침해감시차별철폐국민운동본부 공동대표</li>
+									<li><span>2016. 01. 17. ~ 現</span>성균관 청년유도회 중앙회 중앙위원</li>
+									<li><span>2016. 01. 17. ~ 現</span>성균관 청년유도회 대전광역시본부 부회장</li>
+									<li><span>2015. 04. 25. ~ 現</span>대전광역시장애인단체총연합회 회장</li>
+									<li><span>2015. 12. ~ 現</span>대전광역시장애인정책포럼 상임대표</li>
+									<li><span>2014. 02. 21. ~ 2017. 02. 13.</span>새누리당 대전시당 장애인위원회 위원장</li>
+									<li><span>2014. 02. 02. ~ 現</span>(사)대전광역시척수장애인협회 회장</li>
+									<li><span>2013. 01. 29. ~ 2016. 04.</span>대전광역시편의시설시민촉진단 부단장</li>
+									<li><span>2012. 11. 13.</span>새누리당 제18대 대통령선거장애인대책특별본부 척수장애대책위원 위원장</li>
+									<li><span>2012. 09. 14. ~ 2015. 09. 27.</span>(사)대전장애인단체총연합회 부회장</li>
+									<li><span>2012. 06. 01. ~ 現</span>㈜에이블월드 대표이사</li>
+									<li><span>2011. 10. 21. ~ 現</span>대전광역시 장애인차별금지 및 인권보장 위원회 위원</li>
+									<li><span>2011. 06. 30. ~ 2013. 12. 31.</span>대전광역시장애인콜택시 운영위원회 운영위원</li>
+									<li><span>2010. 06. 22. ~ 現</span>대전광역시보호관찰소 강사</li> 
+									<li><span>2008 09. 10. ~ 2014. 09.</span>(사)대전광역시사회복지사협회 정책분과위원</li>
+									<li><span>2007. 11. 10.</span>한나라당 대전광역시선거대책위원회 장애인특별위원회</li>
+									<li><span>2007. 10. 16. ~ 2008. 12.</span>헤스티아헤어 대표</li>
+									<li><span>2007. 07. 10.</span>한나라당 제17대 대통령선거 지역보좌역</li>
+									<li><span>2007. 02. 26. ~ 2008. 10.</span>(사)충북황정장애인문화예술원 상임이사</li>
+									<li><span>2007. 01. ~ 2012. 09. 14</span>(사)대전광역시장애인단체총연합회 이사</li>
+									<li><span>2006. 05. ~ 2014. 02.</span>(사)대전광역시장애인럭비협회 회장</li>
+									<li><span>2006. 05. ~ 2006. 12</span>한국장애인미술협회 충청지부 지부장</li>
+								</ul>
+								<p class="organtit">위촉 및 표창</p>
+								<div class="organList">
+									<table class="type05">
+										<caption> 회장 이며 위촉 및 표창 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:225px">
+											<col style="width:225px">
+											<col style="width:225px">
+											<col style="width:225px">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td><img src="/assets/user/images/prize_01.png" alt="상장01" /></td>
+												<td><img src="/assets/user/images/prize_02.png" alt="상장02" /></td>
+												<td><img src="/assets/user/images/prize_03.png" alt="상장03" /></td>
+												<td><img src="/assets/user/images/prize_04.png" alt="상장04" /></td>
+											</tr>
+											<tr>
+												<td class="bg01">1990. 11. 12.<br/>보병215연대장 표창</td>
+												<td class="bg01">2000. 05. 09.<br/>산림청장 표창</td>
+												<td class="bg01">2005. 11. 03.<br/>대전광역시장 표창</td>
+												<td class="bg01">2008. 09. 10.<br/>사회복지사협회 정책분과위원<br/>위촉장</td>
+											</tr>
+											<tr>
+												<td><img src="/assets/user/images/prize_05.png" alt="상장05" /></td>
+												<td><img src="/assets/user/images/prize_06.png" alt="상장06" /></td>
+												<td><img src="/assets/user/images/prize_07.png" alt="상장07" /></td>
+												<td><img src="/assets/user/images/prize_08.png" alt="상장08" /></td>
+											</tr>
+											<tr>
+												<td class="bg01">2011. 06. 30.<br/>대전사랑나눔콜센터 운영위원<br/>위촉장</td>
+												<td class="bg01">2011. 10. 21.<br/>대전장애인차별금지 및<br/>인권보장위원회 위원 위촉장</td>
+												<td class="bg01">2013. 03. 14.<br/>대전시립체육재활원<br/>운영위원 위촉장</td>
+												<td class="bg01">2013. 04. 15.<br/>대전편의시설촉진단 위촉장</td>
+											</tr>
+											<tr>
+												<td><img src="/assets/user/images/prize_09.png" alt="상장09" /></td>
+												<td><img src="/assets/user/images/prize_10.png" alt="상장10" /></td>
+												<td><img src="/assets/user/images/prize_11.png" alt="상장11" /></td>
+												<td><img src="/assets/user/images/prize_12.png" alt="상장12" /></td>
+											</tr>
+											<tr>
+												<td class="bg01">2013. 07. 09.<br/>대전보조기구관리센터<br/>자문위원 위촉장</td>
+												<td class="bg01">2013. 10. 01.<br/>보건복지부장관 표창</td>
+												<td class="bg01">2013. 11. 01.<br/>한국마사회 대전지사<br/>기부심의위원 위촉장</td>
+												<td class="bg01">2014. 04. 17.<br/>대전럭비장애인협회 명예회장<br/>추대장</td>
+											</tr>
+											<tr>
+												<td><img src="/assets/user/images/prize_13.png" alt="상장13" /></td>
+												<td><img src="/assets/user/images/prize_14.png" alt="상장14" /></td>
+												<td><img src="/assets/user/images/prize_15.png" alt="상장15" /></td>
+												<td><img src="/assets/user/images/prize_16.png" alt="상장16" /></td>
+											</tr>
+											<tr>
+												<td class="bg01">2014. 10. 23.<br/>대전지체장애인협회 운영위원회<br/>임명장</td>
+												<td class="bg01">2015. 01. 29.<br/>배제대학교 <br/>공동체지도자상</td>
+												<td class="bg01">2015. 01. 29.<br/>민족공동체지도자 수료증</td>
+												<td class="bg01">2015. 04. 07.<br/>한국척수장애인협회<br/>대전광역시협회 임명장</td>
+											</tr>
+											<tr>
+												<td><img src="/assets/user/images/prize_17.png" alt="상장17" /></td>
+												<td><img src="/assets/user/images/prize_18.png" alt="상장18" /></td>
+												<td><img src="/assets/user/images/prize_19.png" alt="상장19" /></td>
+												<td><img src="/assets/user/images/prize_20.png" alt="상장20" /></td>
+											</tr>
+											<tr>
+												<td class="bg01">2014. 12. 20.<br/>최고장애인봉사상 표창패</td>
+												<td class="bg01">2015. 02. 20.<br/>대전럭비장애인협회 감사패</td>
+												<td class="bg01">2015. 10. 31.<br/>미래정치아카데미 수료패</td>
+												<td class="bg01">2015. 10. 31.<br/>미래정치아카데미 표창패</td>
+											</tr>
+											<tr>
+												<td><img src="/assets/user/images/prize_21.png" alt="상장21" /></td>
+												<td><img src="/assets/user/images/prize_22.png" alt="상장22" /></td>
+												<td><img src="/assets/user/images/prize_23.png" alt="상장23" /></td>
+												<td><img src="/assets/user/images/prize_24.png" alt="상장24" /></td>
+											</tr>
+											<tr>
+												<td class="bg01">2017. 02. 21.<br/>55사단 정보통신대대 감사패</td>
+												<td class="bg01">2017. 12. 09.<br/>청렴지도자 인증패</td>
+												<td class="bg01">2017. 12. 27.<br/>시민인권대상 (인권복지부문)</td>
+												<td class="bg01">2018. 01. 10.<br/>자유한국당대표 홍준표 표창장</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="organizationInfo" id="organText02">
+								<p class="contsSubTit tyBullet">회장단</p>
+								<div class="commList">
+									<table class="boardTypeCol type03">
+										<caption> 회장단 이며 부회장 성명,직책,소속기관 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:140px">
+											<col style="width:150px">
+											<col style="width:auto">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">구분</th>
+												<th scope="col">성명</th>
+												<th scope="col">직책</th>
+												<th scope="col">소속기관</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>부회장</td>
+												<td>-</td>
+												<td>-</td>
+												<td class="left">-</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="organizationInfo" id="organText03">
+								<p class="contsSubTit tyBullet">제위원회</p>
+								<div class="commList">
+									<table class="boardTypeCol type03">
+										<caption> 제위원회 이며 성명,직책,소속기관 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:140px">
+											<col style="width:150px">
+											<col style="width:auto">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">구분</th>
+												<th scope="col">성명</th>
+												<th scope="col">직책</th>
+												<th scope="col">소속기관</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>-</td>
+												<td>-</td>
+												<td>-</td>
+												<td class="left">-</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="organizationInfo" id="organText04">
+								<p class="contsSubTit tyBullet">사무처장</p>
+								<div class="commList">
+									<table class="boardTypeCol type03">
+										<caption> 사무처장 이며 성명,직책,소속기관 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:140px">
+											<col style="width:150px">
+											<col style="width:auto">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">구분</th>
+												<th scope="col">성명</th>
+												<th scope="col">직책</th>
+												<th scope="col">소속기관</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>사무처장</td>
+												<td>김현기</td>
+												<td>-</td>
+												<td class="left">-</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="organizationInfo" id="organText05">
+								<p class="contsSubTit tyBullet">본부장</p>
+								<div class="commList">
+									<table class="boardTypeCol type03">
+										<caption> 본부장 이며 성명,직책,소속기관 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:140px">
+											<col style="width:150px">
+											<col style="width:auto">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">구분</th>
+												<th scope="col">성명</th>
+												<th scope="col">직책</th>
+												<th scope="col">소속기관</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>본부장</td>
+												<td>조성주</td>
+												<td>-</td>
+												<td class="left">-</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="organizationInfo" id="organText06">
+								<p class="contsSubTit tyBullet">기획실</p>
+								<div class="commList">
+									<table class="boardTypeCol type03">
+										<caption> 기획실 이며 전화,팩스 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:410px">
+											<col style="width:110px">
+											<col style="width:auto">
+										</colgroup>
+										<tbody>
+											<tr>
+												<th scope="row">전화</th>
+												<td>042-625-4678</td>
+												<th scope="row">팩스</th>
+												<td class="left line">042-635-4679</td>
+											</tr>
+										</tbody>
+									</table>
+									<table class="boardTypeCol type03">
+										<caption> 기획실 이며 성명,직책,소속기관 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:110px">
+											<col style="width:150px">
+											<col style="width:150px">
+											<col style="width:auto">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">구분</th>
+												<th scope="col">직책</th>
+												<th scope="col">성명</th>
+												<th scope="col">전화</th>
+												<th scope="col">주요업무</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th scope="row" rowspan="3">기획실</th>
+												<td>팀장</td>
+												<td>석상배</td>
+												<td>070-4481-0358</td>
+												<td class="left">중증장애인직업재활지원</td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>정은지</td>
+												<td>070-4469-9996</td>
+												<td class="left">법인회계운영</td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>김송희</td>
+												<td>070-4481-0357</td>
+												<td class="left">장애인 홈페이지 운영사업</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="organizationInfo" id="organText07">
+								<p class="contsSubTit tyBullet">대외홍보협력실</p>
+								<div class="commList">
+									<table class="boardTypeCol type03">
+										<caption> 대외홍보협력실 이며 전화,팩스 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:410px">
+											<col style="width:110px">
+											<col style="width:auto">
+										</colgroup>
+										<tbody>
+											<tr>
+												<th scope="row">전화</th>
+												<td>042-625-4678</td>
+												<th scope="row">팩스</th>
+												<td class="left line">042-635-4679</td>
+											</tr>
+										</tbody>
+									</table>
+									<table class="boardTypeCol type03">
+										<caption> 대외홍보협력실 이며 성명,직책,소속기관 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:110px">
+											<col style="width:150px">
+											<col style="width:150px">
+											<col style="width:auto">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">구분</th>
+												<th scope="col">직책</th>
+												<th scope="col">성명</th>
+												<th scope="col">전화</th>
+												<th scope="col">주요업무</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th scope="row" rowspan="4">대외홍보<br>협력실</th>
+												<td>실장</td>
+												<td>김락현</td>
+												<td>070-4282-3696</td>
+												<td class="left">중증장애인직업재활지원 </td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>박정선</td>
+												<td>042-633-0420</td>
+												<td class="left">장애인 상담전화사업</td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>신성용</td>
+												<td>042-345-0035</td>
+												<td class="left">초록여행 </td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>문요섭</td>
+												<td>042-335-0663</td>
+												<td class="left">민들레카</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="organizationInfo" id="organText08">
+								<p class="contsSubTit tyBullet">행정실</p>
+								<div class="commList">
+									<table class="boardTypeCol type03">
+										<caption> 대외홍보협력실 이며 전화,팩스 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:410px">
+											<col style="width:110px">
+											<col style="width:auto">
+										</colgroup>
+										<tbody>
+											<tr>
+												<th scope="row">전화</th>
+												<td>042-625-4678</td>
+												<th scope="row">팩스</th>
+												<td class="left line">042-635-4679</td>
+											</tr>
+										</tbody>
+									</table>
+									<table class="boardTypeCol type03">
+										<caption> 행정실 이며 성명,직책,소속기관 정보 내용입니다.</caption>
+										<colgroup>
+											<col style="width:110px">
+											<col style="width:110px">
+											<col style="width:150px">
+											<col style="width:150px">
+											<col style="width:auto">
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">구분</th>
+												<th scope="col">직책</th>
+												<th scope="col">성명</th>
+												<th scope="col">전화</th>
+												<th scope="col">주요업무</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th scope="row" rowspan="5">행정실</th>
+												<td>실장</td>
+												<td>이서희</td>
+												<td>070-4481-0359</td>
+												<td class="left">편의시설</td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>이현주</td>
+												<td>042-625-8258</td>
+												<td class="left">장애인 특별운송사업</td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>이미숙</td>
+												<td>070-4282-3695</td>
+												<td class="left">건강카페 대전시청점(1호점) </td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>이명열</td>
+												<td>-</td>
+												<td class="left">순환버스 1호차</td>
+											</tr>
+											<tr>
+												<td>팀원</td>
+												<td>강승호</td>
+												<td>-</td>
+												<td class="left">순환버스 2호차</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<!-- //조직도 상세정보 -->
+						</div>
+
+						<div class="tabContBox" id="personalizedTab02">
+							<span class="hidden">회원단체</span>
+							<p class="dateRight">2018. 07. 04.</p>
+							<ul class="memberList">
+								<li>
+									<strong>1</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 1번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">국제장애인문화교류 대전시협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">문선우</td>
+													<th scope="row">전화</th>
+													<td class="left">042-631-7007</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042-672-4482</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">seonu3003@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">대덕구 오정동 495-6</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>2</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 2번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전교통장애인재활협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">최정규</td>
+													<th scope="row">전화</th>
+													<td class="left">042)631-1010</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042-672-4482</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">cjg0409@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 703호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>3</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 3번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전근육장애인협회(준)</td>
+													<th scope="row">대표자</th>
+													<td class="left">정민영</td>
+													<th scope="row">전화</th>
+													<td class="left">042)524-6778</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)524-6779</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">readymix@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 계룡로 825(용두동) 희영빌딩 1층 </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>4</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 4번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전뇌병변장애인인권협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">유선경</td>
+													<th scope="row">전화</th>
+													<td class="left">042)252-0512</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)226-0524</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djkshb@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 708호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>5</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 5번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전시각장애인연합회</td>
+													<th scope="row">대표자</th>
+													<td class="left">이상용</td>
+													<th scope="row">전화</th>
+													<td class="left">042)226-8038</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)226-8041</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djbu8040@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문산로 44, 3층  </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>6</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 6번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전장애우권익문제연구소</td>
+													<th scope="row">대표자</th>
+													<td class="left">김동철</td>
+													<th scope="row">전화</th>
+													<td class="left">042)672-1482~3</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)672-1484</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djcowalk@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">동구 대전로 913, 온누리빌딩 3층  </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>7</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 7번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전장애인문화협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">김지환</td>
+													<th scope="row">전화</th>
+													<td class="left">042)274-5581</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)320-5590</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">tjmunwha7232@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">동구 삼성동 272-9번지 은호빌딩6층</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>8</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 8번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전장애인부모회</td>
+													<th scope="row">대표자</th>
+													<td class="left">이선옥</td>
+													<th scope="row">전화</th>
+													<td class="left">042)488-9457</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)538-9457</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">dotori-hanal@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 704호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>9</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 9번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전장애인자립생활센터총연합회</td>
+													<th scope="row">대표자</th>
+													<td class="left">정민영</td>
+													<th scope="row">전화</th>
+													<td class="left">042)524-6778</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)524-6779</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">ddil2008@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">- </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>10</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 10번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전장애인정보화협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">송희성</td>
+													<th scope="row">전화</th>
+													<td class="left">-</td>
+													<th scope="row">팩스</th>
+													<td class="left line">-</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">suurek@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">- </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>11</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 11번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전점자도서관</td>
+													<th scope="row">대표자</th>
+													<td class="left">이재화</td>
+													<th scope="row">전화</th>
+													<td class="left">042)252-0055</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)252-0013</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djdosg@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 서문로 10 </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>12</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 12번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전정신장애인애호인협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">노정호</td>
+													<th scope="row">전화</th>
+													<td class="left">-</td>
+													<th scope="row">팩스</th>
+													<td class="left line">-</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">no670722@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">유성구 와룡로136번길 75 203동2105호(봉산동,봉산휴먼시아2단지) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>13</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 13번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전지적발달장애인복지협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">정학수</td>
+													<th scope="row">전화</th>
+													<td class="left">042)625-3010</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)625-3095</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djaidd@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">대덕구 대화10길 103</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>14</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 14번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대전척수장애인협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">황경아</td>
+													<th scope="row">전화</th>
+													<td class="left">042)255-0080</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)255-0081</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">kscia0080@daum.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 707호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>15</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 16번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">대한안마사협회 대전지회</td>
+													<th scope="row">대표자</th>
+													<td class="left">진준영</td>
+													<th scope="row">전화</th>
+													<td class="left">042)222-0353~4</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)222-0320</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">anma0320@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 대흥로 10번길 53  </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>16</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 16번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">새날장애인이룸센터(준)</td>
+													<th scope="row">대표자</th>
+													<td class="left">조태흥</td>
+													<th scope="row">전화</th>
+													<td class="left">042)226-0527</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)226-0524</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djdpi@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 708호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>17</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption>17번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국농아인협회 대전시협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">박종희</td>
+													<th scope="row">전화</th>
+													<td class="left">042)673-1518</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)673-1517</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">deafss@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">동구 중앙로 200번길 66, 205호(중앙스퀘어)</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>18</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 18번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국예술문화진흥회 대전충남장애인예술협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">이환수</td>
+													<th scope="row">전화</th>
+													<td class="left">042)221-0423</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)226-8462</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">hwansoo423@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">유성구 원신흥로37, 1004동 1906호(원신흥동,휴먼시아10단지)</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>19</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 19번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국장루장애인협회 대전지부</td>
+													<th scope="row">대표자</th>
+													<td class="left">박현택</td>
+													<th scope="row">전화</th>
+													<td class="left">042)536-5070</td>
+													<th scope="row">팩스</th>
+													<td class="left line">-</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">pht1964@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 702호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>20</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 20번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국장애경제인협회 대전ㆍ충남지회</td>
+													<th scope="row">대표자</th>
+													<td class="left">배영철</td>
+													<th scope="row">전화</th>
+													<td class="left">042)637-0025</td>
+													<th scope="row">팩스</th>
+													<td class="left line">044-865-0719</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">kc0025@hanmail.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">세종시 다솜1로 164, 202-703(도램마을 2단지) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>21</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption> 21번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국장애인문화관광진흥회 대전시협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">송영섭</td>
+													<th scope="row">전화</th>
+													<td class="left">042-255-3119</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)226-3112</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">ktad3112@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 708호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>22</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption>22번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국장애인선교단체총연합회 대전충청지부</td>
+													<th scope="row">대표자</th>
+													<td class="left">여광조</td>
+													<th scope="row">전화</th>
+													<td class="left">042)221-0813</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)254-0817</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djmilal@daum.net</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 대둔산로 200번길 23-11, 101호 </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>23</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption>23번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국장애인IT협회대전IT협회</td>
+													<th scope="row">대표자</th>
+													<td class="left">최지환</td>
+													<th scope="row">전화</th>
+													<td class="left">070-8125-3131</td>
+													<th scope="row">팩스</th>
+													<td class="left line">070-8125-3131</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djitad@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">동구 중앙로 193번길 33(중동) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+								<li>
+									<strong>24</strong>
+									<div class="commList">
+										<table class="boardTypeCol type04">
+											<caption>24번 기관명,대표자,전화,팩스,이메일,주소 입니다.</caption>
+											<colgroup>
+												<col style="width:65px">
+												<col style="width:auto">
+												<col style="width:65px">
+												<col style="width:80px">
+												<col style="width:60px">
+												<col style="width:140px">
+												<col style="width:60px">
+												<col style="width:130px">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row">기관명</th>
+													<td class="left">한국장애인연맹 대전DPI</td>
+													<th scope="row">대표자</th>
+													<td class="left">신석훈</td>
+													<th scope="row">전화</th>
+													<td class="left">042)226-0527</td>
+													<th scope="row">팩스</th>
+													<td class="left line">042)226-0524</td>
+												</tr>
+												<tr>
+													<th scope="row">이메일</th>
+													<td class="left">djdpi@naver.com</td>
+													<th scope="row">주소</th>
+													<td class="left line" colspan="5">중구 보문로 246, 708호(대흥동,대림빌딩) </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</li>
+							</ul>
+						</div>
+
+>>>>>>> refs/heads/202204
+					</div>

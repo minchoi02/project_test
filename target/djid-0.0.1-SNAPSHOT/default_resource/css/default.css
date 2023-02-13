@@ -1,0 +1,142 @@
+@charset "utf-8";
+
+/*font*/
+@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import url(https://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(https://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+
+html{overflow-y: scroll;}
+html, body {height:100%; font-family: 'Noto Sans KR', "sans-serif", "Dotum", "돋움" !important;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,p,span,button,th,td,a {border:0;margin:0;padding:0; font-weight:normal;font-family: 'Noto Sans KR', sans-serif;}
+h1,h2,h3,h4,h5,h6,dt{ font-family: 'Noto Sans KR', sans-serif;}
+h1,h2,h3,h4,h5,h6{letter-spacing:-1px;}
+body {height:100%;font-size:15px;font-weight:400;line-height:1.6;color:#2c2c2c; }
+img{border:0;vertical-align:top;}
+fieldset{margin:0;padding:0;border:0;}
+textarea{margin:0;border:1px solid #cccccc;font-size:14px;font-family: 'Noto Sans KR', sans-serif;}
+select,input{ vertical-align:middle;}
+ul,ol{list-style-type:none;}
+dt,dd,h1,h2,h3,h4,h5,h6{margin:0;padding:0;}
+
+select{margin-right:1%;color:#5c5c5c;font-family: 'Noto Sans KR', sans-serif;vertical-align:middle;border:1px solid #c4c5c8;padding:2px 4px 3px 4px;}
+a,
+a:link,
+a:visited,
+a:active{color:#323232;text-decoration:none;background-color:none; font-family: 'Noto Sans KR', sans-serif;}
+a:hover,
+a:focus{color:#323232;text-decoration:none;background-color:none;}
+legend{visibility:hidden;overflow:hidden;top:-9999px;left:-9999px;width:0;height:0;font-size:0;line-height:0;}
+hr{visibility:hidden;overflow:hidden;position:absolute;top:-9999px;left:-9999px;width:0;height:0;font-size:0;line-height:0;}
+caption{overflow:hidden;visibility:hidden;width:0;height:0;font-size:0;line-height:0;}
+em,address{font-style:normal;}
+button{overflow:visible;padding:0;border:0;background:transparent;font-size:12px;  cursor:pointer; vertical-align: middle; margin:0 4px 0 8px;}
+table{table-layout:fixed;border-collapse:collapse;}
+input[type="text"] {border:1px solid #c4c5c8;height:20px;padding:2px 0 3px 3px;font-size:13px;}
+input[type="File"] {border:1px solid #c4c5c8;height:20px;padding:5px 0 0 3px;font-size:13px;}
+input[type="password"] {border:1px solid #c4c5c8;height:20px;padding:5px 0 0 3px;font-size:13px;}
+input[type="textarea"] {border:1px solid #c4c5c8;padding:8px 0 9px 3px;margin:0 ;}
+input[type="checkbox"] {border-color: #c4c5c8;}
+
+/*a:focus{ outline: 3px dotted red}*/
+.clfix:after {content: "."; display: block; height: 100%; clear: both; visibility: hidden;}
+.clfix {display: inline-block;}
+.clfixb {display: block;}
+* html .clfix {height: 1%;} /* Hides from IE-mac */
+.clfix {zoom:1;} /*for IE 5.5-7*/
+* html #container{height:100%;} /* IE7 hack*/
+* html #content {height:1%;}
+.fl {float:left;}
+.fr {float:right;}
+.cl {clear:both;}
+.rel {position:relative;}
+.ac {text-align:center;}
+.ar {text-align:right;}
+.al {text-align:left;}
+.at {vertical-align:top;}
+.am {vertical-align:middle;}
+.ab {vertical-align:bottom;}
+.hand {cursor:pointer;}
+.bgnone {background:none;}
+.brnone {border:none;}
+.brrnone {border-right:none;}
+.b {font-weight:bold;}
+.n {font-weight:normal;}
+.u {text-decoration:underline;}
+.lt1{ letter-spacing: -1px !important}
+.invisible{overflow:hidden; visibility:hidden; width:0; height:0; font-size:0; line-height:0;}
+.hide{display: none !important;}
+caption, legend {width:0; height:0; line-height:0; overflow:hidden; visibility:hidden; font-size:0;}
+
+/* width값 */
+.w12p {width:12%;}
+.w200 {width:200px;}
+
+/* height값 */
+.h140 {height:140px;}
+
+/* 폰트설정 */
+.fc01 {color:#78590b;}
+.f11{font-size:11pt;}
+.fw3 {font-weight:300;}
+.fw5 {font-weight:500;}
+.nbFont {font-family: 'Nanum Brush Script', cursive;}
+.nmF12 {font-family: "NanumMyeongjo", "나눔명조" !important;font-weight:bold;font-size:12pt;line-height:1.9;}
+.nmF13 {font-family: "NanumMyeongjo", "나눔명조" !important;font-weight:bold;font-size:13pt;line-height:1.9;}
+.nmF16 {font-family: "NanumMyeongjo", "나눔명조" !important;font-weight:bold;font-size:16pt;}
+.nmF18 {font-family: "NanumMyeongjo", "나눔명조" !important;font-weight:bold;font-size:18pt;}
+.nmF20 {font-family: "NanumMyeongjo", "나눔명조" !important;font-weight:700;font-size:20pt;}
+
+/* border */
+.boL {border-left:1px solid #dedede;}
+
+/* bgcolor */
+.bgc01 {background:#f7f7f7;}
+
+/* 여백 */
+.p0		{padding:0 !important;}
+.p10	{padding:10px !important;}
+
+
+.pt3	{padding-top:3px;}
+.pt5	{padding-top:5px;}
+.pt10	{padding-top:10px;}
+.pt20	{padding-top:20px;}
+.pt30	{padding-top:30px;}
+.pt40	{padding-top:40px;}
+.pt70	{padding-top:70px;}
+.pt75	{padding-top:75px;}
+
+.pr10	{padding-right:10px;}
+.pr15	{padding-right:15px;}
+.pr20	{padding-right:20px;}
+
+.pb10	{padding-bottom:10px;}
+.pb15	{padding-bottom:15px;}
+.pb20	{padding-bottom:20px;}
+.pb30	{padding-bottom:30px;}
+.pb40	{padding-bottom:40px;}
+.pb50	{padding-bottom:50px;}
+.pb130	{padding-bottom:130px;}
+
+.pl10	{padding-left:10px;}
+.pl20	{padding-left:20px;}
+.pl15	{padding-left:15px;}
+.pl30	{padding-left:30px;}
+.pl110	{padding-left:110px;}
+
+.mt5	{margin-top:5px;}
+.mt10	{margin-top:10px;}
+.mt13	{margin-top:13px;}
+.mt20	{margin-top:20px;}
+.mt75	{margin-top:75px;}
+
+.mr30	{margin-right:30px;}
+
+.mb10	{margin-bottom:10px;}
+.mb20	{margin-bottom:20px;}
+.mb30	{margin-bottom:30px;}
+
+.ml10	{margin-left:10px;}
+.ml20	{margin-left:20px;}
+.ml30	{margin-left:30px;}
+.ml50	{margin-left:50px;}

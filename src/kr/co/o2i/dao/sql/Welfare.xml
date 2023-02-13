@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="welfare">
+
+	<resultMap id="welfareMap" type="java.util.Map"> 
+		<result property="CONTENT" column="CONTENT" javaType="java.lang.String" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.ClobTypeHandler" /> 
+	</resultMap>
+	
+	<parameterMap type="kr.co.o2i.util.CommonMap" id="welfareParam">
+		<parameter property="content"   javaType="java.lang.String" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.ClobTypeHandler"  />
+	</parameterMap>
+	
+	<insert id="insert" parameterMap="welfareParam">
+		INSERT INTO WELFARE
+						  ( SEQ
+						  , TITLE 	
+						  , CONTENT
+					 	  , DEL_YN
+					 	  , REG_DATE
+					 	  , BOARD_NAME
+				  )VALUES(  
+				  	  ${seq}
+					 ,#{title		,jdbcType=VARCHAR}
+					 ,#{content 	 ,jdbcType=CLOB}
+					 ,'N'
+					 ,NOW()
+					 ,#{board_name	,jdbcType=VARCHAR}
+				 )
+	</insert>
+	
+	<select id="getMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM WELFARE
+	</select>
+	
+	<insert id="insertKind" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO WELFARE_KIND
+						  ( SEQ
+						  , CODE_SEQ 	
+						  , WELFARE_SEQ
+					 	  , DEL_YN
+					 	  , REG_DATE
+				  )VALUES(  
+				  	  ( SELECT SEQ FROM (SELECT IFNULL(MAX(SEQ),0)+1 AS SEQ FROM WELFARE_KIND) TT )
+					 ,${type_code}
+					 ,${seq}
+					 ,'N'
+					 ,NOW()
+				 )
+	</insert>
+
+
+	<select id="view" parameterType="kr.co.o2i.util.CommonMap" resultMap="welfareMap">
+		SELECT SEQ,
+		  TITLE,
+		  CONTENT,
+		  DEL_YN,
+		  REG_DATE
+		FROM WELFARE
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<!--  select * from welfare t
+	where 10 in (select code_seq from welfare_kind where welfare_seq = t.seq ); -->
+	
+	<select id="kind_list" parameterType="kr.co.o2i.util.CommonMap" resultType="String">
+		SELECT 
+		  GROUP_CONCAT((SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = K.CODE_SEQ)) AS KIND_DESC
+		FROM WELFARE_KIND K
+			WHERE WELFARE_SEQ = ${seq}
+			AND (SELECT TYPE FROM WELFARE_CODE WHERE SEQ = K.CODE_SEQ) = ${type}
+			AND DEL_YN = 'N'
+		ORDER BY CODE_SEQ ASC
+	</select>
+	
+	<select id="list" parameterType="kr.co.o2i.util.CommonMap" resultMap="welfareMap">
+				select * from  (
+			       			SELECT T1.SEQ
+			       					  , T1.TITLE
+			       					  , T1.CONTENT
+			       					  , T1.DEL_YN
+			       					  , T1.REG_DATE
+			       					  , T1.BOARD_NAME
+				     		 FROM (SELECT * 
+				     		 			  FROM WELFARE W
+				    					WHERE DEL_YN = 'N'
+				    						AND BOARD_NAME = #{board_name	,jdbcType=VARCHAR}
+								    	<if test="search_group_seq !='' and search_group_seq != null">
+								    		AND ${search_group_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_sex_seq !='' and search_sex_seq != null">
+								    		AND ${search_sex_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_type_seq !='' and search_type_seq != null">
+								    		AND ${search_type_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_grade_seq !='' and search_grade_seq != null">
+								    		AND ${search_grade_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_area_seq !='' and search_area_seq != null">
+								    		AND ${search_area_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_group_seq !='' and search_group_seq != null">
+								    		AND ${search_group_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_content !='' and search_content != null">
+								    		AND (
+								    			CONTENT LIKE '%${search_content}%'
+								    			OR
+								    			TITLE LIKE '%${search_content}%'
+								    			)
+										</if>
+										<if test="search_welfare_seq !='' and search_welfare_seq != null">
+								    		AND ${search_welfare_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+								   )T1
+						   	 ORDER BY SEQ DESC
+	    				) T2 
+	    				ORDER BY SEQ DESC
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="listCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM WELFARE W
+    					WHERE DEL_YN = 'N' 
+    					 	AND BOARD_NAME = #{board_name	,jdbcType=VARCHAR}
+				    	<if test="search_group_seq !='' and search_group_seq != null">
+								    		AND ${search_group_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_sex_seq !='' and search_sex_seq != null">
+								    		AND ${search_sex_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_type_seq !='' and search_type_seq != null">
+								    		AND ${search_type_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_grade_seq !='' and search_grade_seq != null">
+								    		AND ${search_grade_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_area_seq !='' and search_area_seq != null">
+								    		AND ${search_area_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_group_seq !='' and search_group_seq != null">
+								    		AND ${search_group_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_content !='' and search_content != null">
+								    		AND (
+								    			CONTENT LIKE '%${search_content}%'
+								    			OR
+								    			TITLE LIKE '%${search_content}%'
+								    			)
+										</if>
+										<if test="search_welfare_seq !='' and search_welfare_seq != null">
+								    		AND ${search_welfare_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+				   )T1
+
+	</select>	
+	
+	<update id="update" parameterMap="welfareParam">
+		UPDATE WELFARE SET TITLE = #{title		,jdbcType=VARCHAR}
+						  ,CONTENT = #{content	,jdbcType=CLOB}
+			WHERE SEQ = ${seq}
+	</update>
+	
+	<delete id="del" parameterType="java.util.Map" >
+		UPDATE WELFARE
+	       SET DEL_YN    = 'Y'
+		 WHERE SEQ = ${seq}
+	</delete>
+	
+	<delete id="kind_del" parameterType="java.util.Map" >
+		UPDATE WELFARE_KIND
+	       SET DEL_YN    = 'Y'
+		 WHERE WELFARE_SEQ = ${seq}
+	</delete>
+	
+	
+	<select id="codeList" parameterType="kr.co.o2i.util.CommonMap" resultMap="welfareMap">
+				select * from  (
+			       			SELECT *
+				     		 FROM (SELECT * 
+				     		 			  FROM WELFARE_CODE W
+				    					WHERE DEL_YN = 'N'
+								   )T1
+							 <if test="search_type_code_seq !='' and search_type_code_seq != null">
+				    			WHERE TYPE = ${search_type_code_seq}
+							</if>
+						   	 ORDER BY TYPE, CODE ASC
+	    				) T2 
+	    				ORDER BY TYPE, CODE ASC
+	</select>
+			
+	<select id="codeListCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM WELFARE_CODE W
+    					WHERE DEL_YN = 'N' 
+    					 <if test="search_type_code_seq !='' and search_type_code_seq != null">
+			    			AND TYPE = ${search_type_code_seq}
+						</if>
+				   )T1
+
+	</select>	
+	
+	<select id="selectTypeCode" resultType="kr.co.o2i.util.CommonMap" >
+		SELECT TYPE, TYPE_DESC
+		    FROM WELFARE_CODE
+		    WHERE DEL_YN = 'N'
+		    GROUP BY TYPE ASC
+	</select>
+	
+	<select id="code_welfare_view" parameterType="kr.co.o2i.util.CommonMap" resultMap="welfareMap">
+		SELECT *
+		FROM WELFARE_CODE
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<update id="code_welfare_update" parameterType="kr.co.o2i.util.CommonMap">
+		UPDATE WELFARE_CODE SET 
+					CODE_DESC = #{code_desc		,jdbcType=VARCHAR}
+				   ,SORT = ${sort}
+			WHERE SEQ = ${seq}
+	</update>
+	
+	<insert id="welfare_code_insert" parameterMap="welfareParam">
+		INSERT INTO WELFARE_CODE
+						  ( SEQ
+						  , TYPE 	
+						  , TYPE_DESC
+					 	  , CODE
+					 	  , CODE_DESC
+					 	  , DEL_YN
+					 	  , REG_DATE
+					 	  , SORT
+				  )VALUES(  
+				  	   (SELECT SEQ FROM (SELECT IFNULL(MAX(SEQ), 0)+1 AS SEQ FROM WELFARE_CODE) T3)
+					 ,${type}
+					 , (SELECT TYPE_DESC FROM (SELECT DISTINCT(TYPE_DESC) AS TYPE_DESC FROM WELFARE_CODE WHERE TYPE = ${type}) T1)
+					 , (SELECT CODE FROM (SELECT IFNULL(MAX(CODE), 0)+1 AS CODE FROM WELFARE_CODE WHERE TYPE= ${type}) T2)
+					 ,#{code_desc	,jdbcType=VARCHAR}
+					 ,'N'
+					 ,NOW()
+					 ,${sort}
+				 )
+	</insert>
+	
+	<delete id="welfare_code_del" parameterType="java.util.Map" >
+		UPDATE WELFARE_CODE
+	       SET DEL_YN    = 'Y'
+		 WHERE SEQ = ${seq}
+	</delete>
+	
+	<select id="listCountForGroup" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM WELFARE W
+    					WHERE DEL_YN = 'N' 
+    					 	AND BOARD_NAME = #{board_name	,jdbcType=VARCHAR}
+    					 	<if test="all != 'all'">
+    							AND ${group_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+    						</if>
+				    					<if test="search_group_seq !='' and search_group_seq != null">
+								    		AND ${search_group_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_sex_seq !='' and search_sex_seq != null">
+								    		AND ${search_sex_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_type_seq !='' and search_type_seq != null">
+								    		AND ${search_type_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_grade_seq !='' and search_grade_seq != null">
+								    		AND ${search_grade_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_area_seq !='' and search_area_seq != null">
+								    		AND ${search_area_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_group_seq !='' and search_group_seq != null">
+								    		AND ${search_group_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+										<if test="search_content !='' and search_content != null">
+								    		AND (
+								    			CONTENT LIKE '%${search_content}%'
+								    			OR
+								    			TITLE LIKE '%${search_content}%'
+								    			)
+										</if>
+										<if test="search_welfare_seq !='' and search_welfare_seq != null">
+								    		AND ${search_welfare_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+										</if>
+				   )T1
+
+	</select>
+	
+	<select id="kind_count" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+					SELECT
+                         CODE_SEQ, COUNT(CODE_SEQ) AS CNT
+                     FROM WELFARE W, WELFARE_KIND K
+                     WHERE W.SEQ = K.WELFARE_SEQ
+                       AND W.DEL_YN = 'N'
+                       AND K.DEL_YN = 'N'
+                       AND W.BOARD_NAME = #{board_name	,jdbcType=VARCHAR}
+                     GROUP BY CODE_SEQ
+	</select>
+                            
+	
+	<select id="user_list" parameterType="kr.co.o2i.util.CommonMap" resultMap="welfareMap">
+				
+       			SELECT T1.SEQ
+       					  , T1.TITLE
+       					  , T1.CONTENT
+       					  , T1.DEL_YN
+       					  , T1.REG_DATE
+       					  , T1.BOARD_NAME
+	     		 FROM (SELECT * 
+	     		 			  FROM WELFARE W
+	    					WHERE DEL_YN = 'N'
+	    						AND BOARD_NAME = #{board_name	,jdbcType=VARCHAR}
+	    						<if test="all != 'all'">
+	    						AND ${group_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+	    						</if>
+					    	<if test="search_group_seq !='' and search_group_seq != null">
+					    		AND ${search_group_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+							</if>
+							<if test="search_sex_seq !='' and search_sex_seq != null">
+					    		AND ${search_sex_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+							</if>
+							<if test="search_type_seq !='' and search_type_seq != null">
+					    		AND ${search_type_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+							</if>
+							<if test="search_grade_seq !='' and search_grade_seq != null">
+					    		AND ${search_grade_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+							</if>
+							<if test="search_area_seq !='' and search_area_seq != null">
+					    		AND ${search_area_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+							</if>
+							<if test="search_group_seq !='' and search_group_seq != null">
+					    		AND ${search_group_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+							</if>
+							<if test="search_content !='' and search_content != null">
+					    		AND (
+					    			CONTENT LIKE '%${search_content}%'
+					    			OR
+					    			TITLE LIKE '%${search_content}%'
+					    			)
+							</if>
+							<if test="search_welfare_seq !='' and search_welfare_seq != null">
+					    		AND ${search_welfare_seq} IN (SELECT CODE_SEQ FROM WELFARE_KIND WHERE WELFARE_SEQ = W.SEQ AND DEL_YN = 'N')
+							</if>
+					   )T1
+			   	 ORDER BY SEQ DESC
+	    				 
+	</select>
+	
+</mapper>

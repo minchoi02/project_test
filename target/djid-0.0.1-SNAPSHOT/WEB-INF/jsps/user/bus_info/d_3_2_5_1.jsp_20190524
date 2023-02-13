@@ -1,0 +1,497 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="t" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page isELIgnored ="false" %>
+					<div class="contsArea trafficInformation">
+
+						<!-- 설명 -->
+						<p class="textParaList">
+							(사)대전장애인단체총연합회 모셔드림 에서는 장애인들의 교통 편의증진을 돕고자 타기관과 협력하여장애인무료순환버스와 대전시내저상 버스의 정보를 안내하고 있습니다.
+						</p>
+
+						<div class="textsContsWrapper">
+							<p class="contsSubTit">행복한우리복지관</p>
+							<div class="innerWrapper">
+								<dl class="conBox">
+									<dt>차량소개</dt>
+									<dd>
+										<p>셔틀버스 운행안내</p>
+										<ul class="listDashed type2">
+											<li>이용대상 : 복지관 이용 장애인 및 지역주민</li>
+											<li>이용일시 : 월 ~ 금요일 (공휴일 및 주말 제외)</li>
+										</ul>
+									</dd>
+
+									<dt>문의전화</dt>
+									<dd>042-822-3637</dd>
+								</dl>
+							</div>
+						</div>
+						<!-- //노선도 -->
+
+						<!-- 탭 -->
+						<p class="contsSubTit tyBullet">순환버스 배차시간표</p>
+						<div class="tabMenuWrapper">
+							<div class="tabMenu num3">
+								<div>
+									<div class="btnTab on"><a href="#freeShuttleBus3_3_1"><span>1차운행</span></a></div>
+									<div class="btnTab"><a href="#freeShuttleBus3_3_2"><span>2차운행</span></a></div>
+									<div class="btnTab"><a href="#freeShuttleBus3_3_3"><span>3차운행</span></a></div>
+								</div>
+							</div>
+
+							<div class="tabContBox" id="freeShuttleBus3_3_1">
+								<p class="textRight">(좌 → 우 순서입니다)</p>
+								<ul class="busTimeTable">
+									<li>
+										<div class="busStopBox">
+											<span>1</span>
+											<div>
+												<strong>복지관</strong><span class="stopTime"><b class="hidden">시간</b><em>08:40</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>2</span>
+											<div>
+												<strong>정림3가</strong><span class="stopTime"><b class="hidden">시간</b><em>08:45</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>3</span>
+											<div>
+												<strong>머티4가</strong><span class="stopTime"><b class="hidden">시간</b><em>08:50</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>4</span>
+											<div>
+												<strong>버드네@</strong><span class="stopTime"><b class="hidden">시간</b><em>08:55</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>5</span>
+											<div>
+												<strong>태평5가</strong><span class="stopTime"><b class="hidden">시간</b><em>09:00</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>6</span>
+											<div>
+												<strong>용문동(수침교)</strong><span class="stopTime"><b class="hidden">시간</b><em>09:05</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>7</span>
+											<div>
+												<strong>탄방동(남선4가)</strong><span class="stopTime"><b class="hidden">시간</b><em>09:10</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>8</span>
+											<div>
+												<strong>가람@</strong><span class="stopTime"><b class="hidden">시간</b><em>09:15</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>9</span>
+											<div>
+												<strong>둔산경찰서</strong><span class="stopTime"><b class="hidden">시간</b><em>09:20</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>10</span>
+											<div>
+												<strong>열평주공@</strong><span class="stopTime"><b class="hidden">시간</b><em>09:25</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>11</span>
+											<div>
+												<strong>갈마동4가</strong><span class="stopTime"><b class="hidden">시간</b><em>09:35</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>12</span>
+											<div>
+												<strong>롯데@</strong><span class="stopTime"><b class="hidden">시간</b><em>09:40</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>13</span>
+											<div>
+												<strong>도안14단지</strong><span class="stopTime"><b class="hidden">시간</b><em>09:45</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>14</span>
+											<div>
+												<strong>관저대자연@</strong><span class="stopTime"><b class="hidden">시간</b><em>09:55</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>15</span>
+											<div>
+												<strong>복지관</strong><span class="stopTime"><b class="hidden">시간</b><em>10:00</em></span>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+
+							<div class="tabContBox" id="freeShuttleBus3_3_2">
+								<p class="textRight">(좌 → 우 순서입니다)</p>
+								<ul class="busTimeTable">
+									<li>
+										<div class="busStopBox">
+											<span>1</span>
+											<div>
+												<strong>복지관</strong><span class="stopTime"><b class="hidden">시간</b><em>13:30</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>2</span>
+											<div>
+												<strong>진잠4가</strong><span class="stopTime"><b class="hidden">시간</b><em>13:33</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>3</span>
+											<div>
+												<strong>대정동(홈플러스)</strong><span class="stopTime"><b class="hidden">시간</b><em>13:35</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>4</span>
+											<div>
+												<strong>목원대(14,15단지)</strong><span class="stopTime"><b class="hidden">시간</b><em>13:45</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>5</span>
+											<div>
+												<strong>도안10단지</strong><span class="stopTime"><b class="hidden">시간</b><em>13:48</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>6</span>
+											<div>
+												<strong>도안9,4단지</strong><span class="stopTime"><b class="hidden">시간</b><em>13:50</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>7</span>
+											<div>
+												<strong>유성온천역</strong><span class="stopTime"><b class="hidden">시간</b><em>13:52</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>8</span>
+											<div>
+												<strong>월평주공1단지</strong><span class="stopTime"><b class="hidden">시간</b><em>14:00</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>9</span>
+											<div>
+												<strong>황실, 누리@</strong><span class="stopTime"><b class="hidden">시간</b><em>14:02</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>10</span>
+											<div>
+												<strong>둔산이마트</strong><span class="stopTime"><b class="hidden">시간</b><em>14:05</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>11</span>
+											<div>
+												<strong>경성큰마을4가</strong><span class="stopTime"><b class="hidden">시간</b><em>14:08</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>12</span>
+											<div>
+												<strong>탄방4가</strong><span class="stopTime"><b class="hidden">시간</b><em>14:10</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>13</span>
+											<div>
+												<strong>용문4가</strong><span class="stopTime"><b class="hidden">시간</b><em>14:12</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>14</span>
+											<div>
+												<strong>가장4가</strong><span class="stopTime"><b class="hidden">시간</b><em>14:14</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>15</span>
+											<div>
+												<strong>변동5가</strong><span class="stopTime"><b class="hidden">시간</b><em>14:16</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>16</span>
+											<div>
+												<strong>농도원4가</strong><span class="stopTime"><b class="hidden">시간</b><em>14:18</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>17</span>
+											<div>
+												<strong>도마4가</strong><span class="stopTime"><b class="hidden">시간</b><em>14:20</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>18</span>
+											<div>
+												<strong>정림동3가</strong><span class="stopTime"><b class="hidden">시간</b><em>14:23</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>19</span>
+											<div>
+												<strong>가수원4가</strong><span class="stopTime"><b class="hidden">시간</b><em>14:25</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>20</span>
+											<div>
+												<strong>복지관</strong><span class="stopTime"><b class="hidden">시간</b><em>14:30</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>&nbsp;</span>
+											<div>
+												<strong></strong><span class="stopTime"><b class="hidden">시간</b><em></em></span>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+
+							<div class="tabContBox" id="freeShuttleBus3_3_3">
+								<p class="textRight">(좌 → 우 순서입니다)</p>
+								<ul class="busTimeTable">
+									<li>
+										<div class="busStopBox">
+											<span>1</span>
+											<div>
+												<strong>복지관</strong><span class="stopTime"><b class="hidden">시간</b><em>16:00</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>2</span>
+											<div>
+												<strong>정림4가</strong><span class="stopTime"><b class="hidden">시간</b><em>16:05</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>3</span>
+											<div>
+												<strong>도마4가</strong><span class="stopTime"><b class="hidden">시간</b><em>16:10</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>4</span>
+											<div>
+												<strong>머티4가</strong><span class="stopTime"><b class="hidden">시간</b><em>16:12</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>5</span>
+											<div>
+												<strong>버드네@</strong><span class="stopTime"><b class="hidden">시간</b><em>16:15</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>6</span>
+											<div>
+												<strong>변동4가</strong><span class="stopTime"><b class="hidden">시간</b><em>16:20</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>7</span>
+											<div>
+												<strong>내동롯데@</strong><span class="stopTime"><b class="hidden">시간</b><em>16:25</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>8</span>
+											<div>
+												<strong>갈마4가</strong><span class="stopTime"><b class="hidden">시간</b><em>16:30</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>9</span>
+											<div>
+												<strong>월평주공@</strong><span class="stopTime"><b class="hidden">시간</b><em>16:35</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>10</span>
+											<div>
+												<strong>둔산경찰서</strong><span class="stopTime"><b class="hidden">시간</b><em>16:40</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>11</span>
+											<div>
+												<strong>둥지@</strong><span class="stopTime"><b class="hidden">시간</b><em>16:45</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>12</span>
+											<div>
+												<strong>가람@</strong><span class="stopTime"><b class="hidden">시간</b><em>16:50</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>13</span>
+											<div>
+												<strong>탄방 남선공원</strong><span class="stopTime"><b class="hidden">시간</b><em>16:55</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>14</span>
+											<div>
+												<strong>시청</strong><span class="stopTime"><b class="hidden">시간</b><em>17:05</em></span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="busStopBox">
+											<span>15</span>
+											<div>
+												<strong>큰마을4가</strong><span class="stopTime"><b class="hidden">시간</b><em>17:10</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>16</span>
+											<div>
+												<strong>내동안골4가</strong><span class="stopTime"><b class="hidden">시간</b><em>17:15</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>17</span>
+											<div>
+												<strong>도안동</strong><span class="stopTime"><b class="hidden">시간</b><em>17:20</em></span>
+											</div>
+										</div>
+									</li>
+									<li class="rowEven">
+										<div class="busStopBox">
+											<span>18</span>
+											<div>
+												<strong>복지관</strong><span class="stopTime"><b class="hidden">시간</b><em>17:30</em></span>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+
+						</div>
+						<!-- //탭 -->
+					</div>

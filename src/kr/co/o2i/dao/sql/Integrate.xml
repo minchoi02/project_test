@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="integrate">
+
+	<resultMap id="boardMap" type="java.util.Map"> 
+		<result property="CONTENTS" column="CONTENTS" javaType="java.lang.String" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.ClobTypeHandler" /> 
+	</resultMap>
+	
+	<select id="templevillTop5" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT * FROM (
+		  SELECT ROWNUM as pagenum, z.* FROM (
+		    SELECT * FROM CMT_INTEGRATE
+		    WHERE STATUS = 'N'
+		    AND TEMPLE_ID = 'gunindra'
+		    AND GUBUN = ${gubun}
+		    ORDER BY fid DESC, step, no        
+		  ) z )
+		WHERE pagenum BETWEEN 1 AND ${cnt}
+		ORDER BY fid DESC, step, no
+	</select>
+	
+	<select id="userlist" parameterType="kr.co.o2i.util.CommonMap" resultMap="boardMap">
+		select * from ( select pt.*, ceil(rownum /  ${pagesize}) page 
+						from (
+			       			SELECT * FROM CMT_INTEGRATE T1
+						    WHERE STATUS = 'N'
+						    AND TEMPLE_ID = 'gunindra'
+				    		AND T1.GUBUN  = ${gubun}
+				    		  	<if test="search_name !='' and search_name != null">
+							    	<if test="search_value != '' and search_value != null" >
+								    	<choose>
+								    		<when test="search_name=='reg_date'">
+								    			AND to_char(WDATE,'yyyy-mm-dd') like '%${search_value}%' 
+								    		</when>
+								    		<otherwise>
+								    			AND ${search_name} like '%${search_value}%' 
+								    		</otherwise>
+								    	</choose>
+					       			</if>
+								</if>
+						   	 ORDER BY fid DESC, step, no
+	    				) pt 
+	    			) where page = ${page}
+	    			  ORDER BY fid DESC, step, no
+	</select>
+	
+	<select id="userlistCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+		SELECT count(NO) as cnt
+		  FROM CMT_INTEGRATE
+		 WHERE STATUS = 'N'
+		     AND TEMPLE_ID = 'gunindra'
+	   		 AND GUBUN  = ${gubun}
+			 	<if test="search_name !='' and search_name != null">
+			    	<if test="search_value != '' and search_value != null" >
+				    	<choose>
+				    		<when test="search_name=='reg_date'">
+				    			AND to_char(WDATE,'yyyy-mm-dd') like '%${search_value}%' 
+				    		</when>
+				    		<otherwise>
+				    			AND ${search_name} like '%${search_value}%' 
+				    		</otherwise>
+				    	</choose>
+	       			</if>
+				</if>
+	</select>
+	
+	<select id="view" parameterType="kr.co.o2i.util.CommonMap" resultMap="boardMap">
+		SELECT T1.*,
+		(SELECT MAX(NO) 
+		    FROM CMT_INTEGRATE
+		    WHERE GUBUN = T1.GUBUN
+		        AND NO &lt; T1.NO
+		        AND STATUS = 'N'  
+		            <if test="search_value != '' and search_value != null" >
+		              <choose>
+		                <when test="search_name=='reg_date'">
+		                  AND to_char(WDATE,'yyyy-mm-dd') like '%${search_value}%' 
+		                </when>
+		                <otherwise>
+		                  AND ${search_name} like '%${search_value}%' 
+		                </otherwise>
+		              </choose>
+		              </if>
+		   ) as PRE_NO
+		, (SELECT MIN(NO) 
+		    FROM CMT_INTEGRATE
+		    WHERE GUBUN = T1.GUBUN
+		        AND NO &gt; T1.NO
+		        AND STATUS = 'N'  
+		        <if test="search_name !='' and search_name != null">
+		            <if test="search_value != '' and search_value != null" >
+		              <choose>
+		                <when test="search_name=='reg_date'">
+		                  AND to_char(WDATE,'yyyy-mm-dd') like '%${search_value}%' 
+		                </when>
+		                <otherwise>
+		                  AND ${search_name} like '%${search_value}%' 
+		                </otherwise>
+		              </choose>
+		              </if>
+		        </if>
+		         ) as NEXT_NO
+		 ,(SELECT SUBJECT 
+			FROM CMT_INTEGRATE 
+			WHERE NO = (SELECT MAX(NO) 
+					    FROM CMT_INTEGRATE
+					    WHERE GUBUN = T1.GUBUN
+					        AND NO &lt; T1.NO
+					        AND STATUS = 'N'  
+					            <if test="search_value != '' and search_value != null" >
+					              <choose>
+					                <when test="search_name=='reg_date'">
+					                  AND to_char(WDATE,'yyyy-mm-dd') like '%${search_value}%' 
+					                </when>
+					                <otherwise>
+					                  AND ${search_name} like '%${search_value}%' 
+					                </otherwise>
+					              </choose>
+					              </if>
+					   )) as PRE_SUBJECT
+			, (SELECT SUBJECT 
+			FROM CMT_INTEGRATE 
+			WHERE NO = (SELECT MIN(NO) 
+			    FROM CMT_INTEGRATE
+			    WHERE GUBUN = T1.GUBUN
+			      AND NO &gt; T1.NO
+			      AND STATUS = 'N'  
+			      <if test="search_name !='' and search_name != null">
+			          <if test="search_value != '' and search_value != null" >
+			            <choose>
+			              <when test="search_name=='reg_date'">
+			                AND to_char(WDATE,'yyyy-mm-dd') like '%${search_value}%' 
+			              </when>
+			              <otherwise>
+			                AND ${search_name} like '%${search_value}%' 
+			              </otherwise>
+			            </choose>
+			            </if>
+			      </if>
+			       )) as NEXT_SUBJECT
+		  FROM CMT_INTEGRATE T1
+		 WHERE STATUS = 'N'
+		   AND TEMPLE_ID = 'gunindra'
+		   AND GUBUN = ${gubun}
+		   AND NO = ${no}
+	</select>
+		
+</mapper>

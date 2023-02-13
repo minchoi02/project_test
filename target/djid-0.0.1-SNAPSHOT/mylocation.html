@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>버스기사 앱</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js" /></script>
+<script type="text/javascript">
+
+var playAlert;
+var cnt = 0;
+
+	$(document).ready(function(){
+		$("#start").click(function() {
+			alert("운행이 시작되었습니다.");
+			$("#text").html("운행 중....");
+			
+			playAlert = setInterval(function() {
+				getLocation();
+			}, 3000);
+		});
+		
+		$("#stop").click(function() {			
+			alert("운행이 중지되었습니다.");
+			$("#text").html("운행 중지됨.");
+			clearInterval(playAlert);
+		});
+	});
+	
+	var options = {
+	  enableHighAccuracy: true,
+	  timeout: 5000,
+	  maximumAge: 0
+	};
+
+	function success(pos) {
+	
+		cnt++;
+		
+	  var crd = pos.coords;
+
+	  $("#silsigan").append('<br/>' + cnt + '번째 위치 정보를 요청합니다...');
+	  $("#silsigan").append('<br>위도 : ' + crd.latitude);
+	  $("#silsigan").append('<br>경도: ' + crd.longitude);
+	  /* $("#silsigan").append('<br>속도(m/초): ' + crd.speed); */
+	  $("#silsigan").append("<br/>");
+	  
+	  var lat = crd.latitude;
+	  var lon = crd.longitude;	  
+	  
+	  $("body").scrollTop($(document).height());
+	  	  
+	 $.ajax({
+		    url: '/busLocation.do?lat='+lat+'&lon='+lon,
+		    type : "POST",
+		    error: function(){
+		    	alert('에러가 발생했습니다. 관리자에 문의하세요.');
+		    },
+		    success: function(r){
+		    	
+		    }
+		});
+	};
+
+	function error(err) {
+	  console.warn('ERROR(' + err.code + '): ' + err.message);
+	};
+	
+	function getLocation(){
+		navigator.geolocation.getCurrentPosition(success, error, options);		
+	}
+	
+</script>
+</head>
+<body>
+<input type="button" id="start" value="운행시작하기" style="width: 500px; height: 500px"/>
+<input type="button" id="stop" value="운행종료하기" style="width: 500px; height: 500px"/>
+<br>
+<span id="text" style="font-size: 20px;">1호차</span>
+<br>
+실시간 좌표
+<br>
+<div id="silsigan">
+</div>
+</body>
+</html>

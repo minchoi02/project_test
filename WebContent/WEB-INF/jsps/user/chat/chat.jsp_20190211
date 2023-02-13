@@ -1,0 +1,340 @@
+<<<<<<< HEAD
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+	    <title>정보드림 고객센터</title>
+	    
+	    
+	    
+	    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	    <style>
+	    	body { margin : 0; }
+	    	#chatArea { width : 300px; border-radius : 5px; background-color : white; }
+	    	#chatArea .sample { display : none !important; }
+	    	
+	    	#chatArea, #chatArea * { box-sizing: border-box;}
+	    	#messageArea { height : 200px; border : 1px solid #dcdcdc; border-top : 0; padding : 5px; overflow-y : auto; }
+	    	#messageArea .messageItem { padding : 3px; font-size : 15px; }
+	    	#inputMessage { width : 100%; padding : 5px; }
+	    </style>
+	    
+	    
+	    
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<form name="frm_conf">
+			<input type="hidden" name="start_time" value="${chatConf.STARTTIME }" />
+			<input type="hidden" name="end_time" value="${chatConf.ENDTIME }" />
+			<input type="hidden" name="chat_use" value="${chatConf.CHAT_USE }" />
+		</form>
+	    <div id="chatArea">
+	    	<div id="chatBody">
+	    		<div id="messageArea">
+	    			<div class="messageItem sample">안녕하세요. 반갑습니다.</div>
+	    		</div>
+	    	</div>
+	    	<div id="chatFooter">
+	    		<input id="inputMessage" type="text" placeholder="메세지를 입력 후 엔터를 눌러주세요." title="채팅 입력"/>
+	    	</div>
+	    </div>
+	</body>
+    <script type="text/javascript">
+    	var f = document.frm_conf;
+        var chat_use = f.chat_use.value;
+        var start_time = f.start_time.value;
+        var end_time = f.end_time.value;
+
+        var nowDate = new Date();
+        var nowTimeStr = ("0" + nowDate.getHours()).slice(-2) +("0" + nowDate.getMinutes()).slice(-2);
+
+
+    	if(chat_use == "Y" && nowTimeStr < end_time && nowTimeStr > start_time) {
+    		
+    		
+    		
+    		var webSocket = new WebSocket('wss://www.djid.or.kr/broadcasting');
+            var inputMessage = document.getElementById('inputMessage');
+            var cno;
+            
+    		webSocket.onerror = function(event) {
+    			onError(event)
+    		};
+    		webSocket.onopen = function(event) {
+    			onOpen(event)
+    			var chatObj = {};
+    			chatObj.mode = "set";
+
+    			webSocket.send(JSON.stringify(chatObj));
+    		};
+    		webSocket.onmessage = function(event) {
+    			onMessage(event)
+    		};
+    		function onMessage(event) {
+    		    //textarea.value += "너 : " + event.data + "\n";
+    		    var chatObj = JSON.parse(event.data);
+    		    
+    		    var $w = $("#messageArea");
+    		    var $textItem;
+    		    
+    		     console.log(chatObj);
+    		    
+    		    switch(chatObj.mode) {
+    			    case "set": {
+    			    	top.setChatService();
+    			    	
+    			    	cno = chatObj.cno;
+    			    	
+    			    	$textItem = $("#messageArea .messageItem.sample").clone().removeClass("sample").html("안녕하세요. 실시간 상담 서비스 입니다. 무엇을 도와드릴까요?");
+    			    	$("#inputMessage").focus();
+    			    }
+    			    break;
+    			    
+    			    case "msg": {
+    			    	msg_cno = chatObj.cno;
+    			    	switch(chatObj.admin) {
+    			    		case "Y": {
+    			    			$textItem = $("#messageArea .messageItem.sample").clone().removeClass("sample").html("관리자 : " + chatObj.msg);
+    			    			
+    			    			//textarea.value += "관리자 : " + chatObj.msg + "\n";
+    			    		}
+    			    		break;
+    			    		
+    			    		default : {
+    			    			$textItem = $("#messageArea .messageItem.sample").clone().removeClass("sample").html("나 : " + chatObj.msg);
+    			    			//textarea.value += "나 : " + chatObj.msg + "\n"; 
+    			    		}
+    			    		break;
+    			    	}
+    			    }
+    			    break;
+    			    
+    			    case "noAdmin": {
+    		    		$("#chatArea").remove();
+    		    		//alert("실시간 상담중이 아닙니다.");
+    		    		top.noChatService();
+    			    }
+    			    break;
+    		    }
+    		    
+	    		var $chatTextArea = $("#messageArea");
+	    		var chatTextAreaScrollHeight = $chatTextArea.prop('scrollHeight');
+	    		var chatTextAreaHeight = $chatTextArea.height();
+	    		var chatTextAreaMaxScroll = chatTextAreaScrollHeight - chatTextAreaHeight;
+	    		var chatTextAreaScrollTop = $chatTextArea.scrollTop();
+	    		
+	    		$chatTextArea.append($textItem);
+	    		//console.log(chatTextAreaScrollHeight, chatTextAreaHeight, chatTextAreaMaxScroll, chatTextAreaScrollTop);
+	    		if(chatTextAreaMaxScroll <= chatTextAreaScrollTop + 15) {
+	    			$chatTextArea.scrollTop($chatTextArea.prop('scrollHeight'));
+	    		} 
+	    		
+    		}
+    		function onOpen(event) {
+    		    //textarea.value += "Success\n";
+    		}
+    		function onError(event) {
+    			console.log("error = " + event.data);
+    		}
+    		function send() {
+    			if(cno) {
+    				if(inputMessage.value) {
+    					var chatObj = {};
+    					chatObj.mode = "msg";
+    					chatObj.cno = cno.toString();
+    					chatObj.msg = inputMessage.value
+    					//console.log(chatObj);
+    					webSocket.send(JSON.stringify(chatObj));
+    				}
+    			}
+    		    // textarea.value += "ME : " + inputMessage.value + "\n";
+    		    // webSocket.send(inputMessage.value);
+    		    inputMessage.value = "";
+    		}
+    		
+    		$("#inputMessage").keydown(function(e) {
+    			if(e.keyCode == 13) {
+    				send();	
+    			}
+    		})
+    	}
+    	else {
+    		$("#chatArea").remove();
+    		//alert("실시간 상담중이 아닙니다.");
+    		top.noChatService();
+    	}
+    	
+  </script>
+=======
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+	    <title>정보드림 고객센터</title>
+	    
+	    
+	    
+	    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	    <style>
+	    	body { margin : 0; }
+	    	#chatArea { width : 300px; border-radius : 5px; background-color : white; }
+	    	#chatArea .sample { display : none !important; }
+	    	
+	    	#chatArea, #chatArea * { box-sizing: border-box;}
+	    	#messageArea { height : 200px; border : 1px solid #dcdcdc; border-top : 0; padding : 5px; overflow-y : auto; }
+	    	#messageArea .messageItem { padding : 3px; font-size : 15px; }
+	    	#inputMessage { width : 100%; padding : 5px; }
+	    </style>
+	    
+	    
+	    
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<form name="frm_conf">
+			<input type="hidden" name="start_time" value="${chatConf.STARTTIME }" />
+			<input type="hidden" name="end_time" value="${chatConf.ENDTIME }" />
+			<input type="hidden" name="chat_use" value="${chatConf.CHAT_USE }" />
+		</form>
+	    <div id="chatArea">
+	    	<div id="chatBody">
+	    		<div id="messageArea">
+	    			<div class="messageItem sample">안녕하세요. 반갑습니다.</div>
+	    		</div>
+	    	</div>
+	    	<div id="chatFooter">
+	    		<input id="inputMessage" type="text" placeholder="메세지를 입력 후 엔터를 눌러주세요." title="채팅 입력"/>
+	    	</div>
+	    </div>
+	</body>
+    <script type="text/javascript">
+    	var f = document.frm_conf;
+        var chat_use = f.chat_use.value;
+        var start_time = f.start_time.value;
+        var end_time = f.end_time.value;
+
+        var nowDate = new Date();
+        var nowTimeStr = ("0" + nowDate.getHours()).slice(-2) +("0" + nowDate.getMinutes()).slice(-2);
+
+
+    	if(chat_use == "Y" && nowTimeStr < end_time && nowTimeStr > start_time) {
+    		
+    		
+    		
+    		var webSocket = new WebSocket('wss://www.djid.or.kr/broadcasting');
+            var inputMessage = document.getElementById('inputMessage');
+            var cno;
+            
+    		webSocket.onerror = function(event) {
+    			onError(event)
+    		};
+    		webSocket.onopen = function(event) {
+    			onOpen(event)
+    			var chatObj = {};
+    			chatObj.mode = "set";
+
+    			webSocket.send(JSON.stringify(chatObj));
+    		};
+    		webSocket.onmessage = function(event) {
+    			onMessage(event)
+    		};
+    		function onMessage(event) {
+    		    //textarea.value += "너 : " + event.data + "\n";
+    		    var chatObj = JSON.parse(event.data);
+    		    
+    		    var $w = $("#messageArea");
+    		    var $textItem;
+    		    
+    		     console.log(chatObj);
+    		    
+    		    switch(chatObj.mode) {
+    			    case "set": {
+    			    	top.setChatService();
+    			    	
+    			    	cno = chatObj.cno;
+    			    	
+    			    	$textItem = $("#messageArea .messageItem.sample").clone().removeClass("sample").html("안녕하세요. 실시간 상담 서비스 입니다. 무엇을 도와드릴까요?");
+    			    	$("#inputMessage").focus();
+    			    }
+    			    break;
+    			    
+    			    case "msg": {
+    			    	msg_cno = chatObj.cno;
+    			    	switch(chatObj.admin) {
+    			    		case "Y": {
+    			    			$textItem = $("#messageArea .messageItem.sample").clone().removeClass("sample").html("관리자 : " + chatObj.msg);
+    			    			
+    			    			//textarea.value += "관리자 : " + chatObj.msg + "\n";
+    			    		}
+    			    		break;
+    			    		
+    			    		default : {
+    			    			$textItem = $("#messageArea .messageItem.sample").clone().removeClass("sample").html("나 : " + chatObj.msg);
+    			    			//textarea.value += "나 : " + chatObj.msg + "\n"; 
+    			    		}
+    			    		break;
+    			    	}
+    			    }
+    			    break;
+    			    
+    			    case "noAdmin": {
+    		    		$("#chatArea").remove();
+    		    		//alert("실시간 상담중이 아닙니다.");
+    		    		top.noChatService();
+    			    }
+    			    break;
+    		    }
+    		    
+	    		var $chatTextArea = $("#messageArea");
+	    		var chatTextAreaScrollHeight = $chatTextArea.prop('scrollHeight');
+	    		var chatTextAreaHeight = $chatTextArea.height();
+	    		var chatTextAreaMaxScroll = chatTextAreaScrollHeight - chatTextAreaHeight;
+	    		var chatTextAreaScrollTop = $chatTextArea.scrollTop();
+	    		
+	    		$chatTextArea.append($textItem);
+	    		//console.log(chatTextAreaScrollHeight, chatTextAreaHeight, chatTextAreaMaxScroll, chatTextAreaScrollTop);
+	    		if(chatTextAreaMaxScroll <= chatTextAreaScrollTop + 15) {
+	    			$chatTextArea.scrollTop($chatTextArea.prop('scrollHeight'));
+	    		} 
+	    		
+    		}
+    		function onOpen(event) {
+    		    //textarea.value += "Success\n";
+    		}
+    		function onError(event) {
+    			console.log("error = " + event.data);
+    		}
+    		function send() {
+    			if(cno) {
+    				if(inputMessage.value) {
+    					var chatObj = {};
+    					chatObj.mode = "msg";
+    					chatObj.cno = cno.toString();
+    					chatObj.msg = inputMessage.value
+    					//console.log(chatObj);
+    					webSocket.send(JSON.stringify(chatObj));
+    				}
+    			}
+    		    // textarea.value += "ME : " + inputMessage.value + "\n";
+    		    // webSocket.send(inputMessage.value);
+    		    inputMessage.value = "";
+    		}
+    		
+    		$("#inputMessage").keydown(function(e) {
+    			if(e.keyCode == 13) {
+    				send();	
+    			}
+    		})
+    	}
+    	else {
+    		$("#chatArea").remove();
+    		//alert("실시간 상담중이 아닙니다.");
+    		top.noChatService();
+    	}
+    	
+  </script>
+>>>>>>> refs/heads/202204
+</html>

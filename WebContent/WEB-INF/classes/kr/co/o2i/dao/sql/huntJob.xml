@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="hunt_job">
+
+	<!-- <parameterMap type="kr.co.o2i.util.CommonMap" id="jobOfferParam">
+		<parameter property="content"   javaType="java.lang.String" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.ClobTypeHandler"  />
+	</parameterMap> -->
+
+	<insert id="insert" parameterType="java.util.Map">
+		INSERT INTO HUNT_JOB
+						  ( SEQ
+						  ,DEL_YN
+						  ,REG_DATE
+						  ,STATUS_SEQ
+						  ,NAME
+						  ,BIRTH_YEAR
+						  ,BIRTH_MONTH
+						  ,BIRTH_DAY
+						  ,ZIP_CD
+						  ,ADDR1
+						  ,ADDR2
+						  ,TEL1
+						  ,TEL2
+						  ,TEL3
+						  ,EMAIL
+						  ,KIND_SEQ
+						  ,LEVEL_SEQ
+						  ,OCCUR_DATE
+						  ,REGIST_DATE
+						  ,PART
+						  ,CURE
+						  ,LIFE_ABILITY1
+						  ,LIFE_ABILITY2
+						  ,LIFE_ABILITY3
+						  ,LIFE_ABILITY4
+						  ,LIFE_ABILITY5
+						  ,LIFE_ABILITY6
+						  ,LIFE_ABILITY7
+						  ,SECTORS
+						  ,RESPONSE
+						  ,REASON
+						  ,SEX
+						  ,AREA1_GUGUN_SEQ
+						  ,AREA2_GUGUN_SEQ
+						  ,AREA1_DONGRI_SEQ
+						  ,AREA2_DONGRI_SEQ
+						  ,SALARY
+						  ,SHOUR
+						  ,SMINUTE
+						  ,EHOUR
+						  ,EMINUTE
+						  ,EMP
+						  ,DORMITORY_YN
+						  ,CONTENT1
+						  ,CONTENT2
+				  )VALUES(  
+				  	  ${seq}
+				  	  ,'N'
+				  	  ,NOW()
+				  	  ,${status_seq}
+				  	  ,#{name		,jdbcType=VARCHAR}
+				  	  ,#{birth_year		,jdbcType=VARCHAR}
+				  	  ,#{birth_month		,jdbcType=VARCHAR}
+				  	  ,#{birth_day		,jdbcType=VARCHAR}
+				  	  ,#{zip_cd		,jdbcType=VARCHAR}
+				  	  ,#{addr1		,jdbcType=VARCHAR}
+				  	  ,#{addr2		,jdbcType=VARCHAR}
+				  	  ,#{tel1		,jdbcType=VARCHAR}
+				  	  ,#{tel2		,jdbcType=VARCHAR}
+				  	  ,#{tel3		,jdbcType=VARCHAR}
+				  	  ,#{email		,jdbcType=VARCHAR}
+				  	  ,${kind_seq}
+				  	  ,${level_seq}
+				  	  ,#{occur_date		,jdbcType=VARCHAR}
+				  	  ,#{regist_date		,jdbcType=VARCHAR}
+				  	  ,#{part		,jdbcType=VARCHAR}
+				  	  ,#{cure		,jdbcType=VARCHAR}
+				  	  ,#{life_ability1		,jdbcType=VARCHAR}
+				  	  ,#{life_ability2		,jdbcType=VARCHAR}
+				  	  ,#{life_ability3		,jdbcType=VARCHAR}
+				  	  ,#{life_ability4		,jdbcType=VARCHAR}
+				  	  ,#{life_ability5		,jdbcType=VARCHAR}
+				  	  ,#{life_ability6		,jdbcType=VARCHAR}
+				  	  ,#{life_ability7		,jdbcType=VARCHAR}
+				  	  ,#{sectors		,jdbcType=VARCHAR}
+				  	  ,#{response		,jdbcType=VARCHAR}
+				  	  ,#{reason		,jdbcType=VARCHAR}
+				  	  ,#{sex		,jdbcType=VARCHAR}
+				  	  ,${area1_gugun_seq}
+				  	  ,${area2_gugun_seq}
+				  	  ,${area1_dongri_seq}
+				  	  ,${area2_dongri_seq}
+				  	  ,${salary}
+				  	  ,#{shour		,jdbcType=VARCHAR}
+				  	  ,#{sminute		,jdbcType=VARCHAR}
+				  	  ,#{ehour		,jdbcType=VARCHAR}
+				  	  ,#{eminute		,jdbcType=VARCHAR}
+				  	  ,#{emp		,jdbcType=VARCHAR}
+				  	  ,#{dormitory_yn		,jdbcType=VARCHAR}
+				  	  ,#{content1		,jdbcType=VARCHAR}
+				  	  ,#{content2		,jdbcType=VARCHAR}				  	 
+				 )
+	</insert>
+	
+	<select id="getMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM HUNT_JOB
+	</select>
+
+
+	<select id="view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				SELECT
+						SEQ
+						  ,DEL_YN
+						  ,REG_DATE
+						  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.STATUS_SEQ) AS STATUS
+						  ,STATUS_SEQ
+						  ,NAME
+						  ,BIRTH_YEAR
+						  ,BIRTH_MONTH
+						  ,BIRTH_DAY
+						  ,ZIP_CD
+						  ,ADDR1
+						  ,ADDR2
+						  ,TEL1
+						  ,TEL2
+						  ,TEL3
+						  ,EMAIL
+						  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.KIND_SEQ) AS KIND
+						  ,KIND_SEQ
+						  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.LEVEL_SEQ) AS LEVEL
+						  ,LEVEL_SEQ
+						  ,OCCUR_DATE
+						  ,REGIST_DATE
+						  ,PART
+						  ,CURE
+						  ,LIFE_ABILITY1
+						  ,LIFE_ABILITY2
+						  ,LIFE_ABILITY3
+						  ,LIFE_ABILITY4
+						  ,LIFE_ABILITY5
+						  ,LIFE_ABILITY6
+						  ,LIFE_ABILITY7
+						  ,SECTORS
+						  ,RESPONSE
+						  ,REASON
+						  ,SEX
+						  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.AREA1_GUGUN_SEQ) AS AREA1_GUGUN
+						  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.AREA2_GUGUN_SEQ) AS AREA2_GUGUN
+						  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.AREA1_DONGRI_SEQ) AS AREA1_DONGRI
+						  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.AREA2_DONGRI_SEQ) AS AREA2_DONGRI
+						  ,AREA1_GUGUN_SEQ
+						  ,AREA2_GUGUN_SEQ
+						  ,AREA1_DONGRI_SEQ
+						  ,AREA2_DONGRI_SEQ
+						  ,SALARY
+						  ,SHOUR
+						  ,SMINUTE
+						  ,EHOUR
+						  ,EMINUTE
+						  ,EMP
+						  ,DORMITORY_YN
+						  ,CONTENT1
+						  ,CONTENT2
+						  <![CDATA[,REPLACE(CONTENT1, '\r\n', '<br>') AS VIEW_CONTENT1]]>  
+						  <![CDATA[,REPLACE(CONTENT2, '\r\n', '<br>') AS VIEW_CONTENT2]]>		 
+		FROM HUNT_JOB T1
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<select id="list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT SEQ
+							  ,DEL_YN
+							  ,REG_DATE
+							  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.STATUS_SEQ) AS STATUS
+							  ,STATUS_SEQ
+							  ,NAME
+							  ,BIRTH_YEAR
+							  ,BIRTH_MONTH
+							  ,BIRTH_DAY
+							  ,ZIP_CD
+							  ,ADDR1
+							  ,ADDR2
+							  ,TEL1
+							  ,TEL2
+							  ,TEL3
+							  ,EMAIL
+							  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.KIND_SEQ) AS KIND
+							  ,KIND_SEQ
+							  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.LEVEL_SEQ) AS LEVEL
+							  ,LEVEL_SEQ
+							  ,OCCUR_DATE
+							  ,REGIST_DATE
+							  ,PART
+							  ,CURE
+							  ,LIFE_ABILITY1
+							  ,LIFE_ABILITY2
+							  ,LIFE_ABILITY3
+							  ,LIFE_ABILITY4
+							  ,LIFE_ABILITY5
+							  ,LIFE_ABILITY6
+							  ,LIFE_ABILITY7
+							  ,SECTORS
+							  ,RESPONSE
+							  ,REASON
+							  ,SEX
+							  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.AREA1_GUGUN_SEQ) AS AREA1_GUGUN
+							  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.AREA2_GUGUN_SEQ) AS AREA2_GUGUN
+							  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.AREA1_DONGRI_SEQ) AS AREA1_DONGRI
+							  ,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = T1.AREA2_DONGRI_SEQ) AS AREA2_DONGRI
+							  ,AREA1_GUGUN_SEQ
+							  ,AREA2_GUGUN_SEQ
+							  ,AREA1_DONGRI_SEQ
+							  ,AREA2_DONGRI_SEQ
+							  ,SALARY
+							  ,SHOUR
+							  ,SMINUTE
+							  ,EHOUR
+							  ,EMINUTE
+							  ,EMP
+							  ,DORMITORY_YN
+							  ,CONTENT1
+							  ,CONTENT2
+							  <![CDATA[,REPLACE(CONTENT1, '\r\n', '<br>') AS VIEW_CONTENT1]]>  
+							  <![CDATA[,REPLACE(CONTENT2, '\r\n', '<br>') AS VIEW_CONTENT2]]>    			
+				     		 FROM (SELECT * 
+				     		 			  FROM HUNT_JOB M
+				    					WHERE DEL_YN = 'N'
+				    					<if test="search_gugun_seq !='' and search_gugun_seq != null">
+								    		AND (
+								    				AREA1_GUGUN_SEQ = ${search_gugun_seq}
+								    				OR
+								    				AREA2_GUGUN_SEQ = ${search_gugun_seq}
+								    			)
+										</if>
+										<if test="search_dongri_seq !='' and search_dongri_seq != null">
+								    		AND (
+								    				AREA1_DONGRI_SEQ = ${search_dongri_seq}
+								    				OR
+								    				AREA2_DONGRI_SEQ = ${search_dongri_seq}
+								    			)
+										</if>
+								    	<if test="search_content !='' and search_content != null">
+								    		AND (
+								    				SECTORS LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				CONTENT1 LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				NAME LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    			)
+										</if>
+										<if test="BASE == 'user'">
+											AND STATUS_SEQ = 155
+										</if>
+								   )T1
+						   	 ORDER BY SEQ DESC
+	    				) T2 
+	    				ORDER BY SEQ DESC
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="listCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM HUNT_JOB M
+    					WHERE DEL_YN = 'N'
+	    					<if test="search_gugun_seq !='' and search_gugun_seq != null">
+					    		AND (
+					    				AREA1_GUGUN_SEQ = ${search_gugun_seq}
+					    				OR
+					    				AREA2_GUGUN_SEQ = ${search_gugun_seq}
+					    			)
+							</if>
+							<if test="search_dongri_seq !='' and search_dongri_seq != null">
+					    		AND (
+					    				AREA1_DONGRI_SEQ = ${search_dongri_seq}
+					    				OR
+					    				AREA2_DONGRI_SEQ = ${search_dongri_seq}
+					    			)
+							</if>
+					    	<if test="search_content !='' and search_content != null">
+					    		AND (
+					    				SECTORS LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+					    				OR
+					    				CONTENT1 LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+					    				OR
+					    				NAME LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+					    			)
+							</if>
+							<if test="BASE == 'user'">
+								AND STATUS_SEQ = 155
+							</if>
+				   )T1
+
+	</select>	
+	
+	<update id="update" parameterType="java.util.Map">
+		UPDATE HUNT_JOB SET
+			STATUS_SEQ = ${status_seq}
+						  ,NAME = #{name		,jdbcType=VARCHAR}
+						  ,BIRTH_YEAR = #{birth_year		,jdbcType=VARCHAR}
+						  ,BIRTH_MONTH = #{birth_month		,jdbcType=VARCHAR}
+						  ,BIRTH_DAY = #{birth_day		,jdbcType=VARCHAR}
+						  ,ZIP_CD = #{zip_cd		,jdbcType=VARCHAR}
+						  ,ADDR1 = #{addr1		,jdbcType=VARCHAR}
+						  ,ADDR2 = #{addr2		,jdbcType=VARCHAR}
+						  ,TEL1 = #{tel1		,jdbcType=VARCHAR}
+						  ,TEL2 = #{tel2		,jdbcType=VARCHAR}
+						  ,TEL3 = #{tel3		,jdbcType=VARCHAR}
+						  ,EMAIL = #{email		,jdbcType=VARCHAR}
+						  ,KIND_SEQ = ${kind_seq}
+						  ,LEVEL_SEQ = ${level_seq}
+						  ,OCCUR_DATE = #{occur_date		,jdbcType=VARCHAR}
+						  ,REGIST_DATE = #{regist_date		,jdbcType=VARCHAR}
+						  ,PART = #{part		,jdbcType=VARCHAR}
+						  ,CURE = #{cure		,jdbcType=VARCHAR}
+						  ,LIFE_ABILITY1 = #{life_ability1		,jdbcType=VARCHAR}
+						  ,LIFE_ABILITY2 = #{life_ability2		,jdbcType=VARCHAR}
+						  ,LIFE_ABILITY3 = #{life_ability3		,jdbcType=VARCHAR}
+						  ,LIFE_ABILITY4 = #{life_ability4		,jdbcType=VARCHAR}
+						  ,LIFE_ABILITY5 = #{life_ability5		,jdbcType=VARCHAR}
+						  ,LIFE_ABILITY6 = #{life_ability6		,jdbcType=VARCHAR}
+						  ,LIFE_ABILITY7 = #{life_ability7		,jdbcType=VARCHAR}
+						  ,SECTORS = #{sectors		,jdbcType=VARCHAR}
+						  ,RESPONSE = #{response		,jdbcType=VARCHAR}
+						  ,REASON = #{reason		,jdbcType=VARCHAR}
+						  ,SEX = #{sex		,jdbcType=VARCHAR}
+						  ,AREA1_GUGUN_SEQ = ${area1_gugun_seq}
+						  ,AREA2_GUGUN_SEQ = ${area2_gugun_seq}
+						  ,AREA1_DONGRI_SEQ = ${area1_dongri_seq}
+						  ,AREA2_DONGRI_SEQ = ${area2_dongri_seq}
+						  ,SALARY = ${salary}
+						  ,SHOUR = #{shour		,jdbcType=VARCHAR}
+						  ,SMINUTE = #{sminute		,jdbcType=VARCHAR}
+						  ,EHOUR = #{ehour		,jdbcType=VARCHAR}
+						  ,EMINUTE = #{eminute		,jdbcType=VARCHAR}
+						  ,EMP = #{emp		,jdbcType=VARCHAR}
+						  ,DORMITORY_YN = #{dormitory_yn		,jdbcType=VARCHAR}
+						  ,CONTENT1 = #{content1		,jdbcType=VARCHAR}
+						  ,CONTENT2 = #{content2		,jdbcType=VARCHAR}						  
+			WHERE SEQ = ${seq}
+	</update>
+	
+	<delete id="del" parameterType="java.util.Map" >
+		UPDATE HUNT_JOB
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ = ${seq}
+	</delete>
+	
+	<insert id="hunt_job_edu_insert" parameterType="java.util.Map">
+		INSERT INTO HUNT_JOB_EDU
+						  ( SEQ
+						  ,HUNT_JOB_SEQ
+						  ,DEL_YN
+						  ,REG_DATE
+						  ,EDU_NAME
+						  ,EDU_SDATE
+						  ,EDU_EDATE
+						  ,EDU_CONTENT
+						  ,EDU_ETC						
+				  )VALUES(  
+				  	  ( SELECT SEQ FROM (SELECT IFNULL(MAX(SEQ),0)+1 AS SEQ FROM HUNT_JOB_EDU) TT )
+				  	  ,${hunt_job_seq}
+				  	  ,'N'
+				  	  ,NOW()
+				  	  ,#{edu_name		,jdbcType=VARCHAR}
+				  	  ,STR_TO_DATE(#{edu_sdate,jdbcType=VARCHAR}, '%Y-%m-%d')
+				  	  ,STR_TO_DATE(#{edu_edate,jdbcType=VARCHAR}, '%Y-%m-%d')
+				  	  ,#{edu_content		,jdbcType=VARCHAR}
+				  	  ,#{edu_etc		,jdbcType=VARCHAR}  	 
+				 )
+	</insert>
+	
+	<insert id="hunt_job_career_insert" parameterType="java.util.Map">
+		INSERT INTO HUNT_JOB_CAREER
+						  ( SEQ
+						  ,HUNT_JOB_SEQ
+						  ,DEL_YN
+						  ,REG_DATE
+						  ,CAREER_NAME
+						  ,CAREER_SDATE
+						  ,CAREER_EDATE
+						  ,CAREER_CONTENT
+						  ,CAREER_ETC						
+				  )VALUES(  
+				  	  ( SELECT SEQ FROM (SELECT IFNULL(MAX(SEQ),0)+1 AS SEQ FROM HUNT_JOB_CAREER) TT )
+				  	  ,${hunt_job_seq}
+				  	  ,'N'
+				  	  ,NOW()
+				  	  ,#{career_name		,jdbcType=VARCHAR}
+				  	  ,STR_TO_DATE(#{career_sdate,jdbcType=VARCHAR}, '%Y-%m-%d')
+				  	  ,STR_TO_DATE(#{career_edate,jdbcType=VARCHAR}, '%Y-%m-%d')
+				  	  ,#{career_content		,jdbcType=VARCHAR}
+				  	  ,#{career_etc		,jdbcType=VARCHAR}  	 
+				 )
+	</insert>
+	
+	<select id="edu_list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+			SELECT * FROM HUNT_JOB_EDU
+				WHERE DEL_YN = 'N'
+				  AND HUNT_JOB_SEQ = ${seq}
+				ORDER BY REG_DATE ASC
+	</select>
+	
+	<select id="career_list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+			SELECT * FROM HUNT_JOB_CAREER
+				WHERE DEL_YN = 'N'
+				  AND HUNT_JOB_SEQ = ${seq}
+				ORDER BY REG_DATE ASC
+	</select>
+	
+	<delete id="hunt_job_edu_del" parameterType="java.util.Map" >
+		UPDATE HUNT_JOB_EDU
+	       SET DEL_YN  = 'Y'
+		 WHERE HUNT_JOB_SEQ = ${seq}
+	</delete>
+	
+	<delete id="hunt_job_career_del" parameterType="java.util.Map" >
+		UPDATE HUNT_JOB_CAREER
+	       SET DEL_YN  = 'Y'
+		 WHERE HUNT_JOB_SEQ = ${seq}
+	</delete>
+
+	
+</mapper>

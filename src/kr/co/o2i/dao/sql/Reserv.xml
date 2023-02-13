@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="reserv">
+
+	<insert id="insert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO RESERV
+						  ( SEQ
+						  , DEL_YN	
+						  , REG_DATE
+						  , RESERV_NAME
+						  , PWD
+					 	  , RESERV_DATE
+					 	  , PASS_NAME
+					 	  , S_PLACE
+					 	  , E_PLACE
+					 	  , TEL1
+					 	  , TEL2
+					 	  , TEL3
+					 	  , GRADE
+					 	  , PERSON_CNT
+					 	  , SUPPLY_YN
+					 	  , CONFIRM_YN
+				  )VALUES(  
+				  	  ${seq}
+					 ,'N'
+					 ,NOW()
+					 ,HEX(AES_ENCRYPT(#{reserv_name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{pwd,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,STR_TO_DATE(CONCAT(#{year,jdbcType=VARCHAR},'-',#{month,jdbcType=VARCHAR},'-',#{day,jdbcType=VARCHAR},' ',#{hour,jdbcType=VARCHAR},':',#{minute,jdbcType=VARCHAR}), '%Y-%m-%d %H:%i')
+					 ,HEX(AES_ENCRYPT(#{pass_name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,#{s_place		,jdbcType=VARCHAR}
+					 ,#{e_place		,jdbcType=VARCHAR}
+					 ,HEX(AES_ENCRYPT(#{tel1,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{tel2,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{tel3,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,#{grade		,jdbcType=VARCHAR}
+					 ,#{person_cnt		,jdbcType=VARCHAR}
+					 ,#{supply_yn		,jdbcType=VARCHAR}
+					 ,'확인중'
+				 )
+	</insert>
+	
+	<select id="getMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM RESERV
+	</select>
+
+
+	<select id="view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT SEQ
+			  , DEL_YN
+			  , CAST(AES_DECRYPT(UNHEX(RESERV_NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS RESERV_NAME
+			  , CAST(AES_DECRYPT(UNHEX(PWD), #{key,jdbcType=VARCHAR}) AS CHAR) AS PWD
+			  , RESERV_DATE
+			  , CAST(AES_DECRYPT(UNHEX(PASS_NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS PASS_NAME
+			  , S_PLACE
+			  , E_PLACE
+		 	  , CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL1
+		 	  , CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL2
+		 	  , CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL3
+		 	  , DATE_FORMAT(RESERV_DATE, '%Y') AS RESERV_YEAR
+		 	  , DATE_FORMAT(RESERV_DATE, '%m') AS RESERV_MONTH
+		 	  , DATE_FORMAT(RESERV_DATE, '%d') AS RESERV_DAY
+		 	  , DATE_FORMAT(RESERV_DATE, '%H') AS RESERV_HOUR
+		 	  , DATE_FORMAT(RESERV_DATE, '%i') AS RESERV_MINUTE
+		 	  , GRADE
+		 	  , PERSON_CNT
+		 	  , SUPPLY_YN
+		 	  , CONFIRM_YN
+		FROM RESERV
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<select id="list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT T1.SEQ
+							  , T1.DEL_YN
+							  , CAST(AES_DECRYPT(UNHEX(T1.RESERV_NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS RESERV_NAME
+							  , CAST(AES_DECRYPT(UNHEX(T1.PWD), #{key,jdbcType=VARCHAR}) AS CHAR) AS PWD
+							  , T1.RESERV_DATE
+							  , CAST(AES_DECRYPT(UNHEX(T1.PASS_NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS PASS_NAME
+							  , T1.S_PLACE
+							  , T1.E_PLACE
+						 	  , CAST(AES_DECRYPT(UNHEX(T1.TEL1), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL1
+						 	  , CAST(AES_DECRYPT(UNHEX(T1.TEL2), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL2
+						 	  , CAST(AES_DECRYPT(UNHEX(T1.TEL3), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL3						 	  
+						 	  , DATE_FORMAT(T1.RESERV_DATE, '%Y') AS RESERV_YEAR
+						 	  , DATE_FORMAT(T1.RESERV_DATE, '%m') AS RESERV_MONTH
+						 	  , DATE_FORMAT(T1.RESERV_DATE, '%d') AS RESERV_DAY
+						 	  , DATE_FORMAT(T1.RESERV_DATE, '%H') AS RESERV_HOUR
+						 	  , DATE_FORMAT(T1.RESERV_DATE, '%i') AS RESERV_MINUTE		
+						 	  , GRADE
+						 	  , PERSON_CNT
+						 	  , SUPPLY_YN
+						 	  , CONFIRM_YN				 	  
+				     		 FROM (SELECT * 
+				     		 			  FROM RESERV M
+				    					WHERE DEL_YN = 'N'
+								    	<if test="search_value != null" >
+									  		<if test="search_value != ''" >
+									  				AND 
+									  				(
+									  					CAST(AES_DECRYPT(UNHEX(RESERV_NAME), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  					OR
+									  					CAST(AES_DECRYPT(UNHEX(PASS_NAME), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  					OR
+									  					CONCAT(CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR)) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  				)
+
+									  		</if>
+							          	</if>
+								   )T1
+						   	 ORDER BY SEQ DESC
+	    				) T2 
+	    				ORDER BY SEQ DESC
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="listCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM RESERV M
+    					WHERE DEL_YN = 'N'
+					    	<if test="search_value != null" >
+						  		<if test="search_value != ''" >
+						  				AND 
+						  				(
+						  					CAST(AES_DECRYPT(UNHEX(RESERV_NAME), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+						  					OR
+						  					CAST(AES_DECRYPT(UNHEX(PASS_NAME), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+						  					OR
+						  					CONCAT(CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR)) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+						  				)
+
+						  		</if>
+				          	</if>
+				   )T1
+
+	</select>	
+	
+	<update id="update" parameterType="java.util.Map">
+		UPDATE RESERV SET
+					 RESERV_NAME = HEX(AES_ENCRYPT(#{reserv_name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,RESERV_DATE = STR_TO_DATE(CONCAT(#{year,jdbcType=VARCHAR},'-',#{month,jdbcType=VARCHAR},'-',#{day,jdbcType=VARCHAR},' ',#{hour,jdbcType=VARCHAR},':',#{minute,jdbcType=VARCHAR}), '%Y-%m-%d %H:%i')
+					 ,PWD = HEX(AES_ENCRYPT(#{pwd,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,PASS_NAME = HEX(AES_ENCRYPT(#{pass_name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,S_PLACE = #{s_place,jdbcType=VARCHAR}
+					 ,E_PLACE = #{e_place,jdbcType=VARCHAR}
+					 ,TEL1 = HEX(AES_ENCRYPT(#{tel1,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,TEL2 = HEX(AES_ENCRYPT(#{tel2,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,TEL3 = HEX(AES_ENCRYPT(#{tel3,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,GRADE = #{grade		,jdbcType=VARCHAR}
+					 ,PERSON_CNT = #{person_cnt		,jdbcType=VARCHAR}
+					 ,SUPPLY_YN = #{supply_yn		,jdbcType=VARCHAR}
+					 ,CONFIRM_YN = #{confirm_yn		,jdbcType=VARCHAR}
+			WHERE SEQ = ${seq}
+	</update>
+	
+	<delete id="del" parameterType="java.util.Map" >
+		UPDATE RESERV
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ = ${seq}
+	</delete>
+	
+	<delete id="check_del" parameterType="java.util.Map" >
+		UPDATE RESERV
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ IN (${check_seq})
+	</delete>
+	
+	<insert id="ok_finish" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO FINISH
+		(
+			SEQ
+			,DEL_YN
+			,REG_DATE
+			,FINISH_DATE
+		) VALUES
+		(
+			( SELECT SEQ FROM (SELECT IFNULL(MAX(SEQ),0)+1 AS SEQ FROM FINISH) TT )
+			,'N'
+			,NOW()
+			,STR_TO_DATE(#{date,jdbcType=VARCHAR}, '%Y-%m-%d')
+		)
+		
+	</insert>
+	
+	<delete id="cancel_finish" parameterType="java.util.Map" >
+		DELETE FROM FINISH
+		WHERE DATE_FORMAT(FINISH_DATE, '%Y-%m-%d') = #{date,jdbcType=VARCHAR}
+	</delete>
+	
+	<select id="finish_list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+			SELECT
+				SEQ
+				,DEL_YN
+				,REG_DATE
+				,DATE_FORMAT(FINISH_DATE, '%Y') AS FINISH_YEAR
+			 	,DATE_FORMAT(FINISH_DATE, '%m') AS FINISH_MONTH
+			 	,DATE_FORMAT(FINISH_DATE, '%d') AS FINISH_DAY
+			 	,DATE_FORMAT(FINISH_DATE, '%Y-%m-%d') AS FINISH_DATE
+			 FROM FINISH
+			WHERE DEL_YN = 'N'
+			  AND DATE_FORMAT(FINISH_DATE, '%Y') = #{year,jdbcType=VARCHAR}
+			  AND DATE_FORMAT(FINISH_DATE, '%m') = #{month,jdbcType=VARCHAR}
+			  
+	</select>
+	
+	<select id="this_day_list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+			SELECT
+				SEQ
+			  , DEL_YN
+			  , CAST(AES_DECRYPT(UNHEX(RESERV_NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS RESERV_NAME
+			  , CAST(AES_DECRYPT(UNHEX(PWD), #{key,jdbcType=VARCHAR}) AS CHAR) AS PWD
+			  , RESERV_DATE
+			  , CAST(AES_DECRYPT(UNHEX(PASS_NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS PASS_NAME
+			  , S_PLACE
+			  , E_PLACE
+		 	  , CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL1
+		 	  , CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL2
+		 	  , CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL3
+		 	  , DATE_FORMAT(RESERV_DATE, '%Y') AS RESERV_YEAR
+		 	  , DATE_FORMAT(RESERV_DATE, '%m') AS RESERV_MONTH
+		 	  , DATE_FORMAT(RESERV_DATE, '%d') AS RESERV_DAY
+		 	  , DATE_FORMAT(RESERV_DATE, '%H') AS RESERV_HOUR
+		 	  , DATE_FORMAT(RESERV_DATE, '%i') AS RESERV_MINUTE	
+		 	  , GRADE
+		 	  , PERSON_CNT
+		 	  , SUPPLY_YN
+		 	  , CONFIRM_YN
+			 FROM RESERV
+			WHERE DEL_YN = 'N'
+			  AND DATE_FORMAT(RESERV_DATE, '%Y-%m-%d') = #{strThisDate,jdbcType=VARCHAR}
+			  
+	</select>
+	
+	<select id="pwdConfirm" resultType="int" parameterType="kr.co.o2i.util.CommonMap">
+		SELECT COUNT(*) FROM RESERV
+		WHERE SEQ = ${seq}
+		  AND PWD = HEX(AES_ENCRYPT(#{pwd,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+	</select>
+	
+</mapper>

@@ -1,0 +1,106 @@
+@charset "utf-8";
+
+/* --- 상단 롤링 배너--- */
+#mainBanner {position:relative;}
+#mainBanner .owl-dots {position:absolute; bottom:1rem; width:100%; }
+#mainBanner .owl-nav {margin:0;}
+#mainBanner .owl-nav > button {position:absolute; top:50%; width:3rem; height:3rem; margin:-15px 0 0; background:rgba(0,0,0,.5) url(../../common/images/main/btn_mainbnr_arrw.png) 0 -32px no-repeat; background-size:26px auto; border-radius:0;}
+#mainBanner .owl-nav > button span {position:absolute;overflow:hidden;clip:rect(0, 0, 0, 0);width:1px;height:1px;margin:-1px;padding:0;border:0;}
+#mainBanner .owl-nav .owl-prev {left:0; background-position:0 5px;}
+#mainBanner .owl-nav .owl-next {right:0; background-position: 2px -32px;}
+#mainBanner.owl-theme .owl-dots .owl-dot.active>span {width:2.6rem; background:#dd526a;}
+#mainBanner.owl-theme .owl-dots .owl-dot>span {background:#d9d9d9;}
+
+
+/* --- 맞춤형 복지정보 --- */
+.main .boxTitle {display:block; font-size:1.6rem; font-weight:700;}
+.mainCustomInfo {padding:1.5rem 1rem; background:#e8ebf4;}
+.mainCustomInfo .boxTitle {margin-bottom:1rem;}
+.mainCustomInfo > ul > li {position:relative; padding-left:4.5rem;}
+.mainCustomInfo .boxTypeSearch > p {overflow:hidden; margin-bottom:.8rem;}
+.mainCustomInfo .boxTypeSearch select {width:49%;}
+.mainCustomInfo .boxTypeSearch select + select {float:right;}
+.mainCustomInfo .boxTypeSearch .btnTypeBasic {width:100%;}
+.mainCustomInfo .boxTypeSearch .btns {padding:1rem 0 0;}
+.mainCustomInfo .txtTop {position:absolute; top:0; left:0; box-sizing:border-box; width:3.8rem; height:3.8rem; padding-top:.7rem; border-radius:50%; background:#dd526a; text-align:center; color:#fff; font-weight:700; font-size:1.2rem; line-height:110%;}
+.mainCustomInfo .choice02 {margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid #fff;}
+.mainCustomInfo .choice02 .txtTop {top:1.5rem}
+.mainCustomInfo .choice02 .boxTypeSearch .btns {padding-top:1.5rem;}
+
+
+/* --- 우리지역 복지시설 --- */
+.mainFacilitySearch {padding:1.5rem 1rem 3rem; background:#f5e9e1 url(../../common/images/main/bg_map.png) 15px 50px no-repeat; background-size:123px auto;}
+.mainFacilitySearch .boxTitle {margin-bottom:2.7rem;}
+.mainFacilitySearch .boxTypeSearch {padding-left:14rem;}
+.mainFacilitySearch .boxTypeSearch select {width:100%;}
+.mainFacilitySearch .boxTypeSearch input[type=text] {width:100%; margin-top:.8rem;}
+.mainFacilitySearch .boxTypeSearch .btnTypeBasic {width:100%; margin-top:1.5rem;}
+
+
+/* --- 공지사항-핫이슈 탭 --- */
+.mainNewsIssue {position:relative; padding:4rem 0 0; background:#fff;}
+.mainNewsIssue .btnMore {position:absolute; top:0; right:0; width:4rem; height:4rem; border-left:1px solid #dcdcdc; background:url(../../common/images/main/btn_news_more.png) 50% 50% no-repeat; background-size:30px auto}
+.mainNewsIssue .newsTabs {position:absolute; top:0; display:block; width:8rem; height:4rem; background:#fff; font-size:1.4rem;}
+.mainNewsIssue .newsTabs.typeNotice {left:0;}
+.mainNewsIssue .newsTabs.typeIssue {left:8rem; border-right:1px solid #dcdcdc;}
+.mainNewsIssue .newsTabs > a {display:block; height:100%; color:#161616; font-weight:700; line-height:4.1rem; text-align:center; text-decoration:none;}
+.mainNewsIssue .newsWrapper > div {display:none; border-top:1px solid #dcdcdc; height:16rem;}
+.mainNewsIssue .newsWrapper.on > div {display:block;}
+.mainNewsIssue .newsWrapper.on .newsTabs {background:#004ea2;}
+.mainNewsIssue .newsWrapper.on .newsTabs a {color:#fff;}
+.mainNewsIssue .newsWrapper.on .newsTabs.typeIssue {border-color:#004ea2;}
+.mainNewsIssue .tyNoticeList {padding:.2rem .9rem 0;}
+.mainNewsIssue .tyNoticeList > li {position:relative; line-height:150%; padding:.75rem .5rem .5rem 1.5rem; margin-top:.5rem; font-size:1.3rem; border-top:1px solid #e9e9e9;}
+.mainNewsIssue .tyNoticeList > li:before {content:''; position:absolute; top:1.5rem; left:.5rem; display:block; width:.2rem; height:.2rem; background:#222;}
+.mainNewsIssue .tyNoticeList > li:first-child {border-top:0;}
+.mainNewsIssue .tyNoticeList > li a {display:block; font-size:1.4rem; width:70%; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; padding-left:10px;}
+.mainNewsIssue .tyNoticeList > li span {position:absolute; top:30%; right:1rem; color:#949494; font-size:1.2rem;}
+.mainNewsIssue .tyHotIssueList {padding:1.5rem 1.3rem 1rem;}
+.mainNewsIssue .tyHotIssueList > li > a {position:relative; display:block; min-height:6rem;padding-left:110px;}
+.mainNewsIssue .tyHotIssueList > li + li {margin-top:1.4rem;}
+.mainNewsIssue .tyHotIssueList a > img {position:absolute; top:0; left:0; width:10rem; height:5.6rem;}
+.mainNewsIssue .tyHotIssueList a * {display:block;}
+.mainNewsIssue .tyHotIssueList a strong {margin-bottom:.7rem; font-size:1.4rem; font-weight:700; color:#323232;}
+.mainNewsIssue .tyHotIssueList a span {line-height:140%;}
+.mainNewsIssue .tyHotIssueList a em {margin-top:.4rem; color:#949494; font-size:1.2rem;}
+
+
+/* --- 링크(icon 메뉴) 롤링배너 --- */
+.mainMenuLink {height:17rem; background:#e8ebf4;}
+.mainMenuLink.owl-carousel .owl-item .mLink img {display:inline-block; width:9rem; height:9rem;}
+.mainMenuLink.owl-theme .owl-dots {position:absolute; bottom:1rem; left:0; right:0; width:100%; margin-top:0;}
+.mainMenuLink.owl-theme .owl-dots .owl-dot.active>span {width:2.6rem; background:#dd526a;}
+.mainMenuLink.owl-theme .owl-dots .owl-dot>span {background:#898989;}
+.mainMenuLink .mLink {display:block; padding-top:1.5rem; margin:0;}
+.mainMenuLink .mLink * {box-sizing:border-box;}
+.mainMenuLink .mLink > a {display:block; float:left; width:33%; margin:0 auto; text-align:center;}
+.mainMenuLink .mLink > a > strong {display:block; padding-top:.6rem; font-size:1.3rem; font-family:'NanumSquareRound'; color:#323232;}
+
+
+/* --- 하단 안내 + 롤링 배너 --- */
+#mainMenuLink+.mainBannerGroup {border-top:1px solid rgba(231,217,208,.4);}
+.mainBannerGroup {background:#f5e9e1;}
+.mainBannerGroup .bnrIMGs {overflow:hidden; border-bottom:1px solid #fff;}
+.mainBannerGroup .bnrIMGs > li {position:relative; float:left; width:50%;}
+.mainBannerGroup .bnrIMGs > li:nth-of-type(odd):after {content:'';position:absolute; top:0; right:-1px; z-index:10; width:1px; background:#fff; height:100%;}
+.mainBannerGroup .bnrIMGs a {display:block;}
+.mainBannerGroup .bnrIMGs a img {width:100%; height:auto;}
+
+/* 배너 버튼 (이전,다음) */
+.mainBannerGroup .owl-nav {position:absolute; bottom:0; right:0;}
+.mainBannerGroup .owl-nav > button {margin:0 !important;}
+.mainBannerGroup .owl-nav > button span, .mainBannerGroup .bnrListController > button > em {width:1px; height:1px; overflow:hidden; display:block;}
+.mainBannerGroup .bnrList.owl-theme .owl-nav button {position:absolute; width:2.5rem; height:2.5rem; border-radius:0; border:1px solid #d3d3d3; border-width:1px 0 1px 1px;background:#fff url(../../common/images/main/btn_btm_bnr_arrw.png) no-repeat; background-size:24px auto;}
+.mainBannerGroup .bnrList.owl-theme .owl-nav .owl-prev {right:0; top:0; background-position:0 0;}
+.mainBannerGroup .bnrList.owl-theme .owl-nav .owl-next {right:0; top:4.9rem; background-position:2px -25px;}
+
+/* 배너 버튼 토글 (play,stop) */
+.mainBannerGroup .bnrListWrapper {position:relative;}
+.mainBannerGroup .bnrListWrapper .bnrListController {position:absolute; top:25px; right:0}
+.mainBannerGroup .bnrListWrapper .owl-nav {position:absolute; top:0; right:0; margin:0;}
+.mainBannerGroup .bnrListController {position:absolute; top:25px; right:0; z-index:10; height:25px; }
+.mainBannerGroup .bnrListController > button {width:2.5rem; height:2.4rem; border:1px solid #d3d3d3; border-width:0 0 0 1px; background:#fff url(../../common/images/main/btn_btm_bnr_arrw.png) 0 0 no-repeat; background-size:24px auto;}
+.mainBannerGroup .bnrListController .owlPlay2 {background-position:0 -72px;}
+.mainBannerGroup .bnrListController .owlStop2 {background-position:0 -48px;}
+
+.facility_gubun {font-size: 1.4rem; margin-bottom: 10px;}

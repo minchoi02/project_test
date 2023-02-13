@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="volunteer">
+
+	<insert id="insert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO VOLUNTEER
+						  ( SEQ
+						  , MEMBER_SEQ	
+						  , DEL_YN
+						  , REG_DATE
+						  , NAME
+					 	  , TEL1
+					 	  , TEL2
+					 	  , TEL3
+					 	  , EMAIL1
+					 	  , EMAIL2
+					 	  , WANTED_KIND
+					 	  , WANTED_TIME
+					 	  , CONTENT
+					 	  , ETC
+				  )VALUES(  
+				  	  ${seq}
+					 ,${member_seq}
+					 ,'N'
+					 ,NOW()
+					 ,HEX(AES_ENCRYPT(#{name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{tel1,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{tel2,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{tel3,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{email1,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{email2,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,#{wanted_kind,jdbcType=VARCHAR}
+					 ,#{wanted_time,jdbcType=VARCHAR}
+					 ,#{content,jdbcType=VARCHAR}
+					 ,#{etc,jdbcType=VARCHAR}
+				 )
+	</insert>
+	
+	<select id="getMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM VOLUNTEER
+	</select>
+
+
+	<select id="view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT SEQ							  
+		  , MEMBER_SEQ
+		  , (SELECT CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS MEMBER_NAME FROM MEMBER WHERE SEQ = MEMBER_SEQ) AS MEMBER_NAME
+		  , (SELECT CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) AS MEMBER_ID FROM MEMBER WHERE SEQ = MEMBER_SEQ) AS MEMBER_ID
+		  , DEL_YN
+		  , REG_DATE
+		  , CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS NAME
+		  , CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL1
+	 	  , CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL2
+	 	  , CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL3	
+	 	  , CAST(AES_DECRYPT(UNHEX(EMAIL1), #{key,jdbcType=VARCHAR}) AS CHAR) AS EMAIL1
+	 	  , CAST(AES_DECRYPT(UNHEX(EMAIL2), #{key,jdbcType=VARCHAR}) AS CHAR) AS EMAIL2
+	 	  , WANTED_KIND
+	 	  , WANTED_TIME
+	 	  , CONTENT
+	 	  , ETC
+	 	  <![CDATA[,REPLACE(CONTENT, '\r\n', '<br>') AS VIEW_CONTENT]]>
+		FROM VOLUNTEER
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<select id="list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT T1.SEQ							  
+							  , T1.MEMBER_SEQ
+							  , (SELECT CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS MEMBER_NAME FROM MEMBER WHERE SEQ = T1.MEMBER_SEQ) AS MEMBER_NAME
+							  , (SELECT CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) AS MEMBER_ID FROM MEMBER WHERE SEQ = T1.MEMBER_SEQ) AS MEMBER_ID
+							  , T1.DEL_YN
+							  , T1.REG_DATE
+							  , CAST(AES_DECRYPT(UNHEX(T1.NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS NAME
+							  , CAST(AES_DECRYPT(UNHEX(T1.TEL1), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL1
+						 	  , CAST(AES_DECRYPT(UNHEX(T1.TEL2), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL2
+						 	  , CAST(AES_DECRYPT(UNHEX(T1.TEL3), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL3	
+						 	  , CAST(AES_DECRYPT(UNHEX(T1.EMAIL1), #{key,jdbcType=VARCHAR}) AS CHAR) AS EMAIL1
+						 	  , CAST(AES_DECRYPT(UNHEX(T1.EMAIL2), #{key,jdbcType=VARCHAR}) AS CHAR) AS EMAIL2
+						 	  , T1.WANTED_KIND
+						 	  , T1.WANTED_TIME
+						 	  , T1.CONTENT
+						 	  , T1.ETC
+				     		 FROM (SELECT * 
+				     		 			  FROM VOLUNTEER M
+				    					WHERE DEL_YN = 'N'
+								    	<if test="search_value != null" >
+									  		<if test="search_value != ''" >
+									  				AND 
+									  				(
+									  					CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  					OR
+									  					CONCAT(CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR)) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  				)
+									  		</if>
+							          	</if>
+								   )T1
+						   	 ORDER BY SEQ DESC
+	    				) T2 
+	    				ORDER BY SEQ DESC
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="listCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM VOLUNTEER M
+    					WHERE DEL_YN = 'N'
+					    	<if test="search_value != null" >
+						  		<if test="search_value != ''" >
+						  				AND
+						  				(
+						  					CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+						  					OR
+						  					CONCAT(CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR)) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+						  				)
+					  			</if>
+				          	</if>
+				   )T1
+
+	</select>	
+	
+	<update id="update" parameterType="java.util.Map">
+		UPDATE VOLUNTEER SET
+				    NAME = HEX(AES_ENCRYPT(#{name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+			 	  , TEL1 = HEX(AES_ENCRYPT(#{tel1,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+			 	  , TEL2 = HEX(AES_ENCRYPT(#{tel2,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+			 	  , TEL3 = HEX(AES_ENCRYPT(#{tel3,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+			 	  , EMAIL1 = HEX(AES_ENCRYPT(#{email1,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+			 	  , EMAIL2 = HEX(AES_ENCRYPT(#{email2,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+			 	  , WANTED_KIND = #{wanted_kind,jdbcType=VARCHAR}
+			 	  , WANTED_TIME = #{wanted_time,jdbcType=VARCHAR}
+			 	  , CONTENT = #{content,jdbcType=VARCHAR}
+			 	  , ETC = #{etc,jdbcType=VARCHAR}
+			WHERE SEQ = ${seq}
+	</update>
+	
+	<delete id="del" parameterType="java.util.Map" >
+		UPDATE VOLUNTEER
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ = ${seq}
+	</delete>
+	
+	<delete id="check_del" parameterType="java.util.Map" >
+		UPDATE VOLUNTEER
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ IN (${check_seq})
+	</delete>
+
+	<insert id="insertKind" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO VOLUNTEER_MOTIVE
+		(
+			SEQ
+			,CODE_SEQ
+			,VOLUNTEER_SEQ
+			,DEL_YN
+			,REG_DATE
+		) VALUES
+		(
+			( SELECT SEQ FROM (SELECT IFNULL(MAX(SEQ),0)+1 AS SEQ FROM VOLUNTEER_MOTIVE) TT )
+			,${motive_seq}
+			,${seq}
+			,'N'
+			,NOW()
+		)
+		
+	</insert>
+	
+	<select id="motive_list" parameterType="kr.co.o2i.util.CommonMap" resultType="String">
+		SELECT 
+		  GROUP_CONCAT((SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = K.CODE_SEQ)) AS MOTIVE_DESC
+		FROM VOLUNTEER_MOTIVE K
+			WHERE VOLUNTEER_SEQ = ${seq}
+			AND DEL_YN = 'N'
+		ORDER BY SEQ ASC
+	</select>
+	
+	<delete id="motive_delete" parameterType="java.util.Map" >
+		UPDATE VOLUNTEER_MOTIVE
+	       SET DEL_YN    = 'Y'
+		 WHERE VOLUNTEER_SEQ = ${seq}
+	</delete>
+
+	
+</mapper>

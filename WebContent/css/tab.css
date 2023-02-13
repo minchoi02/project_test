@@ -1,0 +1,44 @@
+
+
+.tabs>nav{
+    display: inline-block;;
+    position: relative;
+    background-color: #f6f6f6;
+	font-size:0px;
+}
+
+.tab{
+	display:inline-block;
+    width:220px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.15s ease-in;
+    z-index: 10;
+	color:#000;
+	font-size:18px;
+}
+
+.glider{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 60px;
+    width: 220px;
+    background-color: #fff;
+    transition: 0.25s ease-out;
+}
+/*tab-content가 해당 tab이 클릭 되었을 때만 표기가 되어야 하기 때문에
+display:none을 기본설정으로 한다 */
+.tab-content{
+    min-height: 300px;
+    line-height: 2.5;
+    background-color: #fff;
+    padding: 20px;
+    display: none;
+}
+/*tab이 클릭되었을 때 해당 tab-content의 classList에 acitve class를 추가한다*/
+.tab-content.active{
+    display: block;
+}

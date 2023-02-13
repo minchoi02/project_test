@@ -1,0 +1,173 @@
+/* body {
+    margin: 100px;
+    font-family: Arial, Helvetica, Sans-serif;
+    font-size: 12px;
+} */
+
+#multiSelectElementsSelected2 {
+    border: 1px solid #d3d3d3;
+    width: 93%;
+    min-height: 25px;
+    line-height: 30px;
+    padding-right: 5px;
+    padding-left: 10px;
+    float: left;
+    background: #FFFFFF;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+}
+
+.multiSelectElementSelected2 {
+	font-size: 13px;
+	border: 1px solid #c0c0c0;
+    line-height: 30px;
+    height: 30px;
+    background: #FFFFFF;
+    /* background: #3498DB; */
+    color: #000000;
+    float: left;
+    padding-left: 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius   : 5px 5px 5px 5px;
+    -ms-border-radius    : 5px 5px 5px 5px;
+    -o-border-radius     : 5px 5px 5px 5px;
+    border-radius        : 5px 5px 5px 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.multiSelectElementSelected2 .multiSelectClose2 {
+    float: right;
+    padding-right: 5px;
+    padding-left: 5px;
+    cursor: pointer;
+    color: #000000;
+    font-size: 12px;
+}
+
+#multiSelectClick2 {
+	width: 7%;
+    float: left;
+    background: #FFFFFF;
+    padding: 5px;
+    min-height: 20px;
+    line-height: 20px;
+    border: 1px solid #d3d3d3;
+    border-left: none;
+    cursor: pointer;
+    
+}
+
+#multiSelectElements2 {
+    display: none;
+    width: 100%;
+    min-height: 20px;
+    line-height: 20px;
+    min-height: 20px;
+    clear: both;
+    /* border: solid 1px #000; */
+    border: 1px solid #d3d3d3;
+    margin-bottom: 8px;
+}
+
+.multiSelectElement2 {
+    background: #FFFFFF;
+    padding-right: 5px;
+    padding-left: 5px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.multiSelectElement2:nth-child(2n+1) {
+    background: #FFFFFF;
+}
+
+
+
+
+/* body {
+    margin: 100px;
+    font-family: Arial, Helvetica, Sans-serif;
+    font-size: 12px;
+} */
+
+#multiSelectElementsSelected {
+    border: 1px solid #d3d3d3;
+    width: 93%;
+    min-height: 25px;
+    line-height: 30px;
+    padding-right: 5px;
+    padding-left: 10px;
+    float: left;
+    background: #FFFFFF;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+}
+
+.multiSelectElementSelected {
+	font-size: 13px;
+	border: 1px solid #c0c0c0;
+    line-height: 30px;
+    height: 30px;
+    background: #FFFFFF;
+    /* background: #3498DB; */
+    color: #000000;
+    float: left;
+    padding-left: 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius   : 5px 5px 5px 5px;
+    -ms-border-radius    : 5px 5px 5px 5px;
+    -o-border-radius     : 5px 5px 5px 5px;
+    border-radius        : 5px 5px 5px 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.multiSelectElementSelected .multiSelectClose {
+    float: right;
+    padding-right: 5px;
+    padding-left: 5px;
+    cursor: pointer;
+    color: #000000;
+    font-size: 12px;
+}
+
+#multiSelectClick {
+	width: 7%;
+    float: left;
+    background: #FFFFFF;
+    padding: 5px;
+    min-height: 20px;
+    line-height: 20px;
+    border: 1px solid #d3d3d3;
+    border-left: none;
+    cursor: pointer;
+    
+}
+
+#multiSelectElements {
+    display: none;
+    width: 100%;
+    min-height: 20px;
+    line-height: 20px;
+    min-height: 20px;
+    clear: both;
+    /* border: solid 1px #000; */
+    border: 1px solid #d3d3d3;
+    margin-bottom: 8px;
+}
+
+.multiSelectElement {
+    background: #FFFFFF;
+    padding-right: 5px;
+    padding-left: 5px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.multiSelectElement:nth-child(2n+1) {
+    background: #FFFFFF;
+}
+

@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="factory">
+
+	<insert id="insert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO FACILITY
+						  ( SEQ
+						  , AREA_SEQ
+						  , KIND_SEQ
+						  , NAME
+					 	  , TEL1
+					 	  , TEL2
+					 	  , TEL3
+					 	  , FAX1
+					 	  , FAX2
+					 	  , FAX3
+					 	  , ADDR1
+					 	  , ADDR2
+					 	  , ZIP_CD
+					 	  , DOMAIN
+					 	  , DEL_YN
+					 	  , REG_DATE
+					 	  , LAT
+					 	  , LON
+				  )VALUES(  
+				  	  ${seq}
+					 ,${area_seq}
+					 ,${kind_seq}
+					 ,#{name,jdbcType=VARCHAR}
+					 ,#{tel1,jdbcType=VARCHAR}
+					 ,#{tel2,jdbcType=VARCHAR}
+					 ,#{tel3,jdbcType=VARCHAR}
+					 ,#{fax1,jdbcType=VARCHAR}
+					 ,#{fax2,jdbcType=VARCHAR}
+					 ,#{fax3,jdbcType=VARCHAR}
+					 ,#{addr1,jdbcType=VARCHAR}
+					 ,#{addr2,jdbcType=VARCHAR}
+					 ,#{zip_cd,jdbcType=VARCHAR}
+					 ,#{domain,jdbcType=VARCHAR}
+					 ,'N'
+					 ,NOW()
+					 ,#{lat,jdbcType=VARCHAR}
+					 ,#{lon,jdbcType=VARCHAR}
+				 )
+	</insert>
+	
+	<select id="getMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM FACILITY
+	</select>
+
+
+	<select id="view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT 
+			SEQ
+			,FCATEGORY
+			,FCATEGORY_NM
+			,FNAME
+			,FDATAORIGIN
+			,FCEO
+			,FCORPORATEREGISTRATIONNUM
+			,FCLASSIFICATIONLIST
+			,FPHONE
+			,FZIPCODE
+			,FADDRESS1
+			,FADDRESS2
+			,HOMEPAGE
+			,ORIGINE_YN
+			,DISPLAY_YN
+			,FREG_DATE
+		FROM FACTORY F
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<select id="list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				SELECT 
+					idx AS SEQ
+					, NAME
+					, CREATED
+					, THUMB
+				FROM video
+	</select>
+			
+	<select id="listCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+    	SELECT COUNT(*)
+     	FROM (
+     		SELECT 
+				idx AS SEQ
+				, NAME
+				, CREATED
+				, THUMB
+			FROM video
+		)T1
+	</select>	
+	
+	<update id="update" parameterType="java.util.Map">
+		UPDATE FACILITY SET 
+					 AREA_SEQ = ${area_seq}
+					,KIND_SEQ = ${kind_seq}
+					,NAME = #{name,jdbcType=VARCHAR}
+					,TEL1 = #{tel1,jdbcType=VARCHAR}
+					,TEL2 = #{tel2,jdbcType=VARCHAR}
+					,TEL3 = #{tel3,jdbcType=VARCHAR}
+					,FAX1 = #{fax1,jdbcType=VARCHAR}
+					,FAX2 = #{fax2,jdbcType=VARCHAR}
+					,FAX3 = #{fax3,jdbcType=VARCHAR}
+					,ADDR1 = #{addr1,jdbcType=VARCHAR}
+					,ADDR2 = #{addr2,jdbcType=VARCHAR}
+					,ZIP_CD = #{zip_cd,jdbcType=VARCHAR}
+					,DOMAIN = #{domain,jdbcType=VARCHAR}
+					,LAT = #{lat,jdbcType=VARCHAR}
+					,LON = #{lon,jdbcType=VARCHAR}					
+			WHERE SEQ = ${seq}
+	</update>
+	
+	<delete id="del" parameterType="java.util.Map" >
+		UPDATE FACILITY
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ = ${seq}
+	</delete>	
+	
+	
+	
+	
+	
+	<insert id="conInsert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO CONVENIENCE
+						  ( SEQ
+						  , AREA_SEQ
+						  , KIND_SEQ
+						  , NAME
+					 	  , TEL1
+					 	  , TEL2
+					 	  , TEL3
+					 	  , FAX1
+					 	  , FAX2
+					 	  , FAX3
+					 	  , ADDR1
+					 	  , ADDR2
+					 	  , ZIP_CD
+					 	  , DOMAIN
+					 	  , DEL_YN
+					 	  , REG_DATE
+					 	  , LAT
+					 	  , LON
+					 	  , IMG1
+					 	  , IMG2
+					 	  , IMG3
+					 	  , KIND_STR
+				  )VALUES(  
+				  	  ${seq}
+					 ,${area_seq}
+					 ,${kind_seq}
+					 ,#{name,jdbcType=VARCHAR}
+					 ,#{tel1,jdbcType=VARCHAR}
+					 ,#{tel2,jdbcType=VARCHAR}
+					 ,#{tel3,jdbcType=VARCHAR}
+					 ,#{fax1,jdbcType=VARCHAR}
+					 ,#{fax2,jdbcType=VARCHAR}
+					 ,#{fax3,jdbcType=VARCHAR}
+					 ,#{addr1,jdbcType=VARCHAR}
+					 ,#{addr2,jdbcType=VARCHAR}
+					 ,#{zip_cd,jdbcType=VARCHAR}
+					 ,#{domain,jdbcType=VARCHAR}
+					 ,'N'
+					 ,NOW()
+					 ,#{lat,jdbcType=VARCHAR}
+					 ,#{lon,jdbcType=VARCHAR}
+					 ,#{img1,jdbcType=VARCHAR}
+					 ,#{img2,jdbcType=VARCHAR}
+					 ,#{img3,jdbcType=VARCHAR}
+					 ,#{kind_str,jdbcType=VARCHAR}
+				 )
+	</insert>
+	
+	<select id="conGetMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM CONVENIENCE
+	</select>
+
+
+	<select id="conView" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT 
+			SEQ
+			,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = F.AREA_SEQ) AS AREA
+			,AREA_SEQ
+			,(SELECT CODE_DESC FROM WELFARE_CODE WHERE SEQ = F.KIND_SEQ) AS KIND
+			,KIND_SEQ
+			,NAME
+			,CONCAT(TEL1, '-', TEL2, '-', TEL3) AS TEL
+			,TEL1
+			,TEL2
+			,TEL3
+			,CONCAT(FAX1, '-', FAX2, '-', FAX3) AS FAX
+			,FAX1
+			,FAX2
+			,FAX3
+			,ADDR1
+			,ADDR2
+			,ZIP_CD
+			,DOMAIN
+			,DEL_YN
+			,REG_DATE
+			,LAT
+			,LON
+			,IMG1
+			,IMG2
+			,IMG3
+			,KIND_STR
+			,(SELECT COUNT(*) AS FAVORITE_CNT FROM FAVORITE WHERE GUBUN = 'convenience' AND FACILITY_SEQ = F.SEQ) AS FAVORITE_CNT
+			<if test="member_seq != null and member_seq != ''">
+			,(SELECT COUNT(*) FROM FAVORITE WHERE MEMBER_SEQ = ${member_seq} AND GUBUN = 'convenience' AND FACILITY_SEQ = F.SEQ) AS MEMBER_FAVORITE_CNT
+			</if>
+		FROM CONVENIENCE F
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<select id="conList" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		select * from  (
+	       			SELECT SEQ
+						,FCATEGORY
+						,FCATEGORY_NM
+						,FNAME
+						,FDATAORIGIN
+						,FCEO
+						,FCORPORATEREGISTRATIONNUM
+						,FCLASSIFICATIONLIST
+						,FPHONE
+						,FZIPCODE
+						,FADDRESS1
+						,FADDRESS2
+						,FREG_DATE
+		     		  FROM FACTORY
+				   	 <!-- <choose>
+						<when test="sort == 'name'">
+							ORDER BY NAME ASC
+						</when>
+						<otherwise>
+							ORDER BY SEQ DESC
+						</otherwise>
+					</choose> -->
+					
+   				) T1 ORDER BY T1.SEQ DESC LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="conListCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM FACTORY M
+				   )T1
+	</select>	
+	
+	<update id="conUpdate" parameterType="java.util.Map">
+		UPDATE CONVENIENCE SET 
+					 AREA_SEQ = ${area_seq}
+					,KIND_SEQ = ${kind_seq}
+					,NAME = #{name,jdbcType=VARCHAR}
+					,TEL1 = #{tel1,jdbcType=VARCHAR}
+					,TEL2 = #{tel2,jdbcType=VARCHAR}
+					,TEL3 = #{tel3,jdbcType=VARCHAR}
+					,FAX1 = #{fax1,jdbcType=VARCHAR}
+					,FAX2 = #{fax2,jdbcType=VARCHAR}
+					,FAX3 = #{fax3,jdbcType=VARCHAR}
+					,ADDR1 = #{addr1,jdbcType=VARCHAR}
+					,ADDR2 = #{addr2,jdbcType=VARCHAR}
+					,ZIP_CD = #{zip_cd,jdbcType=VARCHAR}
+					,DOMAIN = #{domain,jdbcType=VARCHAR}
+					,LAT = #{lat,jdbcType=VARCHAR}
+					,LON = #{lon,jdbcType=VARCHAR}
+					<if test="img1 != null and img1 != ''">
+					,IMG1 = #{img1,jdbcType=VARCHAR}
+					</if>
+					<if test="img2 != null and img1 != ''">
+					,IMG2 = #{img2,jdbcType=VARCHAR}
+					</if>
+					<if test="img3 != null and img1 != ''">
+					,IMG3 = #{img3,jdbcType=VARCHAR}
+					</if>
+					,KIND_STR = #{kind_str,jdbcType=VARCHAR}					
+			WHERE SEQ = ${seq}
+	</update>
+	
+	<delete id="conDel" parameterType="java.util.Map" >
+		UPDATE CONVENIENCE
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ = ${seq}
+	</delete>	
+	
+	<select id="commentList" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT T1.SEQ
+			       				,T1.P_SEQ
+			       				,
+			       				(
+			       					CASE 
+				       					WHEN T1.GUBUN = 'facility' THEN (SELECT NAME FROM FACILITY WHERE SEQ = T1.P_SEQ)
+				       					WHEN T1.GUBUN = 'convenience' THEN (SELECT NAME FROM CONVENIENCE WHERE SEQ = T1.P_SEQ)
+				       					ELSE 'X'
+			       					END
+			       				) AS FACILITY_NAME
+								,T1.DEL_YN
+								,T1.REG_DATE
+								,T1.GUBUN
+								,T1.NAME
+								,T1.PWD
+								,T1.CONTENT
+				     		 FROM (SELECT * 
+				     		 			  FROM FACILITY_COMMENT M
+				    					WHERE DEL_YN = 'N'
+				    					<if test="search_gubun !='' and search_gubun != null">
+								    		AND GUBUN = #{search_gubun,jdbcType=VARCHAR}
+										</if>
+										<if test="search_content !='' and search_content != null">
+								    		AND (
+								    				NAME LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				CONTENT LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				(SELECT NAME FROM FACILITY WHERE SEQ = M.P_SEQ) LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    				OR
+								    				(SELECT NAME FROM CONVENIENCE WHERE SEQ = M.P_SEQ) LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+								    			)
+										</if>		    	
+								   )T1
+						   	 ORDER BY SEQ DESC
+	    				) T2 
+	    				ORDER BY SEQ DESC
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="commentListCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM FACILITY_COMMENT M
+    					WHERE DEL_YN = 'N'
+    					<if test="search_gubun !='' and search_gubun != null">
+				    		AND GUBUN = #{search_gubun,jdbcType=VARCHAR}
+						</if>
+    					<if test="search_content !='' and search_content != null">
+				    		AND (
+				    				NAME LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				CONTENT LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				(SELECT NAME FROM FACILITY WHERE SEQ = M.P_SEQ) LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+				    				OR
+				    				(SELECT NAME FROM CONVENIENCE WHERE SEQ = M.P_SEQ) LIKE CONCAT('%', #{search_content,jdbcType=VARCHAR}, '%')
+				    			)
+						</if>	
+				   )T1
+
+	</select>
+	
+	<delete id="commentDel" parameterType="java.util.Map" >
+		UPDATE FACILITY_COMMENT
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ = ${seq}
+	</delete>	
+	
+	
+	<insert id="commentInsert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO FACILITY_COMMENT
+						  ( SEQ
+						  , P_SEQ
+						  , DEL_YN
+						  , REG_DATE
+						  , GUBUN
+					 	  , NAME
+					 	  , PWD
+					 	  , CONTENT
+				  )VALUES(  
+				  	  ${seq}
+				  	 ,${p_seq}
+					 ,'N'
+					 ,NOW()
+					 ,#{gubun,jdbcType=VARCHAR}
+					 ,#{name,jdbcType=VARCHAR}
+					 ,#{pwd,jdbcType=VARCHAR}
+					 ,#{content,jdbcType=VARCHAR}
+				 )
+	</insert>
+	
+	<select id="commentGetMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM FACILITY_COMMENT
+	</select>
+
+	<update id="commentUpdate" parameterType="java.util.Map">
+		UPDATE FACILITY_COMMENT SET 
+					 NAME = #{name,jdbcType=VARCHAR}
+					,CONTENT = #{content,jdbcType=VARCHAR}
+			WHERE SEQ = ${seq}
+	</update>
+	
+	<select id="userCommentList" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT T1.SEQ
+			       				,T1.P_SEQ
+								,T1.DEL_YN
+								,T1.REG_DATE
+								,T1.GUBUN
+								,T1.NAME
+								,T1.PWD
+								,T1.CONTENT
+				     		 FROM (SELECT * 
+				     		 			  FROM FACILITY_COMMENT M
+				    					WHERE DEL_YN = 'N'
+										  AND P_SEQ = ${p_seq}    	
+								   )T1
+						   	 ORDER BY SEQ ASC
+	    				) T2
+	    				ORDER BY SEQ ASC
+	</select>
+			
+	<select id="userCommentListCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM FACILITY_COMMENT M
+    					WHERE DEL_YN = 'N'
+    					AND P_SEQ = ${p_seq}
+				   )T1
+
+	</select>
+	
+	<delete id="comment_check_del" parameterType="java.util.Map" >
+		UPDATE FACILITY_COMMENT
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ IN (${check_seq})
+	</delete>
+	
+	<select id="comment_view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT 
+			SEQ,
+			DEL_YN,
+			DATE_FORMAT(REG_DATE, '%Y-%m-%d') AS REG_DATE,
+			GUBUN,
+			NAME,
+			PWD,
+			CONTENT,
+			P_SEQ
+		FROM FACILITY_COMMENT F
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<select id="comment_pwd_check" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+		SELECT COUNT(*) FROM FACILITY_COMMENT
+		WHERE SEQ = ${seq}
+		  AND PWD = #{pwd,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="favoriteGetMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM FAVORITE
+	</select>
+	
+	<insert id="favoriteInsert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO FAVORITE
+						  ( SEQ
+						  , MEMBER_SEQ
+						  , GUBUN
+						  , FACILITY_SEQ
+					 	  , REG_DATE
+				  )VALUES(  
+				  	  ${seq}
+					 ,${member_seq}
+					 ,#{gubun,jdbcType=VARCHAR}
+					 ,${facility_seq}
+					 ,NOW()
+				 )
+	</insert>
+	
+	<select id="getFavoriteCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		FROM FAVORITE
+     		WHERE MEMBER_SEQ = ${member_seq}
+     		  AND GUBUN = #{gubun,jdbcType=VARCHAR}
+     		  AND FACILITY_SEQ = ${facility_seq}
+	</select>
+	
+	<delete id="favoriteDelete" parameterType="kr.co.o2i.util.CommonMap">
+		DELETE FROM FAVORITE 
+			WHERE FACILITY_SEQ = ${facility_seq}
+			  AND MEMBER_SEQ = ${member_seq}
+			  AND GUBUN = #{gubun,jdbcType=VARCHAR}					
+	</delete>
+	
+</mapper>

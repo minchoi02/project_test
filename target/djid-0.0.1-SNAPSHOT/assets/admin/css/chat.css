@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+#adminChat, #adminChat * { box-sizing : border-box; }
+
+
+#adminChat .sample { display : none !important; }
+#adminChat .none { display : none !important; }
+#adminChat .row { }
+#adminChat .row:after { display : table; clear : both; }
+#adminChat .col-6 { width : 50%}
+
+
+
+#chatMsg { color : red; float : right; line-height : 25px; }
+
+    
+
+#adminChatList { padding : 0; vertical-align : top; }
+#adminChatList > .title { border-bottom : 1px solid #c9c9c9; height: 30px; line-height : 30px; }
+#adminChatList > .chatListWrap { overflow-y : scroll; }
+#adminChatList > .chatListWrap > .chatListItem { border-bottom : 1px solid #c9c9c9; line-height : 30px; height : 30px; cursor : pointer; }
+#adminChatList > .chatListWrap > .chatListItem.on { background-color : #004ea2; color: white; }
+#adminChatList > .chatListWrap > .chatListItem.wait { background-color : orange; color: white; }
+
+#adminChatListWait { background-color : white; border-bottom : 1px solid #c9c9c9; height : 150px; }
+#adminChatListConnect { background-color : white; height : 350px; }
+
+
+#adminChatRoomList { padding : 0; } 
+#adminChatRoomList .adminChatRoomItem { }
+#adminChatRoomList .adminChatRoomItem > .chatTextArea { height : 400px; overflow-y : scroll; border-bottom : 1px solid #eaeaea; }
+#adminChatRoomList .adminChatRoomItem > .chatTextArea > .chatTextItem { padding : 3px 15px; line-height : 200%; }
+
+
+#adminChatRoomList .adminChatRoomItem > .chatInputArea { padding-top : 5px; }
+#adminChatRoomList .adminChatRoomItem > .chatInputArea > .txtChatBtns { float : right; }
+#adminChatRoomList .adminChatRoomItem > .chatInputArea > .txtChatBtns > .btn { cursor : pointer; background-color: #eaeaea; display: block; width: 120px; height: 120px; line-height: 120px; text-align: center; }
+#adminChatRoomList .adminChatRoomItem > .chatInputArea > .txtChatInput { margin-right: 125px; position: static; display: block;}
+#adminChatRoomList .adminChatRoomItem > .chatInputArea > .txtChatInput > textarea { height : 120px; display : block; width : 100%; }
+
+#adminChatRoomList .adminChatRoomItem > .adminChatRoomBtns { text-align : right; height: 30px; line-height: 30px; padding: 0 5px; }
+#adminChatRoomList .adminChatRoomItem > .adminChatRoomBtns > .btn { cursor : pointer; }
+

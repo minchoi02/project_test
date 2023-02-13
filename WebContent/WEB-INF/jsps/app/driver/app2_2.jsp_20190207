@@ -1,0 +1,304 @@
+<<<<<<< HEAD
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="t" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page isELIgnored ="false" %>
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+	<title>정보드림 장애인 교통정보 운전자용 앱</title>
+	<link rel="stylesheet" type="text/css" href="/assets/app/driver/css/common.css">
+	<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript">
+
+	var bus = "${bean.bus}"; // 버스 호차
+	
+	  $(document).ready(function(){
+		  $("#logoutBtn").click(function(){
+			  location.href = "/app/app2_1.do?logout=ok";
+		  });
+		  
+		  $(".btn").click(function(){
+			  $(".btn").removeClass("selection");
+			  $(".btn").addClass("none_selection");
+			  
+			  $(this).removeClass("none_selection");
+			  $(this).addClass("selection");
+			  
+			  var service = $("#BusService").val();			  
+			  if(service == "2"){
+				  //alert("운행이 시작되었습니다.");
+				  sendGPSRequest();
+			  }else if(service == "3"){
+				  //alert("정비중으로 변경하였습니다.");
+				  sendGPSRequest();
+			  }
+			  
+		  });
+		  
+		  $("#BusService").change(function(){
+			  var service = $(this).val();
+			  if(service == "1"){
+				  // 운행 종료 
+				  $(".btn").addClass("none_selection");
+				  $(".btn").attr("disabled", "disabled");
+				  sendGPSRequest();
+			  }else if(service == "2"){
+				  $(".btn").removeAttr("disabled");
+				  $(".btn").addClass("none_selection");
+			  }else if(service == "3"){
+				  $(".btn").removeAttr("disabled");
+				  $(".btn").addClass("none_selection");
+			  }
+		  });
+				
+	  });
+	
+	  function GetUserAgent(){
+			var mobile = (/iphone|ipad|ipod|android/i.test(navigator.userAgent.toLowerCase()));
+			if (mobile) {
+				// 유저에이전트를 불러와서 OS를 구분합니다.
+				var userAgent = navigator.userAgent.toLowerCase();
+				if (userAgent.search("android") > -1)
+					currentOS = "android";
+				else if ((userAgent.search("iphone") > -1) || (userAgent.search("ipod") > -1)
+						|| (userAgent.search("ipad") > -1))
+					currentOS = "ios";
+				else
+					currentOS = "else";
+			} else {
+				// 모바일이 아닐 때
+				currentOS = "nomobile";
+			}
+			
+			return currentOS;
+		}
+
+	
+		function sendGPSRequest() {
+			
+			var currentOS = GetUserAgent();
+		  	var rotation = $(".selection").prop("id");
+		  	var service = $("#BusService").val();
+		  	
+		  	console.log("service = " + service);
+		  	console.log("rotation = " + rotation);
+		  	
+		  	if(currentOS == "android"){
+		  		window.DJID.SendGPSRequest(service, bus, rotation);
+		  	}else if(currentOS == "ios"){
+		  		window.location.href= "js2ios://SendGPSRequest?service="+ service + "&bus=" + bus + "&rotation="+rotation;
+		  	}else{
+		  		console.log("nomobile");
+		  	}
+		  	
+		}
+	
+	</script>
+	</head>
+	<body>
+<input type="hidden" name="bus" id="bus" value="${bean.bus}" />
+<div class="appWrapper">
+			<header>
+				<div class="header">
+							<h1>정보드림<br>
+								장애인 교통정보</h1>
+							<p class="busNumbs">${bean.bus}호차 - ${bean.car_number}</p>
+					</div>
+				<button type="button" class="btnLogout" id="logoutBtn">로그아웃</button>
+		</header>
+			<section>
+				<h2 class="hidden">운행정보 및 운영회차 선택</h2>
+				<div class="formRow">
+							<label for="BusService">버스운행</label>
+							<span>
+						<select id="BusService">
+									<option value="1" selected="selected">운행종료</option>
+									<option value="2">운행중</option>
+									<option value="3">정비중</option>
+							</select>
+						</span> </div>
+				<div class="formRow">
+							<p class="boxTitle"> <strong class="lableText">회차선택</strong> <span>운행하실 회차를 선택해주세요.</span> </p>
+							<div class="btnList">
+								<button type="button" id="1" disabled="disabled" class="btn none_selection">1회차</button>
+								<button type="button" id="2" disabled="disabled" class="btn none_selection">2회차</button>
+								<button type="button" id="3" disabled="disabled" class="btn none_selection">3회차</button>
+								<button type="button" id="4" disabled="disabled" class="btn none_selection">4회차</button>
+						</div>
+					</div>
+				<div class="formRow">
+				<div class="boxTitle"> <strong class="lableText">정류장 위치조정</strong>
+							<p>사용자앱의 현재 정류장 위치와 운행중인 정류장의 위치가 일치하지 않을 경우 현재 버스가 운행중인 정류장을 선택 후 하단의 업데이트 버튼을 눌러주세요.</p>
+					</div>
+				<p class="boxTitle_02"> <strong class="lableText_02">사용자앱 정류장 위치&nbsp;:&nbsp;</strong> <span>한전</span> </p>
+				<p class="boxTitle_02"> <strong class="lableText_02">현재정류장 위치&nbsp;:&nbsp;</strong> 
+					<select style="width: 50%;">
+							<option value="" selected="selected">회차를 선택해주세요.</option>
+					</select>
+				 </p>
+				
+				<div class="bt_Box"> <a href="#" class="bt_update">업데이트</a></div>
+		</section>
+			<footer>
+				<p>Copyright(c) 2018 대전장애인단체총연합회 All Rights reserved.</p>
+		</footer>
+	</div>
+</body>
+=======
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="t" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page isELIgnored ="false" %>
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+	<title>정보드림 장애인 교통정보 운전자용 앱</title>
+	<link rel="stylesheet" type="text/css" href="/assets/app/driver/css/common.css">
+	<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript">
+
+	var bus = "${bean.bus}"; // 버스 호차
+	
+	  $(document).ready(function(){
+		  $("#logoutBtn").click(function(){
+			  location.href = "/app/app2_1.do?logout=ok";
+		  });
+		  
+		  $(".btn").click(function(){
+			  $(".btn").removeClass("selection");
+			  $(".btn").addClass("none_selection");
+			  
+			  $(this).removeClass("none_selection");
+			  $(this).addClass("selection");
+			  
+			  var service = $("#BusService").val();			  
+			  if(service == "2"){
+				  //alert("운행이 시작되었습니다.");
+				  sendGPSRequest();
+			  }else if(service == "3"){
+				  //alert("정비중으로 변경하였습니다.");
+				  sendGPSRequest();
+			  }
+			  
+		  });
+		  
+		  $("#BusService").change(function(){
+			  var service = $(this).val();
+			  if(service == "1"){
+				  // 운행 종료 
+				  $(".btn").addClass("none_selection");
+				  $(".btn").attr("disabled", "disabled");
+				  sendGPSRequest();
+			  }else if(service == "2"){
+				  $(".btn").removeAttr("disabled");
+				  $(".btn").addClass("none_selection");
+			  }else if(service == "3"){
+				  $(".btn").removeAttr("disabled");
+				  $(".btn").addClass("none_selection");
+			  }
+		  });
+				
+	  });
+	
+	  function GetUserAgent(){
+			var mobile = (/iphone|ipad|ipod|android/i.test(navigator.userAgent.toLowerCase()));
+			if (mobile) {
+				// 유저에이전트를 불러와서 OS를 구분합니다.
+				var userAgent = navigator.userAgent.toLowerCase();
+				if (userAgent.search("android") > -1)
+					currentOS = "android";
+				else if ((userAgent.search("iphone") > -1) || (userAgent.search("ipod") > -1)
+						|| (userAgent.search("ipad") > -1))
+					currentOS = "ios";
+				else
+					currentOS = "else";
+			} else {
+				// 모바일이 아닐 때
+				currentOS = "nomobile";
+			}
+			
+			return currentOS;
+		}
+
+	
+		function sendGPSRequest() {
+			
+			var currentOS = GetUserAgent();
+		  	var rotation = $(".selection").prop("id");
+		  	var service = $("#BusService").val();
+		  	
+		  	console.log("service = " + service);
+		  	console.log("rotation = " + rotation);
+		  	
+		  	if(currentOS == "android"){
+		  		window.DJID.SendGPSRequest(service, bus, rotation);
+		  	}else if(currentOS == "ios"){
+		  		window.location.href= "js2ios://SendGPSRequest?service="+ service + "&bus=" + bus + "&rotation="+rotation;
+		  	}else{
+		  		console.log("nomobile");
+		  	}
+		  	
+		}
+	
+	</script>
+	</head>
+	<body>
+<input type="hidden" name="bus" id="bus" value="${bean.bus}" />
+<div class="appWrapper">
+			<header>
+				<div class="header">
+							<h1>정보드림<br>
+								장애인 교통정보</h1>
+							<p class="busNumbs">${bean.bus}호차 - ${bean.car_number}</p>
+					</div>
+				<button type="button" class="btnLogout" id="logoutBtn">로그아웃</button>
+		</header>
+			<section>
+				<h2 class="hidden">운행정보 및 운영회차 선택</h2>
+				<div class="formRow">
+							<label for="BusService">버스운행</label>
+							<span>
+						<select id="BusService">
+									<option value="1" selected="selected">운행종료</option>
+									<option value="2">운행중</option>
+									<option value="3">정비중</option>
+							</select>
+						</span> </div>
+				<div class="formRow">
+							<p class="boxTitle"> <strong class="lableText">회차선택</strong> <span>운행하실 회차를 선택해주세요.</span> </p>
+							<div class="btnList">
+								<button type="button" id="1" disabled="disabled" class="btn none_selection">1회차</button>
+								<button type="button" id="2" disabled="disabled" class="btn none_selection">2회차</button>
+								<button type="button" id="3" disabled="disabled" class="btn none_selection">3회차</button>
+								<button type="button" id="4" disabled="disabled" class="btn none_selection">4회차</button>
+						</div>
+					</div>
+				<div class="formRow">
+				<div class="boxTitle"> <strong class="lableText">정류장 위치조정</strong>
+							<p>사용자앱의 현재 정류장 위치와 운행중인 정류장의 위치가 일치하지 않을 경우 현재 버스가 운행중인 정류장을 선택 후 하단의 업데이트 버튼을 눌러주세요.</p>
+					</div>
+				<p class="boxTitle_02"> <strong class="lableText_02">사용자앱 정류장 위치&nbsp;:&nbsp;</strong> <span>한전</span> </p>
+				<p class="boxTitle_02"> <strong class="lableText_02">현재정류장 위치&nbsp;:&nbsp;</strong> 
+					<select style="width: 50%;">
+							<option value="" selected="selected">회차를 선택해주세요.</option>
+					</select>
+				 </p>
+				
+				<div class="bt_Box"> <a href="#" class="bt_update">업데이트</a></div>
+		</section>
+			<footer>
+				<p>Copyright(c) 2018 대전장애인단체총연합회 All Rights reserved.</p>
+		</footer>
+	</div>
+</body>
+>>>>>>> refs/heads/202204
+</html>

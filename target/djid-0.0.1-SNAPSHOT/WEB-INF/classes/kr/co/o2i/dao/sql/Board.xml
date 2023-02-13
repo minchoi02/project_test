@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<resultMap id="boardMap" type="java.util.Map"> 
+		<result property="CONTENT" column="CONTENT" javaType="java.lang.String" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.ClobTypeHandler" />
+		<result property="ANSWER" column="ANSWER" javaType="java.lang.String" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.ClobTypeHandler" /> 
+	</resultMap>
+	
+	<parameterMap type="kr.co.o2i.util.CommonMap" id="boardParam">
+		<parameter property="content"   javaType="java.lang.String" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.ClobTypeHandler"  />
+		<parameter property="answer"   javaType="java.lang.String" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.ClobTypeHandler"  />
+	</parameterMap>
+	
+	<insert id="insert" parameterMap="boardParam">
+		INSERT INTO BOARD
+						  ( SEQ
+						  , BOARD_NAME 	
+						  , ID
+					 	  , NAME
+					 	  , MEMBER_SEQ
+					 	  , TITLE
+					 	  , REG_DATE
+					 	  , NOTICE_YN
+					 	  , DEL_YN
+					 	  ,	REF
+					 	  ,	REF_STEP
+					 	  , REF_LEVEL
+					 	  , CONTENT
+					 	  , HIT
+					 	  <if test="thum_img != null">
+					 		<if test="thum_img != ''">
+					 	  		, THUM_IMG
+					 	  	</if>
+					 	  </if>
+					 	  , EMAIL
+					 	  , PWD
+					 	  , MEDIA_URL
+					 	  , M_TEL1
+					 	  , M_TEL2
+					 	  , M_TEL3
+					 	  , PLACE
+				  )VALUES(  
+				  	  ${seq}
+					 ,#{gubun		,jdbcType=VARCHAR}
+					 ,#{id 	 		,jdbcType=VARCHAR}
+					 ,#{name 	 	,jdbcType=VARCHAR}
+					 ,#{member_seq 	,jdbcType=VARCHAR}
+					 ,#{title 			,jdbcType=VARCHAR}
+					 ,NOW()
+					 ,#{notice_yn 	,jdbcType=VARCHAR}
+					 ,'N'
+					 ,${seq}
+					 ,0
+					 ,0
+					 ,#{content 	 ,jdbcType=CLOB}
+					 ,0
+					 <if test="thum_img != null">
+					 	<if test="thum_img != ''">
+							 ,#{thum_img      ,jdbcType=VARCHAR}
+						</if>
+					 </if>
+					 ,#{email 	,jdbcType=VARCHAR}
+					 ,#{pwd 	,jdbcType=VARCHAR}
+					 ,#{media_url 	,jdbcType=VARCHAR}
+					 ,#{m_tel1 	,jdbcType=VARCHAR}
+					 ,#{m_tel2 	,jdbcType=VARCHAR}
+					 ,#{m_tel3 	,jdbcType=VARCHAR}
+					 ,#{place 	,jdbcType=VARCHAR}
+				 )
+	</insert>
+
+
+	<select id="view" parameterType="kr.co.o2i.util.CommonMap" resultMap="boardMap">
+		SELECT T1.* 
+			<if test="gubun =='calendar'">
+ 				,( SELECT STR_TO_DATE(MIN(PLANDATE), '%Y%m%d') FROM SCHEDULES WHERE BOARD_SEQ = T1.SEQ) AS SDATE
+           		,( SELECT STR_TO_DATE(MAX(PLANDATE), '%Y%m%d') FROM SCHEDULES WHERE BOARD_SEQ = T1.SEQ) AS EDATE
+			</if>
+				 , (SELECT MAX(SEQ) 
+			  	  		FROM BOARD 
+			  	  	  WHERE BOARD_NAME = T1.BOARD_NAME 
+			  	  	  	  AND SEQ &lt; T1.SEQ  
+			  	  	  	  AND DEL_YN !='Y'  
+			  	  	  	  AND (REF_STEP=0 OR REF_STEP IS NULL)
+			  	  	  	  <if test="search_value != null" >
+					    		<if test="search_value != ''" >
+					    			AND (TITLE like '%${search_value}%' OR CONTENT like '%${search_value}%')
+					    		</if>
+						  </if>
+			  	  	 ) as PRE_SEQ
+			  	  , (SELECT MIN(SEQ) 
+			  	  		FROM BOARD 
+			  	  	  WHERE BOARD_NAME = T1.BOARD_NAME 
+			  	  	      AND SEQ &gt; T1.SEQ  
+			  	  	      AND DEL_YN !='Y'  
+			  	  	      AND (REF_STEP=0 OR REF_STEP IS NULL)
+			  	  	      <if test="search_value != null" >
+					    		<if test="search_value != ''" >
+					    			AND (TITLE like '%${search_value}%' OR CONTENT like '%${search_value}%')
+					    		</if>
+						  </if>
+			  	  	 ) as NEXT_SEQ
+			  	  , (SELECT TITLE 
+			  	  		FROM BOARD 
+			  	  	  WHERE SEQ = (SELECT MAX(SEQ) 
+			  	  	  									  FROM BOARD 
+			  	  	  									WHERE BOARD_NAME = T1.BOARD_NAME 
+			  	  	  										AND SEQ &lt; T1.SEQ  
+			  	  	  										AND DEL_YN !='Y'  
+			  	  	  										AND (REF_STEP=0 OR REF_STEP IS NULL)
+			  	  	  										<if test="search_value != null" >
+													    		<if test="search_value != ''" >
+													    			AND (TITLE like '%${search_value}%' OR CONTENT like '%${search_value}%')
+													    		</if>
+														    </if>
+			  	  	  									) 
+			  	  	  ) as PRE_TITLE
+			  	  , (SELECT TITLE 
+			  	  		FROM BOARD 
+			  	  	  WHERE SEQ = (SELECT MIN(SEQ) 
+			  	  	  									  FROM BOARD 
+			  	  	  									WHERE BOARD_NAME = T1.BOARD_NAME 
+			  	  	  										AND SEQ &gt; T1.SEQ  
+			  	  	  										AND DEL_YN !='Y'  
+			  	  	  										AND (REF_STEP=0 OR REF_STEP IS NULL)
+			  	  	  										<if test="search_value != null" >
+													    		<if test="search_value != ''" >
+													    			AND (TITLE like '%${search_value}%' OR CONTENT like '%${search_value}%')
+													    		</if>
+														    </if>
+			  	  	  								   ) 
+			  	  	 ) as NEXT_TITLE
+		  FROM BOARD T1
+		 WHERE T1.SEQ    	= ${seq}
+		     AND T1.DEL_YN 	= 'N' 
+		     AND T1.BOARD_NAME = #{gubun ,jdbcType=VARCHAR} 
+	</select>
+	
+	<select id="getMaxSeq" resultType="Integer">
+		SELECT IFNULL(MAX(SEQ),1) as cnt
+  		  FROM BOARD
+	</select>
+	
+	
+	<select id="list" parameterType="kr.co.o2i.util.CommonMap" resultMap="boardMap">
+				select * from (
+			       			SELECT T1.SEQ
+			       					  , T1.BOARD_NAME
+			       					  , T1.NAME
+			       					  , T1.TITLE
+			       					  , T1.REG_DATE
+			       					  , T1.HIT
+			       					  , T1.DEL_YN	
+			       					  , T1.THUM_IMG
+			       					  , T1.REF
+			       					  , T1.REF_STEP
+			       					  , T1.REF_LEVEL
+			       					  , (SELECT IFNULL(COUNT(*),0) FROM BOARD_FILE WHERE BOARD_SEQ = T1.SEQ AND DEL_YN ='N')AS F_CNT
+			       					  , (
+			       					  		CASE WHEN T1.REG_DATE >= NOW() - 5 THEN 'Y'
+			       					  			 ELSE 'N'
+			       					  		END
+			       					  	) AS NEW_YN
+			       					  , EMAIL
+			       					  , M_TEL1
+			       					  , M_TEL2
+			       					  , M_TEL3
+			       					  <if test="gubun =='calendar'">
+			       					  ,( SELECT STR_TO_DATE(MIN(PLANDATE), '%Y%m%d') FROM SCHEDULES WHERE BOARD_SEQ = T1.SEQ) AS SDATE
+           							  ,( SELECT STR_TO_DATE(MAX(PLANDATE), '%Y%m%d') FROM SCHEDULES WHERE BOARD_SEQ = T1.SEQ) AS EDATE
+			       					  </if>
+			       					  ,PLACE
+			       					  ,ANSWER
+			       					  ,SORT
+			       					  <if test="gubun =='daejeon_news'">
+			       					  <![CDATA[,FUNC_DELETETAG(T1.CONTENT) AS LIST_CONTENT]]>
+			       					  </if>
+				     		 FROM (SELECT * 
+				     		 			  FROM BOARD  
+				    					WHERE DEL_YN = 'N' 
+				    		  				AND BOARD_NAME  = #{gubun ,jdbcType=VARCHAR}
+								    	<if test="search_name !='' and search_name != null">
+									    	<if test="search_value != '' and search_value != null" >
+										    	<choose>
+										    		<when test="search_name=='reg_date'">
+										    			AND to_char(REG_DATE,'yyyy-mm-dd') like '%${search_value}%' 
+										    		</when>
+										    		<otherwise>
+										    			AND ${search_name} like '%${search_value}%' 
+										    		</otherwise>
+										    	</choose>
+							       			</if>
+										</if>
+										 <if test="BASE != null and (gubun =='calendar')">
+				       					  AND (
+				       					  		(SELECT SUBSTR(MIN(PLANDATE), 0, 6) FROM SCHEDULES WHERE BOARD_SEQ = BOARD.SEQ ) = '${year}${month}'  
+				       					  			OR
+				       					  		(SELECT SUBSTR(MIN(PLANDATE), 0, 6) FROM SCHEDULES WHERE BOARD_SEQ = BOARD.SEQ ) = '${year}${month}'  
+ 				       					  	  )
+ 				       					 </if>
+										  )T1
+							
+						   	 ORDER BY T1.REF DESC, T1.REF_STEP
+	    				) T2 
+	    				ORDER BY T2.REF DESC, T2.REF_STEP
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+	
+	<select id="nList" parameterType="kr.co.o2i.util.CommonMap" resultMap="boardMap">
+		SELECT T1.* 
+				  , (SELECT IFNULL(COUNT(*),0) FROM BOARD_FILE WHERE BOARD_SEQ = T1.SEQ AND DEL_YN ='N')AS F_CNT
+		   FROM BOARD T1
+		 WHERE T1.DEL_YN = 'N' 
+   		     AND T1.NOTICE_YN    = 'Y'
+   		     AND T1.BOARD_NAME  = #{gubun ,jdbcType=VARCHAR}   		     
+   		     <if test="gubun =='notice'">
+   		     	ORDER BY ISNULL(T1.SORT) ASC, T1.SORT, T1.REF DESC, T1.REF_STEP, T1.SEQ
+			 </if>
+			 <if test="gubun !='notice'">
+			 	ORDER BY T1.REF DESC, T1.REF_STEP, T1.SEQ
+			 </if>
+	</select>
+	
+	
+	<select id="listCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+		SELECT COUNT(SEQ) as cnt
+		  FROM BOARD T1
+		 WHERE  T1.DEL_YN = 'N' 
+   		   AND T1.BOARD_NAME  = #{gubun ,jdbcType=VARCHAR}
+			<if test="search_name !='' and search_name != null">
+		    	<if test="search_value != '' and search_value != null" >
+			    	<choose>
+			    		<when test="search_name=='reg_date'">
+			    			AND to_char(REG_DATE,'yyyy-mm-dd') like '%${search_value}%' 
+			    		</when>
+			    		<otherwise>
+			    			AND ${search_name} like '%${search_value}%' 
+			    		</otherwise>
+			    	</choose>
+       			</if>
+			</if>
+			<if test="BASE != null and (gubun =='calendar')">
+				  AND (
+			  		(SELECT SUBSTR(MIN(PLANDATE), 0, 6) FROM SCHEDULES WHERE BOARD_SEQ = T1.SEQ ) = '${year}${month}'  
+			  			OR
+			  		(SELECT SUBSTR(MIN(PLANDATE), 0, 6) FROM SCHEDULES WHERE BOARD_SEQ = T1.SEQ ) = '${year}${month}'  
+				  	  )
+			 </if>
+	</select>
+	
+	<insert id="fileinsert" parameterType="java.util.Map" >
+		INSERT INTO BOARD_FILE
+					( SEQ 
+					 , BOARD_SEQ
+					 , BOARD_NAME
+					 , FILENAME
+					 , REFILENAME
+					 , REG_DATE
+					 , INDEX_SEQ
+					 , PATH
+					 , TYPE
+					 , FILESIZE
+					 , FILECONTENTYPE
+					 , EXT
+					 , DEL_YN              )
+				 VALUES
+					(  ( SELECT SEQ FROM (SELECT IFNULL(MAX(SEQ),0)+1 AS SEQ FROM BOARD_FILE) TT )
+					 , ${board_seq}
+					 , #{gubun ,jdbcType=VARCHAR}
+					 , #{fileName ,jdbcType=VARCHAR}
+					 , #{refileName ,jdbcType=VARCHAR}
+					 , NOW()
+					 , #{index_seq ,jdbcType=VARCHAR}
+					 , #{path ,jdbcType=VARCHAR}
+					 , #{type ,jdbcType=VARCHAR}
+					 , ${FileSize}
+					 , #{filecontentype ,jdbcType=VARCHAR}
+					 , #{ext ,jdbcType=VARCHAR}
+					 , 'N'               )
+	</insert>
+	
+	<select id="fileList"  parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT * 
+		   FROM BOARD_FILE 
+		 WHERE BOARD_SEQ = ${seq} 
+			 AND BOARD_NAME = #{gubun, jdbcType=VARCHAR}  
+			 AND DEL_YN='N'
+	</select>
+	
+	<select id="userlist" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		select * from ( select pt.*, ceil(rownum /  ${pagesize}) page 
+						from (
+			       			SELECT T1.*
+			       					  , (SELECT IFNULL(COUNT(*),0) FROM BOARD_FILE WHERE BOARD_SEQ = T1.SEQ AND DEL_YN='N')AS F_CNT
+			       					  , (SELECT ID FROM BOARD WHERE REF = T1.REF AND DEL_YN='N' AND REF_STEP = '0')AS ORG_ID 
+				     		FROM BOARD T1 
+				    		WHERE T1.DEL_YN = 'N' 
+				    		  AND T1.BOARD_NAME  = #{gubun ,jdbcType=VARCHAR}
+				    		  	<if test="search_name !='' and search_name != null">
+							    	<if test="search_value != '' and search_value != null" >
+								    	<choose>
+								    		<when test="search_name=='reg_date'">
+								    			AND to_char(REG_DATE,'yyyy-mm-dd') like '%${search_value}%' 
+								    		</when>
+								    		<otherwise>
+								    			AND ${search_name} like '%${search_value}%' 
+								    		</otherwise>
+								    	</choose>
+					       			</if>
+								</if>
+						   	 ORDER BY T1.REF DESC, T1.REF_LEVEL limit 1
+	    				) pt ) where page = ${page}
+	</select>
+	
+	<select id="userlistCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+		SELECT count(SEQ) as cnt
+		  FROM BOARD
+		 WHERE DEL_YN = 'N' 
+   		   AND BOARD_NAME  = #{gubun ,jdbcType=VARCHAR}
+		 	<if test="search_name !='' and search_name != null">
+		    	<if test="search_value != '' and search_value != null" >
+			    	<choose>
+			    		<when test="search_name=='reg_date'">
+			    			AND to_char(REG_DATE,'yyyy-mm-dd') like '%${search_value}%' 
+			    		</when>
+			    		<otherwise>
+			    			AND ${search_name} like '%${search_value}%' 
+			    		</otherwise>
+			    	</choose>
+       			</if>
+			</if>
+	</select>
+	
+	<update id="increaseHit" parameterType="java.util.Map">
+		UPDATE BOARD
+		   SET HIT = IFNULL(hit,0)+1
+		 WHERE SEQ = ${seq}  
+	</update>
+	
+	<update id="plus_ref_level" parameterType="kr.co.o2i.util.CommonMap">
+		UPDATE BOARD
+		   SET REF_LEVEL 	 = IFNULL(REF_LEVEL,0)+1
+		 WHERE REF 	     	 = ${ref}
+		     AND REF_LEVEL &gt;= ${ref_level}  
+	</update>
+	
+	<select id="password" parameterType="kr.co.o2i.util.CommonMap" resultType="String">
+		SELECT pwd
+		   FROM BOARD
+		 WHERE seq = ${seq}
+	</select>
+	
+	<delete id="file_del" parameterType="java.util.Map" >
+		UPDATE BOARD_FILE
+	       SET DEL_YN = 'Y'
+	        	, DEL_DATE = NOW()
+		 WHERE SEQ = ${file_seq}
+	</delete>
+	
+	<update id="fileUpdate" parameterType="java.util.Map" >
+		UPDATE BOARD_FILE 
+			  SET FILENAME = #{fileName ,jdbcType=VARCHAR}
+			  	  , REFILENAME = #{refileName ,jdbcType=VARCHAR}
+			  	  ,	PATH = #{path ,jdbcType=VARCHAR}
+			  	  , TYPE = #{type ,jdbcType=VARCHAR}
+			  	  , FILESIZE = ${FileSize}
+			  	  , FILECONTENTYPE = #{filecontentype ,jdbcType=VARCHAR}
+			  	  , EXT = #{ext ,jdbcType=VARCHAR}
+		 WHERE SEQ = ${file_seq}
+	</update>
+	
+	<update id="update" parameterMap="boardParam">
+		UPDATE BOARD
+	       	  SET 
+	       	  	  MEDIA_URL				= #{media_url					,jdbcType=VARCHAR}
+	       	  	  <if test="title != null"><if test="title != ''">
+	       	  	  ,	TITLE       			= #{title 				,jdbcType=VARCHAR}
+	       	  	  </if></if>
+	       	  	  <if test="content != null"><if test="content != ''">
+	           	  , CONTENT      		= #{content  		,jdbcType=CLOB}
+	           	  </if></if>
+			  	  , NOTICE_YN        = #{notice_yn		,jdbcType=VARCHAR}
+			  	  , UPT_DATE			= NOW()
+			  	  , UPT_ID				= #{id					,jdbcType=VARCHAR}			  	  
+			  	  <if test="thum_img != null"><if test="thum_img != ''">
+			  	   , THUM_IMG			= #{thum_img			,jdbcType=VARCHAR}
+			  	  </if></if>
+			  	  , EMAIL				= #{email		,jdbcType=VARCHAR}
+			  	  , PWD					= #{pwd		,jdbcType=VARCHAR}
+			  	  <if test="place != null"><if test="place != ''">
+			  	  , PLACE				= #{place		,jdbcType=VARCHAR}
+			  	  </if></if>
+			  	  <if test="answer != null"><if test="answer != ''">			  	  
+			  	  , ANSWER      		= #{answer  		,jdbcType=CLOB}
+			  	  </if></if>
+		 WHERE SEQ = ${seq}
+		     AND BOARD_NAME = #{gubun		,jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="del" parameterType="java.util.Map" >
+		UPDATE BOARD
+	       SET DEL_YN    = 'Y'
+	           , DEL_DATE = NOW()
+		 WHERE SEQ = ${seq}
+	</delete>
+	
+	<delete id="qna_del" parameterType="java.util.Map" >
+		UPDATE BOARD
+	       SET DEL_YN    = 'Y'
+	           , DEL_DATE = NOW()
+		 WHERE REF = ${ref}
+	</delete>
+
+	<!-- main list -->
+	<select id="mainList" parameterType="String" resultType="java.util.Map">
+		SELECT T1.* FROM (
+							SELECT * 
+							   FROM BOARD 
+							 WHERE BOARD_NAME= #{gubun ,jdbcType=VARCHAR}
+							 	 AND DEL_YN='N'
+							 ORDER BY REG_DATE DESC 
+						 )T1
+				ORDER BY T1.REG_DATE DESC 
+				LIMIT 0, ${cnt}
+						
+		 
+	</select>	
+
+		
+	<select id="mainPopupList" parameterType="kr.co.o2i.util.CommonMap" resultMap="boardMap">
+      SELECT *
+    	  FROM POPUP
+   	  WHERE DEL_YN = 'N'
+   	  	AND USE_YN = 'Y'							
+	  	AND GESI_SD <![CDATA[<=]]> STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d')
+	  	AND GESI_ED <![CDATA[>=]]> STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d')		
+	  	AND BOARD_NAME = #{gubun, jdbcType=VARCHAR}				  
+	  ORDER BY SORT ASC
+	</select>
+
+	<select id="popupList" parameterType="kr.co.o2i.util.CommonMap" resultMap="boardMap">
+		select * from (
+			       			SELECT T1.SEQ
+			       				  ,T1.TITLE
+			       				  ,T1.LINK
+			       				  ,T1.LINK_WINDOW
+			       				  ,T1.SORT
+			       				  ,T1.USE_YN
+			       				  ,T1.FILENAME
+			       				  ,T1.OFILENAME
+			       				  ,T1.VIDEOFILENAME
+			       				  ,T1.VIDEOOFILENAME
+			       				  ,T1.REG_DATE
+			       				  ,T1.WIDTH
+			       				  ,T1.HEIGHT
+			       				  ,T1.TOP
+			       				  ,T1.LEFT_PADDING 
+			       				  ,T1.BLOCK_GUBUN
+			       				  ,T1.GESI_SD
+			       				  ,T1.GESI_ED
+				     		 FROM (SELECT * 
+				     		 			  FROM POPUP
+				    					WHERE DEL_YN = 'N'
+				    					AND BOARD_NAME = #{gubun,		jdbcType=VARCHAR}
+								   )T1
+						   	 ORDER BY T1.REG_DATE DESC
+	    				) T2 
+	    				ORDER BY T2.REG_DATE DESC
+	    				LIMIT ${slimit}, ${elimit}
+	</select>
+	
+	<select id="popupListCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+		SELECT COUNT(SEQ) as cnt
+		  FROM POPUP T1
+		 WHERE  T1.DEL_YN = 'N'
+		 	AND BOARD_NAME = #{gubun,		jdbcType=VARCHAR} 
+	</select>
+	
+	<select id="popupAllList" parameterType="kr.co.o2i.util.CommonMap" resultMap="boardMap">
+		SELECT * 
+			  FROM POPUP  
+		WHERE DEL_YN = 'N'
+		  AND BOARD_NAME = #{gubun,		jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="popupDel" parameterType="java.util.Map" >
+		UPDATE POPUP
+	       SET DEL_YN    = 'Y'
+	           , DEL_DATE = NOW()
+		 WHERE SEQ = ${seq}
+	</delete>
+	
+	<insert id="popupInsert" parameterMap="boardParam">
+		INSERT INTO POPUP
+						  ( SEQ
+						  , TITLE	
+						  , LINK
+					 	  , LINK_WINDOW
+					 	  , SORT
+					 	  , USE_YN
+					 	  , FILENAME
+					 	  , OFILENAME
+					 	  , VIDEOFILENAME
+					 	  , VIDEOOFILENAME
+					 	  , REG_DATE
+					 	  , WIDTH
+					 	  , HEIGHT
+					 	  , TOP
+					 	  , LEFT_PADDING
+					 	  , BLOCK_GUBUN
+					 	  , GESI_SD
+					 	  , GESI_ED
+					 	  , BOARD_NAME
+					 	  , DEL_YN
+				  )VALUES(  
+				  	  ( SELECT SEQ FROM (SELECT IFNULL(MAX(SEQ),0)+1 AS SEQ FROM POPUP) TT )
+					 ,#{title	,jdbcType=VARCHAR}
+					 ,#{link	,jdbcType=VARCHAR}
+					 ,#{link_window	,jdbcType=VARCHAR}
+					 ,#{sort	,jdbcType=VARCHAR}
+					 ,#{use_yn	,jdbcType=VARCHAR}
+					 ,#{filename	,jdbcType=VARCHAR}
+					 ,#{ofilename	,jdbcType=VARCHAR}
+					 ,#{videofilename	,jdbcType=VARCHAR}
+					 ,#{videoofilename	,jdbcType=VARCHAR}
+					 ,NOW()
+					 ,#{width	,jdbcType=VARCHAR}
+					 ,#{height	,jdbcType=VARCHAR}
+					 ,#{top	,jdbcType=VARCHAR}
+					 ,#{left	,jdbcType=VARCHAR}
+					 ,#{block_gubun	,jdbcType=VARCHAR}
+					 ,STR_TO_DATE(#{gesi_sd	,jdbcType=VARCHAR},	'%Y-%m-%d')
+					 ,STR_TO_DATE(#{gesi_ed	,jdbcType=VARCHAR},	'%Y-%m-%d')
+					 ,#{gubun	,jdbcType=VARCHAR}
+					 ,'N'
+				 )
+	</insert>
+	
+	<select id="popupView" parameterType="kr.co.o2i.util.CommonMap" resultMap="boardMap">
+		SELECT T1.SEQ
+      				  ,T1.TITLE
+      				  ,T1.LINK
+      				  ,T1.LINK_WINDOW
+      				  ,T1.SORT
+      				  ,T1.USE_YN
+      				  ,T1.FILENAME
+      				  ,T1.OFILENAME
+      				  ,T1.VIDEOFILENAME
+      				  ,T1.VIDEOOFILENAME
+      				  ,T1.REG_DATE
+      				  ,T1.WIDTH
+      				  ,T1.HEIGHT
+      				  ,T1.TOP
+      				  ,T1.LEFT_PADDING 
+      				  ,T1.BLOCK_GUBUN
+      				  ,T1.GESI_SD
+      				  ,T1.GESI_ED
+		 FROM POPUP T1
+				WHERE SEQ = ${seq}
+				AND BOARD_NAME = #{gubun,		jdbcType=VARCHAR}
+				
+	</select>
+	
+	<update id="popupUpdate" parameterMap="boardParam">
+		UPDATE POPUP
+	       	  SET 
+	       	  		TITLE			= #{title			,jdbcType=VARCHAR}
+	       	  	  , LINK			= #{link			,jdbcType=VARCHAR}
+	           	  , LINK_WINDOW		= #{link_window	,jdbcType=VARCHAR}
+	           	  , SORT			= #{sort			,jdbcType=VARCHAR}
+	           	  , USE_YN			= #{use_yn		,jdbcType=VARCHAR}
+	           	  <if test="filename != null"><if test="filename != ''">
+	           	  , FILENAME		= #{filename		,jdbcType=VARCHAR}
+	           	  </if></if>
+	           	  <if test="ofilename != null"><if test="ofilename != ''">
+	           	  , OFILENAME		= #{ofilename		,jdbcType=VARCHAR}
+	           	  </if></if>	           	  
+	           	  <if test="videofilename != null"><if test="videofilename != ''">
+	           	  , VIDEOFILENAME		= #{videofilename		,jdbcType=VARCHAR}
+	           	  </if></if>
+	           	  <if test="videoofilename != null"><if test="videoofilename != ''">
+	           	  , VIDEOOFILENAME		= #{videoofilename		,jdbcType=VARCHAR}
+	           	  </if></if>	
+	           	  <if test="videoDelete != null"><if test="videoDelete != ''"><if test="videoDelete == 1">
+	           	  , VIDEOFILENAME = null
+	           	  , VIDEOOFILENAME = null
+	           	  </if></if></if>
+	           	  , WIDTH			= #{width			,jdbcType=VARCHAR}
+	           	  , HEIGHT			= #{height		,jdbcType=VARCHAR}
+	           	  , TOP				= #{top			,jdbcType=VARCHAR}
+	           	  , LEFT_PADDING			= #{left			,jdbcType=VARCHAR}
+	           	  , BLOCK_GUBUN		= #{block_gubun	,jdbcType=VARCHAR}
+	           	  , GESI_SD			= STR_TO_DATE(#{gesi_sd	,jdbcType=VARCHAR},	'%Y-%m-%d')
+	           	  , GESI_ED			= STR_TO_DATE(#{gesi_ed	,jdbcType=VARCHAR},	'%Y-%m-%d')
+		 WHERE SEQ = ${seq}
+		 AND BOARD_NAME = #{gubun,		jdbcType=VARCHAR}
+	</update>
+	
+	<insert id="schedulesInsert" parameterType="java.util.Map" >
+		INSERT INTO SCHEDULES
+					( SEQ 
+					 , BOARD_SEQ
+					 , PLANDATE
+					 , REG_DATE              
+					 )
+				 VALUES
+					(  (SELECT SEQ FROM (SELECT IFNULL(MAX(SEQ),0)+1 AS SEQ FROM SCHEDULES) TT)
+					 , ${board_seq}
+					 , #{plandate ,jdbcType=VARCHAR}
+					 , NOW()
+					)
+	</insert>
+	
+	<delete id="schedulesDelete" parameterType="java.util.Map" >
+		DELETE FROM SCHEDULES
+		 WHERE BOARD_SEQ = ${board_seq}
+	</delete>
+	
+	<select id="schedulesList" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT * FROM
+		  (
+		    SELECT 
+		     T1.SEQ
+		    ,T1.BOARD_SEQ
+		    ,T1.PLANDATE
+		    ,SUBSTR(PLANDATE, 7, 2) AS PLANDAY
+		    ,T1.REG_DATE
+		    ,(SELECT BOARD_NAME FROM BOARD WHERE SEQ = T1.BOARD_SEQ ) AS BOARD_NAME
+		    ,(SELECT DEL_YN FROM BOARD WHERE SEQ = T1.BOARD_SEQ ) AS DEL_YN
+		    FROM SCHEDULES T1
+		  )
+		  WHERE BOARD_NAME = #{gubun,   jdbcType=VARCHAR}
+		  AND DEL_YN = 'N'
+		  AND SUBSTR(PLANDATE, 0, 4) = #{year,  jdbcType=VARCHAR}
+		  AND SUBSTR(PLANDATE, 5, 2) = #{month,  jdbcType=VARCHAR}
+		  ORDER BY PLANDATE
+	</select>
+
+	<select id="schedulesAjax" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT 
+			  T1.SEQ
+			, T1.BOARD_NAME
+			, T1.NAME
+			, T1.TITLE
+			, T1.REG_DATE
+			, T1.HIT
+			, T1.DEL_YN	
+			, T1.THUM_IMG
+			, T1.REF
+			, T1.REF_STEP
+			, T1.REF_LEVEL
+			, (SELECT IFNULL(COUNT(*),0) FROM BOARD_FILE WHERE BOARD_SEQ = T1.SEQ AND DEL_YN ='N')AS F_CNT
+			, (SELECT TO_CHAR(TO_DATE(MIN(PLANDATE), 'YYYYMMDD'), 'YYYY-MM-DD') FROM SCHEDULES WHERE BOARD_SEQ = T1.SEQ ) AS SDATE
+			, (SELECT TO_CHAR(TO_DATE(MAX(PLANDATE), 'YYYYMMDD'), 'YYYY-MM-DD') FROM SCHEDULES WHERE BOARD_SEQ = T1.SEQ ) AS EDATE
+		FROM BOARD T1
+		WHERE SEQ IN (
+		      SELECT DISTINCT(BOARD_SEQ) FROM
+		        (
+		          SELECT * FROM
+		            (
+		              SELECT 
+		               T1.SEQ
+		              ,T1.BOARD_SEQ
+		              ,T1.PLANDATE
+		              ,T1.REG_DATE
+		              ,(SELECT BOARD_NAME FROM BOARD WHERE SEQ = T1.BOARD_SEQ AND ROWNUM = 1) AS BOARD_NAME
+		              FROM SCHEDULES T1
+		              WHERE PLANDATE = #{yearMonthDay		,jdbcType=VARCHAR}
+		            ) 
+		        ) WHERE BOARD_NAME = #{gubun	,jdbcType=VARCHAR}
+		      ) AND DEL_YN = 'N'
+		ORDER BY SDATE DESC
+	</select>
+	
+	<select id="boardPwdCheck" parameterType="kr.co.o2i.util.CommonMap" resultType="int">
+			SELECT COUNT(*) FROM BOARD
+			WHERE SEQ = #{seq,	jdbcType=VARCHAR}
+			  AND PWD = #{pwd,	jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="check_del" parameterType="java.util.Map" >
+		UPDATE BOARD
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ IN (${check_seq})
+	</delete>
+	
+	<delete id="check_del_popup" parameterType="java.util.Map" >
+		UPDATE POPUP
+	       SET DEL_YN  = 'Y'
+		 WHERE SEQ IN (${check_seq})
+	</delete>
+	
+	<select id="pwdConfirm" resultType="int" parameterType="kr.co.o2i.util.CommonMap">
+		SELECT COUNT(*) FROM BOARD
+		WHERE SEQ = ${seq}
+		  AND PWD = #{pwd,jdbcType=VARCHAR}
+		  AND DEL_YN = 'N'
+	</select>
+	
+	<select id="this_day_list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+			SELECT
+				SEQ
+			  , BOARD_SEQ
+			  , PLANDATE
+			  , REG_DATE
+			  , (SELECT TITLE FROM BOARD WHERE SEQ = T.BOARD_SEQ) AS TITLE
+			 FROM SCHEDULES T
+			WHERE (SELECT DEL_YN FROM BOARD WHERE SEQ = T.BOARD_SEQ) = 'N'
+			  AND DATE_FORMAT(STR_TO_DATE(PLANDATE, '%Y%m%d'), '%Y-%m-%d') = #{strThisDate,jdbcType=VARCHAR}
+			  
+	</select>
+	
+	<select id="sign_language_list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT * FROM SIGN_LANGUAGE
+			WHERE DEL_YN = 'N'
+			ORDER BY SEQ ASC
+	</select>
+	
+	<select id="sign_language_view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT * FROM SIGN_LANGUAGE
+			WHERE SEQ = ${seq}
+			 AND DEL_YN = 'N'
+			 AND SHOW_YN = 'Y'
+	</select>
+	
+	<update id="sign_language_update" parameterType="java.util.Map">
+		UPDATE SIGN_LANGUAGE
+		   SET SRC = #{src, jdbcType=VARCHAR}
+		      ,SHOW_YN = #{show_yn, jdbcType=VARCHAR}
+		      ,AUTO_YN = #{auto_yn, jdbcType=VARCHAR}
+		 WHERE SEQ = ${seq}
+	</update>
+	
+	<update id="sortUpdate" parameterType="java.util.Map">
+		UPDATE BOARD
+			<choose>
+				<when test="sort == null or sort == ''">
+					SET SORT = NULL
+				</when>
+				<otherwise>
+					SET SORT = ${sort}
+				</otherwise>
+			</choose>		   
+		 WHERE SEQ = ${seq}
+	</update>
+	
+
+</mapper>

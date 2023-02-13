@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js" /></script>
+<script type="text/javascript">
+
+var canvas;
+
+function draw_station() {
+	
+	canvas = document.getElementById("canvas");
+    
+    if (canvas.getContext) {
+      var ctx = canvas.getContext("2d");
+
+      /* ctx.fillStyle = "rgb(200,0,0)";
+      ctx.fillRect (10, 10, 50, 50); */
+
+      ctx.fillStyle = "rgba(0, 0, 200, 1)";
+      ctx.fillRect (800, 30, 5, 1800);
+      
+      //ctx.beginPath();
+      var x = 25 + 3 * 50; // x coordinate
+      var y = 30; // y coordinate
+      
+      var radius = 20; // Arc radius
+      var startAngle = 0; // Starting point on circle
+      var endAngle = Math.PI + (Math.PI * 3) / 2; // End point on circle
+      var anticlockwise = 4 % 2 == 0 ? false : true; // clockwise or anticlockwise
+      
+      var cnt_bus_station = 10;
+      
+      for (var i = 1; i <= cnt_bus_station; i++) {
+    	  ctx.arc(802, y, radius, startAngle, endAngle, anticlockwise);
+          ctx.fill();
+          y = y+200;
+	  }
+
+    }
+    
+    setInterval(function() {
+		move();
+	}, 3000);
+  }
+  
+ function move(){
+	 	 
+	 //var lat = $("#lat").val();
+	 //var lon = $("#lon").val();
+	 
+	$.ajax({
+		    url: '/busPrint.do',
+		    //url: '/busPrint?lat='+lat+"&lon="+lon,
+		    type : "POST",
+		    error: function(){
+		    	alert('에러가 발생했습니다. 관리자에 문의하세요.');
+		    },
+		    success: function(r){
+		    	var cnt = r;
+		    	//alert(cnt);
+		    	//var top = $(".absolute").css("top").replace("px", "");	 
+			   	//top = parseInt(top) + 50;
+			   	var top = 10 + (50 * r);
+			   	$(".absolute").css("top", top + "px");	 
+		    }
+	});
+ }
+</script>
+<style type="text/css">
+.absolute {
+  position: absolute;
+  top: 10px;
+  left: 770px;  
+}
+
+.absolute img{
+	width: 80px;
+  	height: 80px;
+}
+
+.button {
+  position: absolute;
+  top: 20px;
+  left: 850px;  
+}
+</style>
+</head>
+<body onload="draw_station();">
+	<canvas id="canvas" width="1000" height="2000"></canvas>
+	<div class="absolute">
+		<img src="/assets/user/images/sub/bus.png" />
+	</div>
+	
+	<!-- <div class="button">
+		<input type="text" name="lat" id="lat" />
+		<input type="text" name="lon" id="lon" />
+		<input type="button" value="이동" onclick="move();"/>
+	</div> -->
+	
+	<div class="button">
+		아뜨리에 프라자
+		<br><br><br><br>
+		<br><br><br><br>
+		<br><br>
+		고양삼송A18BL 아파트
+		<br><br><br><br>
+		<br><br><br><br>
+		<br>
+		고양시립삼송도서관
+		<br><br><br><br>
+		<br><br><br><br>
+		<br><br>
+		연덕암
+		<br><br><br><br>
+		<br><br><br><br>
+		<br>
+		하나로마트
+		<br><br><br><br>
+		<br><br><br><br>
+		<br><br>
+		SK주유소
+		<br><br><br><br>
+		<br><br><br><br>
+		<br>
+		고양동산고입구
+		<br><br><br><br>
+		<br><br><br><br>
+		<br><br>
+		삼송교
+		<br><br><br><br>
+		<br><br><br><br>
+		<br>
+		세븐일레븐
+		<br><br><br><br>
+		<br><br><br><br>
+		<br><br>
+		아뜨리에프라자
+	</div>
+</body>
+</html>

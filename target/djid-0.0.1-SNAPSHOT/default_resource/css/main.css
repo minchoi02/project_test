@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+#Mcontainer { position: relative; width:100%;overflow: hidden;margin:0 auto;background:#f7f7f7;}
+#Mcontainer .m_visual {position: relative;width:100%;height:400px;margin:0 auto;background:url('../images/main/main_visual01.jpg') no-repeat center top;}
+#Mcontainer .m_visual ul li {position:absolute;bottom:0;}
+#Mcontainer .m_visual:after{content:'';display:block;clear:both;}
+
+#Mcontainer #Mcontents {width:1100px;position: relative;padding:0 0 30px 0;margin:20px auto 0 auto;box-sizing: border-box;} 
+#Mcontainer #Mcontents:after{content:'';display:block;clear:both;}
+#Mcontainer #Mcontents .left_area {width:640px;float:left;margin-right:20px;}
+#Mcontainer #Mcontents .loginArea {width:310px;height:110px;float:left;margin-right:20px;background:url('../images/main/bg_login.png') no-repeat 0 0;}
+#Mcontainer #Mcontents .bannerArea {width:310px;float:left;}
+#Mcontainer #Mcontents .iconArea {width:640px;float:left;background:#ffffff;border:1px solid #dcdcdc;box-sizing: border-box;margin:20px 0 10px 0;}
+#Mcontainer #Mcontents .iconArea li {float:left;padding:30px 0 20px 0;width:106px;text-align:center;background:url('../images/main/bg_icon.png') no-repeat 0px 42px;}
+#Mcontainer #Mcontents .iconArea li:first-child{background:none;}
+#Mcontainer #Mcontents .popupzone {width:440px;float:left;}
+
+#Mcontainer #Mcontents .noticeArea {display:inline-block;float:left;width:310px;height:305px;background:#ffffff;border:1px solid #dcdcdc;box-sizing: border-box;padding:15px;margin-right:20px;}
+#Mcontainer #Mcontents .noticeArea .tit {float:left;padding:10px 0 0 30px;background:url('../images/main/list_style01.png') no-repeat 0px 11px;}
+#Mcontainer #Mcontents .noticeArea .nlistArea {width:270px;float:left;padding:15px 0px 20px 0px;}
+#Mcontainer #Mcontents .noticeArea .nlistArea li {display:inline-block;padding:0 0 9px 0;}
+#Mcontainer #Mcontents .noticeArea .nlistArea .nlist {width:270px;float:left;display:inline-block;text-overflow:ellipsis;overflow:hidden; white-space:nowrap;line-height:1.3;font-size:11pt;}
+#Mcontainer #Mcontents .noticeArea .nlistArea .nlist:hover{text-decoration:underline;}
+#Mcontainer #Mcontents .noticeArea .nlistArea .date {width:70px;float:left;padding:0 10px 0 11px;line-height:1.5;font-size:9pt;color:#797979;}
+
+#Mcontainer #Mcontents .jongArea {display:inline-block;float:left;width:310px;height:153px;background:#ffffff;border:1px solid #dcdcdc;box-sizing: border-box;padding:7px 15px 15px 15px;}
+#Mcontainer #Mcontents .jongArea .tit {float:left;padding:10px 0 0 30px;background:url('../images/main/list_style01.png') no-repeat 0px 11px;}
+#Mcontainer #Mcontents .jongArea .nlistArea {width:270px;float:left;padding:15px 0px 20px 0px;}
+#Mcontainer #Mcontents .jongArea .nlistArea li {display:inline-block;padding:0 0 9px 0;}
+#Mcontainer #Mcontents .jongArea .nlistArea .nlist {width:270px;float:left;display:inline-block;text-overflow:ellipsis;overflow:hidden; white-space:nowrap;line-height:1.3;font-size:11pt;}
+#Mcontainer #Mcontents .jongArea .nlistArea .nlist:hover{text-decoration:underline;}
+#Mcontainer #Mcontents .jongArea .nlistArea .date {width:70px;float:left;padding:0 10px 0 11px;line-height:1.5;font-size:9pt;color:#797979;}
+
+#Mcontainer #Mcontents .colligeArea {display:inline-block;float:left;width:310px;height:152px;background:#ffffff;border-right:1px solid #dcdcdc;border-bottom:1px solid #dcdcdc;border-left:1px solid #dcdcdc;box-sizing: border-box;padding:7px 15px 15px 15px;}
+#Mcontainer #Mcontents .colligeArea .tit {float:left;padding:10px 0 0 30px;background:url('../images/main/list_style01.png') no-repeat 0px 11px;}
+#Mcontainer #Mcontents .colligeArea .nlistArea {width:270px;float:left;padding:15px 0px 20px 0px;}
+#Mcontainer #Mcontents .colligeArea .nlistArea li {display:inline-block;padding:0 0 9px 0;}
+#Mcontainer #Mcontents .colligeArea .nlistArea .nlist {width:270px;float:left;display:inline-block;text-overflow:ellipsis;overflow:hidden; white-space:nowrap;line-height:1.3;font-size:11pt;}
+#Mcontainer #Mcontents .colligeArea .nlistArea .nlist:hover{text-decoration:underline;}
+#Mcontainer #Mcontents .colligeArea .nlistArea .date {width:70px;float:left;padding:0 10px 0 11px;line-height:1.5;font-size:9pt;color:#797979;}
+
+#Mcontainer #Mcontents .photo01 {display:inline-block;float:left;width:540px;height:160px;background:#ffffff;border:1px solid #dcdcdc;box-sizing: border-box;padding:5px 30px 15px 32px;margin-top:10px;}
+#Mcontainer #Mcontents .photo01 .tit {display:inline-block;padding:10px 0 0 30px;background:url('../images/main/list_style01.png') no-repeat 0px 11px;}
+#Mcontainer #Mcontents .photo01 ul {display:block;padding:5px 0px 20px 0px;}
+#Mcontainer #Mcontents .photo01 ul li {display:inline-block;padding:5px 0 9px 40px;float:left;width:130px;}
+#Mcontainer #Mcontents .photo01 ul li:first-child {padding-left:0;}
+#Mcontainer #Mcontents .photo01 .nlist {width:130px;float:left;display:inline-block;text-overflow:ellipsis;overflow:hidden; white-space:nowrap;line-height:1.9;font-size:10pt;}
+
+#Mcontainer #Mcontents .malsa {display:inline-block;width:1100px;height:160px;margin:20px 0 0 0;background:url('../images/main/bg_malsa.png') no-repeat 0px 0px;padding:15px 0 0 30px;}
+#Mcontainer #Mcontents .malsa .tit {float:left;padding:10px 0 0 30px;background:url('../images/main/list_style01.png') no-repeat 0px 11px;}
+#Mcontainer #Mcontents .malsa ul{width:900px;display:inline-block;margin:20px 0 0 20px;}
+#Mcontainer #Mcontents .malsa ul li a{float:left;display:block;width:100px;text-align:center;font-weight:400;}
+
+#Mcontainer #Mcontents .bannerArea {display:inline-block;width:1100px;margin:5px 0 0 0;padding:15px 0 15px 8px;border:1px solid #dcdcdc;box-sizing: border-box;background:#ffffff;}
+#Mcontainer #Mcontents .bannerArea ul li a{float:left;padding:0 8px;}
+#Mcontainer #Mcontents .bannerArea ul li:first-child a{margin-left:0;}
+#Mcontainer #Mcontents .bannerArea ul li a.sel, #Mcontainer #Mcontents .bannerarea ul li a:hover{border:1px solid #562467;box-sizing: border-box;background:#562467;color:#ffffff;}
+
+
+.loginT {margin:18px 0 0 20px;}
+.loginT td {padding:2px;font-size:10pt;}

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+     <definition name="userlayout" template="/WEB-INF/jsps/user/layout/layout.jsp">  
+         <put-attribute name="header" value="/WEB-INF/jsps/user/layout/header.jsp" />
+         <put-attribute name="subNavi" value="/WEB-INF/jsps/user/layout/subNavi.jsp" />
+         <put-attribute name="body" value="" />
+         <put-attribute name="footer" value="/WEB-INF/jsps/user/layout/footer.jsp" />
+     </definition>
+     
+     <definition name="mobileLayout" template="/WEB-INF/jsps/mobile/layout/layout.jsp">  
+         <put-attribute name="header" value="/WEB-INF/jsps/mobile/layout/header.jsp" />
+         <put-attribute name="subNavi" value="/WEB-INF/jsps/mobile/layout/subNavi.jsp" />
+         <put-attribute name="body" value="" />
+         <put-attribute name="footer" value="/WEB-INF/jsps/mobile/layout/footer.jsp" />
+     </definition>
+     
+     
+     <definition name="adminlayout" template="/WEB-INF/jsps/admin/layout/layout.jsp">  
+         <put-attribute name="header" value="/WEB-INF/jsps/admin/layout/header.jsp" />
+         <put-attribute name="header2" value="/WEB-INF/jsps/admin/layout/header2.jsp" />
+         <put-attribute name="letfmenu" value="/WEB-INF/jsps/admin/layout/left_menu.jsp" />
+         <put-attribute name="body" value="" />
+         <put-attribute name="footer" value="/WEB-INF/jsps/admin/layout/footer.jsp" />
+     </definition>
+     
+     
+	<!-- 사용자 레이아웃 -->
+	 <definition name="/*.o2i" extends="userlayout">
+     	<put-attribute name="body" value="/WEB-INF/jsps/user/{1}.jsp" />
+     </definition>
+	 <definition name="/*/*.o2i" extends="userlayout">
+     	<put-attribute name="body" value="/WEB-INF/jsps/user/{1}/{2}.jsp" />
+     </definition>
+     <definition name="/*/*/*.o2i" extends="userlayout">
+     	<put-attribute name="body" value="/WEB-INF/jsps/user/{1}/{2}/{3}.jsp" />
+     </definition>
+     <definition name="/*/*/*/*.o2i" extends="userlayout">
+     	<put-attribute name="body" value="/WEB-INF/jsps/user/{1}/{2}/{3}/{4}.jsp" />
+     </definition>
+     
+     <!-- 모바일 레이아웃 -->
+	 <definition name="/*.mobile" extends="mobileLayout">
+     	<put-attribute name="body" value="/WEB-INF/jsps/mobile/{1}.jsp" />
+     </definition>
+	 <definition name="/*/*.mobile" extends="mobileLayout">
+     	<put-attribute name="body" value="/WEB-INF/jsps/mobile/{1}/{2}.jsp" />
+     </definition>
+     <definition name="/*/*/*.mobile" extends="mobileLayout">
+     	<put-attribute name="body" value="/WEB-INF/jsps/mobile/{1}/{2}/{3}.jsp" />
+     </definition>
+     <definition name="/*/*/*/*.mobile" extends="mobileLayout">
+     	<put-attribute name="body" value="/WEB-INF/jsps/mobile/{1}/{2}/{3}/{4}.jsp" />
+     </definition>
+     
+     <!-- 어드민 레이아웃 -->
+      <definition name="/*.abss" extends="adminlayout">
+     	<put-attribute name="body" value="/WEB-INF/jsps/admin/{1}.jsp" />
+     </definition>
+     <definition name="/*/*.abss" extends="adminlayout">
+     	<put-attribute name="body" value="/WEB-INF/jsps/admin/{1}/{2}.jsp" />
+     </definition>
+     <definition name="/*/*/*.abss" extends="adminlayout">
+     	<put-attribute name="body" value="/WEB-INF/jsps/admin/{1}/{2}/{3}.jsp" />
+     </definition>
+     <definition name="/*/*/*/*.abss" extends="adminlayout">
+     	<put-attribute name="body" value="/WEB-INF/jsps/admin/{1}/{2}/{3}/{4}.jsp" />
+     </definition>
+     
+     
+     <definition name="/404.pop" template="/WEB-INF/jsps/common/404.jsp" />
+     <definition name="/500.pop" template="/WEB-INF/jsps/common/500.jsp" />
+	 	
+     <!--  레이아웃 없이 페이지 확인 -->
+     <definition name="/*.a" template="/WEB-INF/jsps/admin/{1}.jsp" />
+     <definition name="/*/*.a"  template="/WEB-INF/jsps/admin/{1}/{2}.jsp" />
+     <definition name="/*/*/*.a" template ="/WEB-INF/jsps/admin/{1}/{2}/{3}.jsp" />
+     <definition name="/*/*/*/*.a" template ="/WEB-INF/jsps/admin/{1}/{2}/{3}/{4}.jsp" />
+     
+     <definition name="/*.u" template="/WEB-INF/jsps/user/{1}.jsp" />
+     <definition name="/*/*.u"  template="/WEB-INF/jsps/user/{1}/{2}.jsp" />
+     <definition name="/*/*/*.u" template ="/WEB-INF/jsps/user/{1}/{2}/{3}.jsp" />
+     <definition name="/*/*/*/*.u" template ="/WEB-INF/jsps/user/{1}/{2}/{3}/{4}.jsp" />
+     
+     <definition name="/*.m" template="/WEB-INF/jsps/mobile/{1}.jsp" />
+     <definition name="/*/*.m"  template="/WEB-INF/jsps/mobile/{1}/{2}.jsp" />
+     <definition name="/*/*/*.m" template ="/WEB-INF/jsps/mobile/{1}/{2}/{3}.jsp" />
+     <definition name="/*/*/*/*.m" template ="/WEB-INF/jsps/mobile/{1}/{2}/{3}/{4}.jsp" />
+     
+     <definition name="/*.app" template="/WEB-INF/jsps/app/{1}.jsp" />
+     <definition name="/*/*.app"  template="/WEB-INF/jsps/app/{1}/{2}.jsp" />
+     <definition name="/*/*/*.app" template ="/WEB-INF/jsps/app/{1}/{2}/{3}.jsp" />
+     <definition name="/*/*/*/*.app" template ="/WEB-INF/jsps/app/{1}/{2}/{3}/{4}.jsp" />
+     
+     <definition name="/*.pop" template="/WEB-INF/jsps/common/{1}.jsp" />
+     <definition name="/*/*.pop"  template="/WEB-INF/jsps/common/{1}/{2}.jsp" />
+     <definition name="/*/*/*.pop" template ="/WEB-INF/jsps/common/{1}/{2}/{3}.jsp" />
+     <definition name="/*/*/*/*.pop" template ="/WEB-INF/jsps/common/{1}/{2}/{3}/{4}.jsp" />
+     
+     <definition name="/*.test" template="/WEB-INF/jsps/common/{1}.jsp" />
+     <definition name="/*/*.test"  template="/WEB-INF/jsps/common/{1}/{2}.jsp" />
+     <definition name="/*/*/*.test" template ="/WEB-INF/jsps/common/{1}/{2}/{3}.jsp" />
+     <definition name="/*/*/*/*.test" template ="/WEB-INF/jsps/common/{1}/{2}/{3}/{4}.jsp" />
+    
+     <definition name="/img_uploader.daum" template ="/assets/common/daum/pages/trex/image.jsp" />
+     <definition name="/file_uploader.daum" template ="/assets/common/daum/pages/trex/file.jsp" />
+     
+     <definition name="/comment" template ="/WEB-INF/jsps/user/menu04/comment.jsp" />
+     
+     
+</tiles-definitions> 

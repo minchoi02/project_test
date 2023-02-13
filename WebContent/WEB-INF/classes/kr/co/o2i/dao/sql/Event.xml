@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="event">
+
+	<select id="list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT  TO_CHAR(ADD_MONTHS(TO_DATE(B.DAY_FR,'YYYYMMDD'),-1),'YYYYMM') MONTH_BEF 
+		       	 ,B.MONTH_CUR 
+		       	 ,TO_CHAR(ADD_MONTHS(TO_DATE(B.DAY_FR,'YYYYMMDD'), 1),'YYYYMM') MONTH_NEXT 
+		       	 ,A.SEQ 
+		       	 ,A.SDATE 
+		         ,A.EDATE 
+		       	 ,A.CURDATE 
+		       	 ,A.TITLE 
+		       	 ,A.DEL_YN
+		   FROM (SELECT A.SEQ 
+		               		 ,A.SDATE 
+		               		 ,A.EDATE 
+		               		 ,A.TITLE 
+		               		 ,A.DEL_YN
+		               		 ,TO_CHAR(A.SDATE+(B.SEQ-1),'YYYYMMDD') CURDATE 
+		           	  FROM PLAN A 
+		              		 , DUMMY_SEQ B 
+		         	    WHERE B.SEQ &lt;= A.EDATE-A.SDATE+1 
+		       	   ) A 
+		       	 , (SELECT  #{yyyymm}      MONTH_CUR 
+	               		  , #{yyyymm} ||'01' DAY_FR 
+	               		  , #{yyyymm} ||'31' DAY_TO 
+		           		FROM DUAL 
+		        	) B 
+		   WHERE A.CURDATE(+) BETWEEN B.DAY_FR AND B.DAY_TO 
+		   	   AND A.DEL_YN ='N'
+		   <if test="search_date != null">
+		   		<if test="search_date != ''">
+		   			AND CURDATE = #{search_date}
+		   		</if>
+		   </if>
+		  ORDER BY A.CURDATE,A.SEQ 
+	</select>
+	
+	
+	
+	<select id="view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT * 
+		 FROM PLAN
+		 WHERE SEQ = ${seq}
+		     <!-- AND TO_CHAR(edate, 'YYYYMMDD') >    = #{yyyymmdd}
+		     AND TO_CHAR(sdate, 'YYYYMMDD') &lt; = #{yyyymmdd}  -->
+	</select>
+	
+	
+	<update id="update" parameterType="kr.co.o2i.util.CommonMap">
+		UPDATE PLAN
+		   SET TITLE   = #{title} 
+		      ,SDATE   = #{sdate} 
+		      ,EDATE   = #{edate} 
+		WHERE SEQ       = ${seq}
+	</update>
+	
+	<delete id="delete"  parameterType="kr.co.o2i.util.CommonMap">
+		UPDATE PLAN
+			  SET DEL_YN = 'Y'
+			  	   , DEL_DATE = sysdate
+		 WHERE SEQ       = ${seq}
+	</delete>
+	
+	<insert id="insert"  parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO PLAN( SEQ
+						  ,TITLE
+						  ,SDATE
+						  ,EDATE
+						  ,REG_DATE
+						  ,DEL_YN
+						 )VALUES(
+						   (SELECT NVL(MAX(SEQ),0)+1 FROM PLAN)
+						   ,#{title} 
+						   ,#{sdate} 
+						   ,#{edate} 
+						   ,sysdate
+						   ,'N'
+						 )
+	</insert>
+	
+	<select id="m_list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		select * from ( select pt.*, ceil(rownum /  ${pagesize}) page 
+						from (
+									SELECT * 
+									   FROM PLAN
+									 WHERE DEL_YN ='N'
+									    AND #{yyyymm} BETWEEN TO_CHAR(SDATE,'YYYYMM') AND TO_CHAR(EDATE,'YYYYMM')
+									 <if test="day != null"><if test="day != ''">
+									 	 AND #{yyyymmdd} BETWEEN TO_CHAR(SDATE,'YYYYMMDD') AND TO_CHAR(EDATE,'YYYYMMDD')
+									 </if></if>
+									 ORDER BY SDATE ASC	
+		 				) pt ) where page = ${page} 
+		 						ORDER BY SDATE ASC	
+	</select>
+	
+	<select id="mTotalCnt" parameterType="kr.co.o2i.util.CommonMap" resultType="int">
+		SELECT NVL(COUNT(*),0)as CNT 
+		   FROM PLAN
+		 WHERE #{yyyymm} BETWEEN TO_CHAR(SDATE,'YYYYMM') AND TO_CHAR(EDATE,'YYYYMM')
+		     AND DEL_YN ='N'
+	</select>
+	
+	<select id="userlist" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT DISTINCT TO_CHAR(ADD_MONTHS(TO_DATE(B.DAY_FR,'YYYYMMDD'),-1),'YYYYMM') MONTH_BEF 
+		       	 ,B.MONTH_CUR 
+		       	 ,TO_CHAR(ADD_MONTHS(TO_DATE(B.DAY_FR,'YYYYMMDD'), 1),'YYYYMM') MONTH_NEXT 
+		       	 ,A.CURDATE
+		       	 ,A.DEL_YN
+		       	 ,(SELECT COUNT(*) FROM PLAN WHERE A.CURDATE BETWEEN SDATE AND EDATE AND DEL_YN = 'N')AS COUNT
+		   FROM (SELECT A.SEQ 
+		               		 ,A.SDATE 
+		               		 ,A.EDATE 
+		               		 ,A.TITLE 
+		               		 ,A.DEL_YN
+		               		 ,TO_CHAR(A.SDATE+(B.SEQ-1),'YYYYMMDD') CURDATE 
+		           	  FROM PLAN A 
+		              		 , DUMMY_SEQ B 
+		         	    WHERE B.SEQ &lt;= A.EDATE-A.SDATE+1 
+		       	   ) A 
+		       	 , (SELECT  #{yyyymm}      MONTH_CUR 
+	               		  , #{yyyymm} ||'01' DAY_FR 
+	               		  , #{yyyymm} ||'31' DAY_TO 
+		           		FROM DUAL 
+		        	) B 
+		   WHERE A.CURDATE IS NOT NULL 
+		       AND A.CURDATE(+) BETWEEN B.DAY_FR AND B.DAY_TO 
+		       AND A.DEL_YN ='N'
+		   ORDER BY A.CURDATE
+	</select>
+	
+</mapper>

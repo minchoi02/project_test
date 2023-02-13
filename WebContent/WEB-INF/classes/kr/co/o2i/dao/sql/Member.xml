@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+	<insert id="insert" parameterType="kr.co.o2i.util.CommonMap">
+		INSERT INTO MEMBER
+						  ( SEQ
+						  , ID 	
+						  , PWD
+						  , NAME
+					 	  , TEL1
+					 	  , TEL2
+					 	  , TEL3
+					 	  , EMAIL
+					 	  , GUBUN
+					 	  , AGE
+					 	  , SEX
+					 	  , KIND
+					 	  , DROP_YN
+					 	  , DEL_YN
+					 	  , REG_DATE
+				  )VALUES(  
+				  	  ${seq}
+					 ,HEX(AES_ENCRYPT(#{id,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,PASSWORD(#{pwd,jdbcType=VARCHAR})
+					 ,HEX(AES_ENCRYPT(#{name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{tel1,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{tel2,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{tel3,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,HEX(AES_ENCRYPT(#{email,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,#{person_gubun		,jdbcType=VARCHAR}
+					 ,#{age		,jdbcType=VARCHAR}
+					 ,#{sex		,jdbcType=VARCHAR}
+					 ,#{kind		,jdbcType=VARCHAR}
+					 ,'N'
+					 ,'N'
+					 ,NOW()
+					 
+				 )
+	</insert>
+	
+	<select id="getMaxSeq" resultType="int" >
+		SELECT IFNULL(MAX(SEQ),0)+1 FROM MEMBER
+	</select>
+
+
+	<select id="view" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT SEQ
+			  , CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) AS ID
+			  , PWD
+			  , CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS NAME
+		 	  , CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL1
+		 	  , CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL2
+		 	  , CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL3
+		 	  , CAST(AES_DECRYPT(UNHEX(EMAIL), #{key,jdbcType=VARCHAR}) AS CHAR) AS EMAIL
+		 	  , GUBUN
+		 	  , AGE
+		 	  , SEX
+		 	  , KIND
+		 	  , DROP_YN
+		 	  , DEL_YN
+		 	  , REG_DATE
+		FROM MEMBER
+		WHERE SEQ = ${seq}
+	</select>
+	
+	<select id="list" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+				select * from  (
+			       			SELECT T1.SEQ
+								  , CAST(AES_DECRYPT(UNHEX(T1.ID), #{key,jdbcType=VARCHAR}) AS CHAR) AS ID
+								  , CAST(AES_DECRYPT(UNHEX(T1.NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS NAME
+							 	  , CAST(AES_DECRYPT(UNHEX(T1.TEL1), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL1
+							 	  , CAST(AES_DECRYPT(UNHEX(T1.TEL2), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL2
+							 	  , CAST(AES_DECRYPT(UNHEX(T1.TEL3), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL3
+							 	  , CAST(AES_DECRYPT(UNHEX(T1.EMAIL), #{key,jdbcType=VARCHAR}) AS CHAR) AS EMAIL
+							 	  , T1.GUBUN
+							 	  , T1.AGE
+							 	  , T1.SEX
+							 	  , T1.KIND
+							 	  , T1.DROP_YN
+							 	  , T1.DEL_YN
+							 	  , T1.REG_DATE
+				     		 FROM (SELECT * 
+				     		 			  FROM MEMBER M
+				    					WHERE 
+				    					<choose>
+				    						<when test="board_name == 'member'">
+				    							DEL_YN = 'N'
+				    							AND DROP_YN = 'N'
+				    						</when>
+				    						<otherwise>
+				    							DEL_YN = 'N'
+				    							AND DROP_YN = 'Y'
+				    						</otherwise>
+				    					</choose>
+								    	<if test="search_value != null" >
+									  		<if test="search_value != ''" >
+									  				<if test="search_title == 'name'">
+									  				AND CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  				</if>
+									  				<if test="search_title == 'id'">
+									  				AND CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  				</if>
+									  				<if test="search_title == 'tel'">
+									  				AND CONCAT(CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR)) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  				</if>
+									  				<if test="search_title == ''">
+									  				AND (
+									  						CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  						OR
+									  						CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  						OR
+									  						CONCAT(CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR)) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+									  					)
+									  				</if>
+									  		</if>
+							          	</if>
+								   )T1
+						   	 ORDER BY SEQ DESC
+	    				) T2 
+	    				ORDER BY SEQ DESC
+	    				LIMIT ${slimit}, ${elimit} 
+	</select>
+			
+	<select id="listCount" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM (SELECT SEQ
+     		 			  FROM MEMBER M
+    					WHERE <choose>
+	    						<when test="board_name == 'member'">
+	    							DEL_YN = 'N'
+	    							AND DROP_YN = 'N'
+	    						</when>
+	    						<otherwise>
+	    							DEL_YN = 'N'
+	    							AND DROP_YN = 'Y'
+	    						</otherwise>
+	    					</choose>
+					    	<if test="search_value != null" >
+						  		<if test="search_value != ''" >
+						  				<if test="search_title == 'name'">
+						  				AND CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+						  				</if>
+						  				<if test="search_title == 'id'">
+						  				AND CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+						  				</if>
+						  				<if test="search_title == 'tel'">
+						  				AND CONCAT(CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR)) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+						  				</if>
+						  				<if test="search_title == ''">
+						  				AND (
+						  						CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+						  						OR
+						  						CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+						  						OR
+						  						CONCAT(CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR), CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR)) LIKE CONCAT('%', #{search_value ,jdbcType=VARCHAR}, '%')
+						  					)
+						  				</if>
+						  		</if>
+				          	</if>
+				   )T1
+
+	</select>	
+	
+	<update id="update" parameterType="java.util.Map">
+		UPDATE MEMBER SET 
+					<if test="change_pwd == 'OK' and pwd != ''">
+						PWD = PASSWORD(#{pwd,jdbcType=VARCHAR}),
+					</if>
+					 NAME = HEX(AES_ENCRYPT(#{name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,TEL1 = HEX(AES_ENCRYPT(#{tel1,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,TEL2 = HEX(AES_ENCRYPT(#{tel2,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,TEL3 = HEX(AES_ENCRYPT(#{tel3,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,EMAIL = HEX(AES_ENCRYPT(#{email,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+					 ,GUBUN = #{person_gubun,jdbcType=VARCHAR}
+					 ,AGE = #{age,jdbcType=VARCHAR}
+					 ,SEX = #{sex,jdbcType=VARCHAR}
+					 <if test="kind != null and kind != ''">
+					 ,KIND = #{kind,jdbcType=VARCHAR}
+					 </if>
+			WHERE SEQ = ${seq}
+	</update>
+	
+	<delete id="del" parameterType="java.util.Map" >
+		UPDATE MEMBER
+	       SET DEL_YN  = 'Y'
+	       	  ,DROP_YN = 'Y'
+	       	  ,DROP_DATE = NOW()
+	       	  ,DROP_DATE = NOW()
+		 WHERE SEQ = ${seq}
+	</delete>
+	
+	<select id="check_id" parameterType="kr.co.o2i.util.CommonMap" resultType="int" >
+      		SELECT COUNT(*)
+     		 FROM MEMBER
+     		 WHERE CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="check_del" parameterType="java.util.Map" >
+		UPDATE MEMBER
+	       SET DEL_YN  = 'Y'
+	       	  ,DROP_YN = 'Y'
+	       	  ,DROP_DATE = NOW()
+		 WHERE SEQ IN (${check_seq})
+	</delete>
+	
+	<delete id="user_drop" parameterType="java.util.Map" >
+		UPDATE MEMBER
+	       SET DROP_YN = 'Y'
+	       	  ,DROP_DATE = NOW()
+		 WHERE ID = HEX(AES_ENCRYPT(#{id,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+	</delete>
+	
+	<delete id="drop_delete" parameterType="java.util.Map" >
+		UPDATE MEMBER
+	       SET DEL_YN  = 'Y'
+	       	  ,DROP_YN = 'Y'
+	       	  ,DROP_DATE = NOW()
+		 WHERE SEQ = ${seq}
+	</delete>
+	
+	<delete id="drop_cancel" parameterType="java.util.Map" >
+		UPDATE MEMBER
+	       SET DEL_YN  = 'N'
+	       	  ,DROP_YN = 'N'
+	       	  ,DROP_DATE = null
+		 WHERE SEQ = ${seq}
+	</delete>
+	
+	<select id="userIdCheck" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+		SELECT SEQ
+			  , CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) AS ID
+			  , ID AS CRYPT_ID
+			  , PWD
+			  , CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) AS NAME
+		 	  , CAST(AES_DECRYPT(UNHEX(TEL1), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL1
+		 	  , CAST(AES_DECRYPT(UNHEX(TEL2), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL2
+		 	  , CAST(AES_DECRYPT(UNHEX(TEL3), #{key,jdbcType=VARCHAR}) AS CHAR) AS TEL3
+		 	  , CAST(AES_DECRYPT(UNHEX(EMAIL), #{key,jdbcType=VARCHAR}) AS CHAR) AS EMAIL
+		 	  , GUBUN
+		 	  , AGE
+		 	  , SEX
+		 	  , KIND
+		 	  , DROP_YN
+		 	  , DEL_YN
+		 	  , REG_DATE 
+		 	  , (
+                CASE 
+                    WHEN (SELECT COUNT(*) FROM MASTER WHERE DEL_YN = 'N' AND ID = M.ID) > 0 THEN 'Y'
+                    ELSE 'N'
+                END
+                ) AS MASTER_YN
+		   FROM MEMBER M
+		 WHERE DEL_YN ='N'
+		 	 AND DROP_YN ='N'
+		     AND ID = HEX(AES_ENCRYPT(#{id,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+		     AND PWD = PASSWORD(#{pwd,jdbcType=VARCHAR})
+	</select>
+	
+	<delete id="drop_board_update" parameterType="java.util.Map" >
+		UPDATE BOARD
+	       SET NAME = '게스트'
+	       	  ,ID = 'guest'
+		 WHERE ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<select id="findId" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+      		SELECT
+      			SEQ 
+      		  , CONCAT(SUBSTRING(CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR), 1, 3), '*****') AS ID
+		 	  , DATE_FORMAT(REG_DATE, '%Y년 %m월 %d일') AS REG_DATE
+     		 FROM MEMBER
+     		 WHERE CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) = #{name,jdbcType=VARCHAR}
+     		   AND CAST(AES_DECRYPT(UNHEX(EMAIL), #{key,jdbcType=VARCHAR}) AS CHAR) = #{email,jdbcType=VARCHAR}
+     		   AND DEL_YN ='N'
+		 	   AND DROP_YN ='N'
+	</select>
+	
+	<select id="findPwd" parameterType="kr.co.o2i.util.CommonMap" resultType="java.util.Map">
+      		SELECT
+      			SEQ
+     		 FROM MEMBER
+     		 WHERE CAST(AES_DECRYPT(UNHEX(NAME), #{key,jdbcType=VARCHAR}) AS CHAR) = #{name,jdbcType=VARCHAR}
+     		   AND CAST(AES_DECRYPT(UNHEX(EMAIL), #{key,jdbcType=VARCHAR}) AS CHAR) = #{email,jdbcType=VARCHAR}
+     		   AND CAST(AES_DECRYPT(UNHEX(ID), #{key,jdbcType=VARCHAR}) AS CHAR) = #{id,jdbcType=VARCHAR}
+     		   AND DEL_YN ='N'
+		 	   AND DROP_YN ='N'
+	</select>
+	
+	<delete id="findPwdUpdate" parameterType="java.util.Map" >
+		UPDATE MEMBER
+	       SET PWD = PASSWORD(#{pwd,jdbcType=VARCHAR})
+		 WHERE ID = HEX(AES_ENCRYPT(#{id,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}))
+	</delete>
+	
+</mapper>
